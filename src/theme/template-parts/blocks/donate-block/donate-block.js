@@ -322,7 +322,7 @@
 
 			if (currency == "GBP") {
 				if (freq == "monthly") {
-					url += "/donate-GBP-regular/";
+					// url = "https://donate.hopeforjustice.org/";
 				} else {
 					url += "/donate-GBP-once/";
 				}
@@ -371,6 +371,10 @@
 
 			if (image) {
 				url += `&image=${encodeURIComponent(image)}`;
+			}
+
+			if (currency == "GBP" && freq == "monthly") {
+				url = `https://donate.hopeforjustice.org/?amount=${urlAmount}`;
 			}
 
 			window.location.href = url;
