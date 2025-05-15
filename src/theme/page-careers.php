@@ -106,7 +106,9 @@ get_header(); ?>
 									<img src="<?php echo get_template_directory_uri() .
          	"/assets/img/balloon.svg"; ?>" />
 									<p>
-										<?php echo $body->location; ?>,&nbsp;<?php echo $body->nation; ?>
+										<?php echo $body->location
+          	? $body->location
+          	: $body->region; ?>,&nbsp;<?php echo $body->nation; ?>
 									</p>
 								</div>
 							</a>
