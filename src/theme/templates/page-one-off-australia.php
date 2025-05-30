@@ -652,8 +652,8 @@ endif;
                     <input type="hidden" id="StripeStatementText" value="Hope for Justice Au" />
                     <input type="hidden" id="CurrencyCode" value="aud" />
                     <input type="hidden" id="CountryCode" value="GB" />
-                    <!-- <input type="hidden" id="PayPalStatementText" value="Hope for Justice" />
-                    <input type="hidden" id="PayPalClientId" value="AaQzhULMlg_dYWzkSmm06sKuUrqAaMdzyUW_E9OPMlmxroQoipJ5v5CX9u6yzcK7oZJc36aXK4Rn8Y3j" /> -->
+                    <input type="hidden" id="PayPalStatementText" value="Hope for Justice" />
+                    <input type="hidden" id="PayPalClientId" value="AR1zpYtOZt6NrCD9EFPPLEovkHjKzwGzL0Rpx7fOFfXT4tH-UlTqTteamTi7qmQkxKhZmfJW8R2E5Kwn" />
                     <input type="hidden" id="ExternalPaymentReference" value="" />
                     <!-- <input type="hidden" id="PayPal" value="" /> -->
 
