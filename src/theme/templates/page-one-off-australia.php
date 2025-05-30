@@ -655,7 +655,7 @@ endif;
                     <input type="hidden" id="PayPalStatementText" value="Hope for Justice" />
                     <input type="hidden" id="PayPalClientId" value="AR1zpYtOZt6NrCD9EFPPLEovkHjKzwGzL0Rpx7fOFfXT4tH-UlTqTteamTi7qmQkxKhZmfJW8R2E5Kwn" />
                     <input type="hidden" id="ExternalPaymentReference" value="" />
-                    <!-- <input type="hidden" id="PayPal" value="" /> -->
+                    <input type="hidden" id="PayPal" value="" />
 
                     <div class="donorfy-donate__hidden">
                         <input id="GiftAid" type="checkbox" />
