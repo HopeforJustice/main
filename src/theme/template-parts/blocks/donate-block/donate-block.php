@@ -10,6 +10,8 @@ $margin_bottom_desktop = get_field("margin_bottom_desktop");
 $extra_graphic = get_field("extra_graphic");
 $thank_you = urlencode(get_field("custom_thankyou"));
 $tracked = get_field("tracked") ?: "false";
+//used for the donation app to track the campaign
+$campaign = get_field("campaign") ?: null;
 
 $extra_text = get_field("extra_text") ?: false;
 $background_color = get_field("background_color") ?: "#ffffff";
@@ -225,7 +227,7 @@ if ($tracked && $target) {
         <?php } ?>
 
         <!-- donate widget -->
-        <div data-tracked="<?php echo $tracked; ?>" data-thankyou="<?php echo $thank_you; ?>" data-emaileventonce="<?php echo $email_event_once; ?>" data-emaileventmonthly="<?php echo $email_event_monthly; ?>" data-currency="<?php echo $currency; ?>" class="donate-block" <?php if (
+        <div data-tracked="<?php echo $tracked; ?>" data-thankyou="<?php echo $thank_you; ?>" data-emaileventonce="<?php echo $email_event_once; ?>" data-emaileventmonthly="<?php echo $email_event_monthly; ?>" data-campaign="<?php echo $campaign; ?>" data-currency="<?php echo $currency; ?>" class="donate-block" <?php if (
 	$widget_id_once
 ) { ?> data-widgetidonce="<?php echo $widget_id_once; ?>" <?php } ?> <?php if (
  	$widget_id_monthly
