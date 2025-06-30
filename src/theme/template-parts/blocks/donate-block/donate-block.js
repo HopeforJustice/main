@@ -28,6 +28,9 @@
 		let emailEventOnce = $(".donate-block").data("emaileventonce");
 		let tracked = $(".donate-block").data("tracked");
 
+		//campaign for donation app
+		let campaign = $(".donate-block").data("campaign") || null;
+
 		$(document).ready(function () {
 			if (currency == "NOK") {
 				$(".donate-block__options-option").each(function () {
@@ -373,8 +376,12 @@
 				url += `&image=${encodeURIComponent(image)}`;
 			}
 
+			//donation app accepts campaign param if it exists
 			if (currency == "GBP" && freq == "monthly") {
 				url = `https://donate.hopeforjustice.org/?amount=${urlAmount}`;
+				if (campaign) {
+					url += `&campaign=${campaign}`;
+				}
 			}
 
 			window.location.href = url;
