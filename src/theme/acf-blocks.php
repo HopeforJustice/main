@@ -751,8 +751,6 @@ function register_acf_block_styles(): void
 	// }
 
 	if (has_block("acf/donate-block")) {
-		// wp_enqueue_style('donate_block_assets', get_template_directory_uri() . '/template-parts/blocks/donate-block.css', array(), _S_VERSION);
-
 		wp_enqueue_script(
 			"donate_block_scripts",
 			get_template_directory_uri() .
@@ -760,6 +758,22 @@ function register_acf_block_styles(): void
 			[],
 			_S_VERSION
 		);
+	}
+
+	if (has_block("acf/resources-block")) {
+		wp_enqueue_script(
+			"resources_block_scripts",
+			get_template_directory_uri() .
+				"/template-parts/blocks/resources/resources.js",
+			[],
+			_S_VERSION,
+			true
+		);
+
+		// Localize AJAX URL and any other dynamic data
+		wp_localize_script("resources_block_scripts", "ResourcesAjax", [
+			"ajax_url" => admin_url("admin-ajax.php"),
+		]);
 	}
 
 	// if (has_block('acf/form-block')) {
