@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.4.4");
+	define("_S_VERSION", "6.4.5");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -475,6 +475,16 @@ function page_scripts()
 }
 
 add_action("wp_enqueue_scripts", "page_scripts", 1);
+
+/**
+ * Admin filters
+ */
+require get_template_directory() . "/admin-filters.php";
+
+/**
+ * Post filters
+ */
+require get_template_directory() . "/post-filters.php";
 
 /**
  * Implement the Custom Header feature.
@@ -996,6 +1006,96 @@ function add_custom_taxonomies()
 			"with_front" => false, // Don't display the category base before "/locations/"
 
 			"hierarchical" => true, // This will allow URL's like "/locations/boston/cambridge/"
+		],
+	]);
+
+	//resource languages
+	register_taxonomy("languages", "resources_template", [
+		"hierarchical" => true,
+
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"show_admin_column" => true,
+
+		"labels" => [
+			"name" => _x("Languages", "taxonomy general name"),
+
+			"singular_name" => _x("Language", "taxonomy singular name"),
+
+			"search_items" => __("Search Language"),
+
+			"all_items" => __("All Languages"),
+
+			"parent_item" => __("Parent"),
+
+			"parent_item_colon" => __("Parent:"),
+
+			"edit_item" => __("Edit Language"),
+
+			"update_item" => __("Update Language"),
+
+			"add_new_item" => __("Add New Language"),
+
+			"new_item_name" => __("New Language"),
+
+			"menu_name" => __("Languages"),
+		],
+
+		"show_in_nav_menus" => true,
+
+		// Control the slugs used for this taxonomy
+
+		"rewrite" => [
+			"slug" => "language", // This controls the base slug that will display before each term
+
+			"with_front" => false, // Don't display the category base before "/locations/"
+
+			"hierarchical" => false, // This will allow URL's like "/locations/boston/cambridge/"
+		],
+	]);
+
+	//resource topics
+	register_taxonomy("topics", "resources_template", [
+		"hierarchical" => true,
+
+		"show_ui" => true,
+		"show_in_rest" => true,
+		"show_admin_column" => true,
+
+		"labels" => [
+			"name" => _x("Topics", "taxonomy general name"),
+
+			"singular_name" => _x("Topic", "taxonomy singular name"),
+
+			"search_items" => __("Search Topic"),
+
+			"all_items" => __("All Topics"),
+
+			"parent_item" => __("Parent"),
+
+			"parent_item_colon" => __("Parent:"),
+
+			"edit_item" => __("Edit Topic"),
+
+			"update_item" => __("Update Topic"),
+
+			"add_new_item" => __("Add New Topic"),
+
+			"new_item_name" => __("New Topic"),
+
+			"menu_name" => __("Topics"),
+		],
+
+		"show_in_nav_menus" => true,
+
+		// Control the slugs used for this taxonomy
+
+		"rewrite" => [
+			"slug" => "topic", // This controls the base slug that will display before each term
+
+			"with_front" => false, // Don't display the category base before "/locations/"
+
+			"hierarchical" => false, // This will allow URL's like "/locations/boston/cambridge/"
 		],
 	]);
 }

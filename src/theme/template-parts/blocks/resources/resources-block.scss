@@ -1,18 +1,43 @@
 .resources-block {
-    &__img {
-        padding-top: 100%;
-        position: relative;
-    }
+	&__img {
+		padding-top: 100%;
+		position: relative;
+	}
 
-    &__content {
-        margin-top: 0;
-    }
+	&__content {
+		margin-top: 0;
+	}
 
-    &__download {
-        left: auto;
-        right: 10px;
-        bottom: 10px;
-        position: absolute;
-        width: 40px;
-    }
+	&__download {
+		left: auto;
+		right: 10px;
+		bottom: 10px;
+		position: absolute;
+		width: 40px;
+	}
+	&__languages {
+		grid-column: 1/12;
+		margin-bottom: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 10px;
+	}
+	&__language-list {
+		select {
+			border-radius: 77px;
+			padding-left: 24px !important;
+		}
+		position: relative;
+		&:after {
+			display: block;
+			content: "▾";
+			font-size: 16px;
+			position: absolute;
+			right: 2em;
+			top: 20px;
+			pointer-events: none;
+			opacity: 0.5;
+		}
+	}
 }
