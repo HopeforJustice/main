@@ -389,7 +389,7 @@
 					url += `&campaign=${campaign}`;
 				}
 			}
-			if (useDonationApp) {
+			if (useDonationApp && (currency == "GBP" || currency == "USD")) {
 				url = `https://donate.hopeforjustice.org/?amount=${urlAmount}&givingFrequency=${freq}&currency=${currency.toLowerCase()}`;
 				if (campaign) {
 					url += `&campaign=${campaign}`;
