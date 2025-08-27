@@ -2,6 +2,7 @@
 
 //Get Currency=value from the url
 $currency = $_GET["Currency"];
+$use_donation_app = get_field("use_donation_app") ?: false;
 $frequency = get_field("frequency_settings");
 $frequency_start = get_field("frequency_start");
 $image = get_field("image");
@@ -227,7 +228,8 @@ if ($tracked && $target) {
         <?php } ?>
 
         <!-- donate widget -->
-        <div data-tracked="<?php echo $tracked; ?>" data-thankyou="<?php echo $thank_you; ?>" data-emaileventonce="<?php echo $email_event_once; ?>" data-emaileventmonthly="<?php echo $email_event_monthly; ?>" data-campaign="<?php echo $campaign; ?>" data-currency="<?php echo $currency; ?>" class="donate-block" <?php if (
+        <div data-tracked="<?php echo $tracked; ?>" data-thankyou="<?php echo $thank_you; ?>" data-emaileventonce="<?php echo $email_event_once; ?>" data-emaileventmonthly="<?php echo $email_event_monthly; ?>" data-campaign="<?php echo $campaign; ?>" data-currency="<?php echo $currency; ?>"
+        data-usedonationapp="<?php echo $use_donation_app; ?>" class="donate-block" <?php if (
 	$widget_id_once
 ) { ?> data-widgetidonce="<?php echo $widget_id_once; ?>" <?php } ?> <?php if (
  	$widget_id_monthly
@@ -403,26 +405,6 @@ if ($tracked && $target) {
                 <span id="reason"></span>
             </p>
 
-            <div class="donate-block__other-ways">
-            <?php if ($currency !== "GBP" && $currency !== "USD") { ?>
-                <a href="<?php echo $other_ways_link; ?>">
-                    <?php if ($currency == "NOK") { ?>
-                        Andre måter å gi
-                    <?php } else { ?>
-                        Other ways to give
-                    <?php } ?>
-                </a>
-                <div class="donate-block__other-ways-divider">|</div>
-            <?php } ?>
-                <a data-toggle="modal" data-target="#currencyModal" id="changeCurrency">
-                    <?php if ($currency == "NOK") { ?>
-                        Endre valuta
-                    <?php } else { ?>
-                        Change currency
-                    <?php } ?>
-                </a>
-            </div>
-
             <div class="donate-block__button">
                 <?php if ($currency == "NOK") { ?>
                     Gi
@@ -437,6 +419,48 @@ if ($tracked && $target) {
                 ?></span><span class="donate-block__button-amount"></span>
                 <span class="donate-block__button-freq"></span>
             </div>
+                        <div class="donate-block__other-ways">
+                
+                    <a href="<?php echo $currency == "usd" || "gbp"
+                    	? "#other-ways"
+                    	: $other_ways_link; ?>">
+                        <?php if ($currency == "NOK") { ?>
+                            Andre måter å gi
+                        <?php } else { ?>
+                            Other ways to give
+                        <?php } ?>
+                    </a>
+                    <div class="donate-block__other-ways-divider color-red">|</div>
+                
+                <a data-toggle="modal" data-target="#currencyModal" id="changeCurrency">
+                    <?php if ($currency == "NOK") { ?>
+                        Endre valuta
+                    <?php } else { ?>
+                        Change currency
+                    <?php } ?>
+                </a>
+            </div>
+            <?php if (
+            	($currency == "GBP" || $currency == "USD") &&
+            	$use_donation_app
+            ) { ?>
+            <div class="donate-block__payment-methods">
+                <ul>
+
+                    <li class="donate-block__payment-methods-applepay"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/applepay.svg" alt="Apple Pay" /></li>
+                    <li class="donate-block__payment-methods-googlepay"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/googlepay.svg" alt="Google Pay" /></li>
+                    <li class="donate-block__payment-methods-paypal"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/paypal.png" alt="PayPal" /></li>
+                    <?php if ($currency == "GBP") { ?>
+                    <li class="donate-block__payment-methods-banktransfer"><img  src="<?php echo get_template_directory_uri(); ?>/assets/img/banktransfer.svg" alt="Bank Transfer" /></li>
+                    <?php } ?>
+                    <li class="donate-block__payment-methods-visa"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/visa.svg" alt="Visa" /></li>
+                    <li class="donate-block__payment-methods-mastercard"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/mastercard.svg" alt="Master Card" /></li>
+                    <?php if ($currency == "USD") { ?>
+                    <li class="donate-block__payment-methods-amex"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/amex.svg" alt="Amex" /></li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <?php } ?>
         </div>
 
     </div>
