@@ -302,12 +302,12 @@
 		display: flex;
 		font-size: 14px;
 		justify-content: center;
-		margin-top: 25px;
+		margin-bottom: 40px;
 
 		a {
 			color: #767676;
 			text-decoration: underline;
-			opacity: 0.8;
+			opacity: 1;
 
 			&:hover {
 				opacity: 1;
@@ -315,8 +315,7 @@
 		}
 
 		&-divider {
-			margin: 0 5px;
-			opacity: 0.5;
+			margin: 0 10px;
 		}
 	}
 
@@ -363,6 +362,46 @@
 			object-fit: contain;
 			display: block;
 		}
+	}
+
+	&__payment-methods {
+		margin: 20px;
+		margin-top: -20px;
+		ul {
+			box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+			border-radius: 10px;
+			padding: 10px;
+			display: flex;
+			gap: 15px;
+			justify-content: center;
+			list-style: none;
+			align-items: center;
+			flex-wrap: wrap;
+			li {
+				display: flex;
+				align-items: center;
+				img {
+					scale: 0.9;
+				}
+			}
+		}
+		&-paypal {
+			img {
+				height: 23px;
+			}
+		}
+	}
+}
+
+.donate-block__container--GBP .donate-block-monthly {
+	.donate-block__payment-methods {
+		display: none;
+	}
+}
+
+.donate-block__container--USD .donate-block-monthly {
+	.donate-block__payment-methods-paypal {
+		display: none;
 	}
 }
 
@@ -458,7 +497,12 @@
 		}
 
 		&__button {
-			margin: 40px;
+			margin: 20px 40px;
+		}
+
+		&__payment-methods {
+			margin: 20px 40px 40px 40px;
+			margin-top: -20px;
 		}
 	}
 }
@@ -522,6 +566,10 @@
 			}
 		}
 
+		&__other-ways {
+			margin-top: -20px;
+		}
+
 		&__button {
 			margin: 40px;
 		}
@@ -555,10 +603,6 @@
 			&-option {
 				height: 70px;
 			}
-		}
-
-		&__other-ways {
-			margin-top: 18px;
 		}
 
 		&__button {

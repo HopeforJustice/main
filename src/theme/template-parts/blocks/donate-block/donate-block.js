@@ -13,7 +13,7 @@
 	 */
 	var initializeBlock = function () {
 		let image = $(".donate-block__container").data("image");
-
+		let useDonationApp = $(".donate-block").data("usedonationapp");
 		let amount = $(".donate-block__options-option--active").data("amount");
 		let freq = $(".donate-block__freq-option--active").data("freq");
 		let reason = $(".donate-block__options-option--active").data("reason");
@@ -88,8 +88,6 @@
 			window.location.href = url + `?Currency=${data}`;
 		});
 
-		//alert(parseFloat(amount).toFixed(2));
-
 		//initial set
 
 		if (freq == "monthly") {
@@ -103,6 +101,8 @@
 			$(".donate-block__top-text--once").hide();
 			$(".donate-block__title").show();
 			$(".donate-block__title--once").hide();
+			$(".donate-block").removeClass("donate-block-once");
+			$(".donate-block").addClass("donate-block-monthly");
 			if (currency == "NOK") {
 				$(".donate-block__button-freq").text("månedlig");
 			} else {
@@ -121,6 +121,8 @@
 			$(".donate-block__title--once").show();
 			$(".donate-block__button-freq").hide();
 			$(".donate-block__text-freq").hide();
+			$(".donate-block").removeClass("donate-block-monthly");
+			$(".donate-block").addClass("donate-block-once");
 		}
 
 		$(".donate-block__text-amount").text(amount);
@@ -152,12 +154,16 @@
 				$(".donate-block__button-freq").show();
 				$(".donate-block__button-freq").text(freq);
 				$(".donate-block__text-freq").show();
+				$(".donate-block").removeClass("donate-block-once");
+				$(".donate-block").addClass("donate-block-monthly");
 			} else {
 				$(".donate-new__hero-image--alt").show();
 				$(".donate-new__hero-image--main").hide();
 				$(".donate-block__button-freq").hide();
 				$(".donate-block__text-freq").hide();
 				$(".picture-description").show();
+				$(".donate-block").removeClass("donate-block-monthly");
+				$(".donate-block").addClass("donate-block-once");
 			}
 
 			if (freq == "monthly") {
@@ -379,6 +385,12 @@
 			//donation app accepts campaign param if it exists
 			if (currency == "GBP" && freq == "monthly") {
 				url = `https://donate.hopeforjustice.org/?amount=${urlAmount}`;
+				if (campaign) {
+					url += `&campaign=${campaign}`;
+				}
+			}
+			if (useDonationApp) {
+				url = `https://donate.hopeforjustice.org/?amount=${urlAmount}&givingFrequency=${freq}&currency=${currency.toLowerCase()}`;
 				if (campaign) {
 					url += `&campaign=${campaign}`;
 				}
