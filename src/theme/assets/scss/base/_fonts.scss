@@ -4,82 +4,80 @@
 *
 */
 
-
 /* apercu-regular-pro */
 
 @font-face {
-    font-family: 'apercu-reg';
-    src: url('assets/fonts/apercu-regular-pro.eot');
-    src: url('assets/fonts/apercu-regular-pro.eot?#iefix') format('embedded-opentype'),
-         url('assets/fonts/apercu-regular-pro.woff2') format('woff2'),
-         url('assets/fonts/apercu-regular-pro.woff') format('woff'),
-         url('assets/fonts/apercu-regular-pro.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+	font-family: "apercu-reg";
+	src: url("assets/fonts/apercu-regular-pro.eot");
+	src: url("assets/fonts/apercu-regular-pro.eot?#iefix")
+			format("embedded-opentype"),
+		url("assets/fonts/apercu-regular-pro.woff2") format("woff2"),
+		url("assets/fonts/apercu-regular-pro.woff") format("woff"),
+		url("assets/fonts/apercu-regular-pro.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
 }
 
 /* font-awesome-solid */
 
 @font-face {
-    font-family: 'font-awesome-solid';
-    src: url('assets/fonts/fa-solid-900.eot');
-    src: url('assets/fonts/fa-solid-900.woff2') format('woff2'),
-         url('assets/fonts/fa-solid-900.woff') format('woff'),
-         url('assets/fonts/fa-solid-900.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+	font-family: "font-awesome-solid";
+	src: url("assets/fonts/fa-solid-900.eot");
+	src: url("assets/fonts/fa-solid-900.woff2") format("woff2"),
+		url("assets/fonts/fa-solid-900.woff") format("woff"),
+		url("assets/fonts/fa-solid-900.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
 }
-
 
 /* apercu-bold-pro */
 
 @font-face {
-    font-family: 'apercu-bold';
-    src: url('assets/fonts/apercu-bold-pro.eot');
-    src: url('assets/fonts/apercu-bold-pro.eot?#iefix') format('embedded-opentype'),
-         url('assets/fonts/apercu-bold-pro.woff2') format('woff2'),
-         url('assets/fonts/apercu-bold-pro.woff') format('woff'),
-         url('assets/fonts/apercu-bold-pro.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+	font-family: "apercu-bold";
+	src: url("assets/fonts/apercu-bold-pro.eot");
+	src: url("assets/fonts/apercu-bold-pro.eot?#iefix")
+			format("embedded-opentype"),
+		url("assets/fonts/apercu-bold-pro.woff2") format("woff2"),
+		url("assets/fonts/apercu-bold-pro.woff") format("woff"),
+		url("assets/fonts/apercu-bold-pro.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
 }
-
 
 /* apercu-italic-pro */
 
 @font-face {
-    font-family: 'apercu-italic';
-    src: url('assets/fonts/apercu-italic-pro.eot');
-    src: url('assets/fonts/apercu-italic-pro.eot?#iefix') format('embedded-opentype'),
-         url('assets/fonts/apercu-italic-pro.woff2') format('woff2'),
-         url('assets/fonts/apercu-italic-pro.woff') format('woff'),
-         url('assets/fonts/apercu-italic-pro.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-
-/* fk-screamer-legacy */
-
-@font-face {
-    font-family: 'fk-screamer';
-    src: url('assets/fonts/FKScreamerLegacy-Upright.woff2');
-    src: url('assets/fonts/FKScreamerLegacy-Upright.woff2') format('woff2'),
-         url('assets/fonts/FKScreamerLegacy-Upright.woff') format('woff'),
-         url('assets/fonts/FKScreamerLegacy-Upright.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+	font-family: "apercu-italic";
+	src: url("assets/fonts/apercu-italic-pro.eot");
+	src: url("assets/fonts/apercu-italic-pro.eot?#iefix")
+			format("embedded-opentype"),
+		url("assets/fonts/apercu-italic-pro.woff2") format("woff2"),
+		url("assets/fonts/apercu-italic-pro.woff") format("woff"),
+		url("assets/fonts/apercu-italic-pro.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
 }
 
 /* fk-screamer-legacy */
 
 @font-face {
-    font-family: 'canela-medium';
-    src: url('assets/fonts/canela-medium.woff2');
-    src: url('assets/fonts/canela-medium.woff2') format('woff2'),
-         url('assets/fonts/canela-medium.woff') format('woff'),
-         url('assets/fonts/canela-medium.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
+	font-family: "fk-screamer";
+	src: url("assets/fonts/FKScreamerLegacy-Upright.woff2");
+	src: url("assets/fonts/FKScreamerLegacy-Upright.woff2") format("woff2"),
+		url("assets/fonts/FKScreamerLegacy-Upright.woff") format("woff"),
+		url("assets/fonts/FKScreamerLegacy-Upright.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
 }
 
+/* fk-screamer-legacy */
+
+@font-face {
+	font-family: "canela-medium";
+	src: url("assets/fonts/canela-medium.woff2");
+	src: url("assets/fonts/canela-medium.woff2") format("woff2"),
+		url("assets/fonts/canela-medium.woff") format("woff"),
+		url("assets/fonts/canela-medium.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}

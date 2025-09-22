@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.4.7");
+	define("_S_VERSION", "6.4.8");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -412,6 +412,14 @@ function page_scripts()
 		wp_enqueue_style(
 			"men-are-victims",
 			get_template_directory_uri() . "/men-are-victims.css",
+			[],
+			_S_VERSION
+		);
+	}
+	if (is_page_template("templates/page-tbco.php")) {
+		wp_enqueue_style(
+			"tbco",
+			get_template_directory_uri() . "/tbco.css",
 			[],
 			_S_VERSION
 		);
