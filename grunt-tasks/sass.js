@@ -51,6 +51,10 @@ module.exports = function (distTheme, devTheme, scssDir) {
 					dest: distTheme + "/men-are-victims.css",
 				},
 				{
+					src: devTheme + scssDir + "pages/tbco.scss",
+					dest: distTheme + "/tbco.css",
+				},
+				{
 					src: devTheme + scssDir + "pages/goats-milk.scss",
 					dest: distTheme + "/goats-milk.css",
 				},
