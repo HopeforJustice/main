@@ -22,16 +22,22 @@ function captureUTMParameters() {
 	];
 
 	utmParams.forEach((param) => {
-		const value = urlParams.get(param) || "unknown";
+		const value = urlParams.get(param);
 		if (value) {
-			Cookies.set("wordpress_" + param, value, { path: "/", expires: 30 });
+			const cookieName = "wordpress_" + param;
+			const existingValue = Cookies.get(cookieName);
+
+			// Only set cookie if it doesn't exist or the value has changed
+			if (!existingValue || existingValue !== value) {
+				Cookies.set(cookieName, value, { path: "/", expires: 30 });
+			}
 		}
 	});
 }
 
 /* Page load scripts */
 jQuery(document).ready(function ($) {
-	console.log("v6.4.8");
+	console.log("v6.4.9");
 	captureUTMParameters();
 	let cookies = Cookies.get("wordpress_hfjcookies");
 
