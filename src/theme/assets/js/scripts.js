@@ -10,9 +10,29 @@ function formatPostcode(string) {
 	return string;
 }
 
+//capture UTM parameters and store as cookies
+function captureUTMParameters() {
+	const urlParams = new URLSearchParams(window.location.search);
+	const utmParams = [
+		"utm_source",
+		"utm_medium",
+		"utm_campaign",
+		"utm_term",
+		"utm_content",
+	];
+
+	utmParams.forEach((param) => {
+		const value = urlParams.get(param) || "unknown";
+		if (value) {
+			Cookies.set("wordpress_" + param, value, { path: "/", expires: 30 });
+		}
+	});
+}
+
 /* Page load scripts */
 jQuery(document).ready(function ($) {
 	console.log("v6.4.8");
+	captureUTMParameters();
 	let cookies = Cookies.get("wordpress_hfjcookies");
 
 	// cookieAccept click
