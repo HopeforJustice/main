@@ -13,23 +13,17 @@ function formatPostcode(string) {
 //capture UTM parameters and store as cookies
 function captureUTMParameters() {
 	const urlParams = new URLSearchParams(window.location.search);
-	const utmParams = [
-		"utm_source",
-		"utm_medium",
-		"utm_campaign",
-		"utm_term",
-		"utm_content",
-	];
+	const utmParams = ["utm_source", "utm_medium", "utm_campaign"];
 
 	utmParams.forEach((param) => {
-		const value = urlParams.get(param) || "unknown";
+		const value = urlParams.get(param);
 		if (value) {
 			const cookieName = "wordpress_" + param;
 			const existingValue = Cookies.get(cookieName);
 
 			// Only set cookie if it doesn't exist or the value has changed
 			if (!existingValue || existingValue !== value) {
-				Cookies.set(cookieName, value, { path: "/", expires: 30 });
+				Cookies.set(cookieName, value, { path: "/", expires: 10 });
 			}
 		}
 	});
