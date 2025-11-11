@@ -22,7 +22,7 @@ function captureUTMParameters() {
 	];
 
 	utmParams.forEach((param) => {
-		const value = urlParams.get(param);
+		const value = urlParams.get(param) || "unknown";
 		if (value) {
 			const cookieName = "wordpress_" + param;
 			const existingValue = Cookies.get(cookieName);
