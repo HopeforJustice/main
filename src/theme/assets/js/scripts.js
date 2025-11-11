@@ -23,7 +23,11 @@ function captureUTMParameters() {
 
 			// Only set cookie if it doesn't exist or the value has changed
 			if (!existingValue || existingValue !== value) {
-				Cookies.set(cookieName, value, { path: "/", expires: 10 });
+				Cookies.set(cookieName, value, {
+					path: "/",
+					domain: ".hopeforjustice.org",
+					expires: 10,
+				});
 			}
 		}
 	});
