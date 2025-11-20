@@ -382,17 +382,24 @@
 				url += `&image=${encodeURIComponent(image)}`;
 			}
 
-			//donation app accepts campaign param if it exists
-			if (currency == "GBP" && freq == "monthly") {
+			//force donation app if the currency is GBP and the frequency is monthly
+			if (!useDonationApp && currency == "GBP" && freq == "monthly") {
 				url = `https://donate.hopeforjustice.org/?amount=${urlAmount}`;
 				if (campaign) {
 					url += `&campaign=${campaign}`;
 				}
+				if (image) {
+					url += `&image=${encodeURIComponent(image)}`;
+				}
 			}
+
 			if (useDonationApp && (currency == "GBP" || currency == "USD")) {
 				url = `https://donate.hopeforjustice.org/?amount=${urlAmount}&givingFrequency=${freq}&currency=${currency.toLowerCase()}`;
 				if (campaign) {
 					url += `&campaign=${campaign}`;
+				}
+				if (image) {
+					url += `&image=${encodeURIComponent(image)}`;
 				}
 			}
 
