@@ -6,6 +6,10 @@ $use_donation_app = get_field("use_donation_app") ?: false;
 $frequency = get_field("frequency_settings");
 $frequency_start = get_field("frequency_start");
 $image = get_field("image");
+$image_uk = get_field("image_uk") ?: false;
+$image_us = get_field("image_us") ?: false;
+$image_au = get_field("image_au") ?: false;
+$image_nok = get_field("image_nok") ?: false;
 $margin_bottom_mobile = get_field("margin_bottom_mobile");
 $margin_bottom_desktop = get_field("margin_bottom_desktop");
 $extra_graphic = get_field("extra_graphic");
@@ -33,6 +37,7 @@ if (
 	$currency = "USD";
 	$settings = "usa_donate";
 	$symbol = '$';
+	$image = $image_us ?: $image;
 } elseif (
 	// if they are in Norway or want to give in Kr
 	($GLOBALS["userInfo"] &&
@@ -45,6 +50,7 @@ if (
 	$currency = "NOK";
 	$settings = "no_donate";
 	$symbol = "&nbsp;kr";
+	$image = $image_nok ?: $image;
 } elseif (
 	// if they are in AU or want to give in AUD
 	($GLOBALS["userInfo"] &&
@@ -57,11 +63,13 @@ if (
 	$currency = "AUD";
 	$settings = "au_donate";
 	$symbol = '$';
+	$image = $image_au ?: $image;
 } else {
 	// fallback to UK
 	$currency = "GBP";
 	$settings = "uk_donate";
 	$symbol = "£";
+	$image = $image_uk ?: $image;
 }
 ?>
 
