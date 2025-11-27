@@ -217,14 +217,15 @@
 			);
 			$(this).addClass("donate-block__options-option--active");
 			reason = $(this).data("reason");
+			console.log(reason);
 			reasonMonthly = $(this).data("monthly");
 
 			if (freq == "monthly") {
-				$("#reason").text(reasonMonthly);
+				$("#reason").html(reasonMonthly);
 				amount = $(this).data("amountmonthly");
 				$(".donate-block__text-freq").show();
 			} else {
-				$("#reason").text(reason);
+				$("#reason").html(reason);
 				amount = $(this).data("amount");
 				$(".donate-block__text-freq").hide();
 			}
@@ -276,9 +277,9 @@
 			$(this).children("input").show().focus();
 
 			if (freq == "monthly") {
-				$("#reason").text(reasonMonthly);
+				$("#reason").html(reasonMonthly);
 			} else {
-				$("#reason").text(reason);
+				$("#reason").html(reason);
 			}
 
 			amount = val;

@@ -330,7 +330,9 @@ if ($tracked && $target) {
                 	$default_level == "a"
                 ) {
                 	echo "donate-block__options-option--active";
-                } ?>" data-amount="<?php echo $amount_once_a; ?>" data-amountmonthly="<?php echo $amount_monthly_a; ?>" data-reason="<?php echo $reason_once_a; ?>" data-monthly="<?php echo $reason_monthly_a; ?>">
+                } ?>" data-amount="<?php echo $amount_once_a; ?>" data-amountmonthly="<?php echo $amount_monthly_a; ?>" data-reason="<?php echo htmlspecialchars(
+	$reason_once_a
+); ?>" data-monthly="<?php echo htmlspecialchars($reason_monthly_a); ?>">
                     <span class="currency"><?php echo $symbol; ?></span>
                     <span class="donate-block__options-amount">
                         <?php echo $amount_monthly_a; ?>
@@ -341,7 +343,9 @@ if ($tracked && $target) {
                 	$default_level == "b"
                 ) {
                 	echo "donate-block__options-option--active";
-                } ?>" data-amount="<?php echo $amount_once_b; ?>" data-amountmonthly="<?php echo $amount_monthly_b; ?>" data-reason="<?php echo $reason_once_b; ?>" data-monthly="<?php echo $reason_monthly_b; ?>">
+                } ?>" data-amount="<?php echo $amount_once_b; ?>" data-amountmonthly="<?php echo $amount_monthly_b; ?>" data-reason="<?php echo htmlspecialchars(
+	$reason_once_b
+); ?>" data-monthly="<?php echo htmlspecialchars($reason_monthly_b); ?>">
                     <span class="currency"><?php echo $symbol; ?></span>
                     <span class="donate-block__options-amount">
                         <?php echo $amount_monthly_b; ?>
@@ -352,7 +356,9 @@ if ($tracked && $target) {
                 	$default_level == "c"
                 ) {
                 	echo "donate-block__options-option--active";
-                } ?>" data-amount="<?php echo $amount_once_c; ?>" data-amountmonthly="<?php echo $amount_monthly_c; ?>" data-reason="<?php echo $reason_once_c; ?>" data-monthly="<?php echo $reason_monthly_c; ?>">
+                } ?>" data-amount="<?php echo $amount_once_c; ?>" data-amountmonthly="<?php echo $amount_monthly_c; ?>" data-reason="<?php echo htmlspecialchars(
+	$reason_once_c
+); ?>" data-monthly="<?php echo htmlspecialchars($reason_monthly_c); ?>">
                     <span class="currency"><?php echo $symbol; ?></span>
                     <span class="donate-block__options-amount">
                         <?php echo $amount_monthly_c; ?>
@@ -363,7 +369,9 @@ if ($tracked && $target) {
                 	$default_level == "d"
                 ) {
                 	echo "donate-block__options-option--active";
-                } ?>" data-amount="<?php echo $amount_once_d; ?>" data-amountmonthly="<?php echo $amount_monthly_d; ?>" data-reason="<?php echo $reason_once_d; ?>" data-monthly="<?php echo $reason_monthly_d; ?>">
+                } ?>" data-amount="<?php echo $amount_once_d; ?>" data-amountmonthly="<?php echo $amount_monthly_d; ?>" data-reason="<?php echo htmlspecialchars(
+	$reason_once_d
+); ?>" data-monthly="<?php echo htmlspecialchars($reason_monthly_d); ?>">
                     <span class="currency"><?php echo $symbol; ?></span>
                     <span class="donate-block__options-amount">
                         <?php echo $amount_monthly_d; ?>
@@ -374,14 +382,20 @@ if ($tracked && $target) {
                 	$default_level == "e"
                 ) {
                 	echo "donate-block__options-option--active";
-                } ?>" data-amount="<?php echo $amount_once_e; ?>" data-amountmonthly="<?php echo $amount_monthly_e; ?>" data-reason="<?php echo $reason_once_e; ?>" data-monthly="<?php echo $reason_monthly_e; ?>">
+                } ?>" data-amount="<?php echo $amount_once_e; ?>" data-amountmonthly="<?php echo $amount_monthly_e; ?>" data-reason="<?php echo htmlspecialchars(
+	$reason_once_e
+); ?>" data-monthly="<?php echo htmlspecialchars($reason_monthly_e); ?>">
                     <span class="currency"><?php echo $symbol; ?></span>
                     <span class="donate-block__options-amount">
                         <?php echo $amount_monthly_e; ?>
                     </span>
                 </div>
 
-                <div class="donate-block__options-option donate-block__options-option--custom" data-amount="custom" data-reason="<?php echo $reason_once_f; ?>" data-monthly="<?php echo $reason_monthly_f; ?>">
+                <div class="donate-block__options-option donate-block__options-option--custom" data-amount="custom" data-reason="<?php echo htmlspecialchars(
+                	$reason_once_f
+                ); ?>" data-monthly="<?php echo htmlspecialchars(
+	$reason_monthly_f
+); ?>">
                     <span class="text">
                         <?php if ($currency == "NOK") { ?>
                             Valgfritt<br />beløp
