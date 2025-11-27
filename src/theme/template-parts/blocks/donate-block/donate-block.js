@@ -91,7 +91,7 @@
 		//initial set
 
 		if (freq == "monthly") {
-			$("#reason").text(reasonMonthly);
+			$("#reason").html(reasonMonthly);
 			amount = $(".donate-block__options-option--active").data("amountmonthly");
 			$(".donate-block__options-option").each(function () {
 				let textAmount = $(this).data("amountmonthly");
@@ -109,7 +109,7 @@
 				$(".donate-block__button-freq").text(freq);
 			}
 		} else {
-			$("#reason").text(reason);
+			$("#reason").html(reason);
 			amount = $(".donate-block__options-option--active").data("amount");
 			$(".donate-block__options-option").each(function () {
 				let textAmount = $(this).data("amount");
