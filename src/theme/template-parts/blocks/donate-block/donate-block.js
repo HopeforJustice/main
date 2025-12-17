@@ -167,7 +167,7 @@
 			}
 
 			if (freq == "monthly") {
-				$("#reason").text(reasonMonthly);
+				$("#reason").html(reasonMonthly);
 				amount = $(".donate-block__options-option--active").data(
 					"amountmonthly"
 				);
@@ -180,7 +180,7 @@
 				$(".donate-block__title").show();
 				$(".donate-block__title--once").hide();
 			} else {
-				$("#reason").text(reason);
+				$("#reason").html(reason);
 
 				$(".donate-block__top-text").hide();
 				$(".donate-block__top-text--once").show();
