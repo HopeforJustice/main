@@ -298,7 +298,7 @@
                     </svg>
                 </a>
                 <div class="header__navigation">
-                    <a id="donate" class="button button--red button--nav bold" href="/donate">DONATE</a>
+                    <a id="donate" class="button button--red button--nav bold" href="/donate">GIVE</a>
                     <div id="burger-menu" class="header__burger">
                         <div class="burger">
                             <span></span>
