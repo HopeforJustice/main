@@ -85,7 +85,14 @@
 		$(".modal-currency__currency").click(function () {
 			let data = $(this).data("currency");
 			let url = window.location.origin + window.location.pathname;
-			window.location.href = url + `?Currency=${data}`;
+			
+			// Get existing URL parameters
+			let params = new URLSearchParams(window.location.search);
+			
+			// Update or add Currency parameter
+			params.set('Currency', data);
+			
+			window.location.href = url + `?${params.toString()}`;
 		});
 
 		//initial set

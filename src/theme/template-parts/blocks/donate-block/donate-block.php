@@ -16,7 +16,13 @@ $extra_graphic = get_field("extra_graphic");
 $thank_you = urlencode(get_field("custom_thankyou"));
 $tracked = get_field("tracked") ?: "false";
 //used for the donation app to track the campaign
+//if the campaign is set in the url, use that instead of whats in the donate block ACF
+$url_campaign = $_GET["campaign"] ?: null;
+
 $campaign = get_field("campaign") ?: null;
+if ($url_campaign) {
+	$campaign = $url_campaign;
+}
 
 $extra_text = get_field("extra_text") ?: false;
 $background_color = get_field("background_color") ?: "#ffffff";
