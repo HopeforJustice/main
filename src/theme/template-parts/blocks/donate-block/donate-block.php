@@ -10,6 +10,7 @@ $image_uk = get_field("image_uk") ?: false;
 $image_us = get_field("image_us") ?: false;
 $image_au = get_field("image_au") ?: false;
 $image_nok = get_field("image_nok") ?: false;
+$image_eur = get_field("image_eur") ?: false;
 $margin_bottom_mobile = get_field("margin_bottom_mobile");
 $margin_bottom_desktop = get_field("margin_bottom_desktop");
 $extra_graphic = get_field("extra_graphic");
@@ -37,7 +38,8 @@ if (
 		in_array($GLOBALS["userInfo"], $GLOBALS["usa"]) &&
 		$currency != "NOK" &&
 		$currency != "GBP" &&
-		$currency != "AUD") ||
+		$currency != "AUD" &&
+		$currency != "EUR") ||
 	$currency == "USD"
 ) {
 	$currency = "USD";
@@ -50,7 +52,8 @@ if (
 		in_array($GLOBALS["userInfo"], $GLOBALS["norway"]) &&
 		$currency != "USD" &&
 		$currency != "GBP" &&
-		$currency != "AUD") ||
+		$currency != "AUD" &&
+		$currency != "EUR") ||
 	$currency == "NOK"
 ) {
 	$currency = "NOK";
@@ -63,13 +66,28 @@ if (
 		in_array($GLOBALS["userInfo"], $GLOBALS["au"]) &&
 		$currency != "USD" &&
 		$currency != "GBP" &&
-		$currency != "NOK") ||
+		$currency != "NOK" &&
+		$currency != "EUR") ||
 	$currency == "AUD"
 ) {
 	$currency = "AUD";
 	$settings = "au_donate";
 	$symbol = '$';
 	$image = $image_au ?: $image;
+} elseif (
+	// if they are in Eurozone countries or want to give in EUR
+	($GLOBALS["userInfo"] &&
+		in_array($GLOBALS["userInfo"], $GLOBALS["eur"]) &&
+		$currency != "USD" &&
+		$currency != "GBP" &&
+		$currency != "NOK" &&
+		$currency != "AUD") ||
+	$currency == "EUR"
+) {
+	$currency = "EUR";
+	$settings = "eur_donate";
+	$symbol = "€";
+	$image = $image_eur ?: $image;
 } else {
 	// fallback to UK
 	$currency = "GBP";
@@ -93,6 +111,9 @@ if (is_admin()) {
 	} elseif ($settings == "au_donate") {
 		$currency = "AUD";
 		$symbol = '$';
+	} elseif ($settings == "eur_donate") {
+		$currency = "EUR";
+		$symbol = "€";
 	} else {
 		$currency = "USD";
 		$symbol = '$';
