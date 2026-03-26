@@ -124,19 +124,38 @@
 
     $GLOBALS["au"] = ["AU", "NZ"];
 
-    // added this as its sometimes references as aus
+    // added this as its sometimes referenced as aus
     $GLOBALS["aus"] = ["AU", "NZ"];
 
+    // Eurozone countries - countries that use the Euro (EUR) as their currency
+    $GLOBALS["eur"] = [
+    	"AT", // Austria
+    	"BE", // Belgium
+    	"CY", // Cyprus
+    	"EE", // Estonia
+    	"FI", // Finland
+    	"FR", // France
+    	"DE", // Germany
+    	"GR", // Greece
+    	"IE", // Ireland
+    	"IT", // Italy
+    	"LV", // Latvia
+    	"LT", // Lithuania
+    	"LU", // Luxembourg
+    	"MT", // Malta
+    	"NL", // Netherlands
+    	"PT", // Portugal
+    	"SK", // Slovakia
+    	"SI", // Slovenia
+    	"ES", // Spain
+    ];
     $GLOBALS["help"] = ["US", "GB"];
 
     // lookup country code of IP
     $GLOBALS["geo"] = Wpengine\Geoip::instance();
     $GLOBALS["userInfo"] = $GLOBALS["geo"]->country();
     ?>
-
     <?php wp_head(); ?>
-
-
 
 
 </head>

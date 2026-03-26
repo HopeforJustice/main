@@ -35,7 +35,7 @@ function captureUTMParameters() {
 
 /* Page load scripts */
 jQuery(document).ready(function ($) {
-	console.log("v6.5.7");
+	console.log("v6.5.8");
 	captureUTMParameters();
 	let cookies = Cookies.get("wordpress_hfjcookies");
 
@@ -83,7 +83,7 @@ jQuery(document).ready(function ($) {
 			{
 				scrollTop: $("#ukraineGiving").offset().top - 100,
 			},
-			500
+			500,
 		);
 	});
 
@@ -261,7 +261,7 @@ jQuery(document).ready(function ($) {
 			$(this).val(
 				txt.replace(/^(.)|(\s|\-)(.)/g, function ($word) {
 					return $word.toUpperCase();
-				})
+				}),
 			);
 			box.setSelectionRange(stringStart, stringEnd);
 		});
@@ -324,7 +324,7 @@ jQuery(document).on(
 		// o.listen("populate", function() {
 		//     jQuery(".address-search input").val(jQuery(".address_line_1 input").val() + "...");
 		// }), o.load()
-	}
+	},
 );
 
 jQuery(document).on("gform_confirmation_loaded", function (event, formId) {
@@ -424,7 +424,7 @@ jQuery(document).on("gform_confirmation_loaded", function (event, formId) {
 				.find("label");
 			if (choice == "Faith Based") {
 				$(furtherDetails).html(
-					"Please tell us the name of your place of worship"
+					"Please tell us the name of your place of worship",
 				);
 			} else if (choice == "Social media") {
 				$(furtherDetails).html("Please tell us which platform inspired you");

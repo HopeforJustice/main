@@ -18,7 +18,7 @@
 		let freq = $(".donate-block__freq-option--active").data("freq");
 		let reason = $(".donate-block__options-option--active").data("reason");
 		let reasonMonthly = $(".donate-block__options-option--active").data(
-			"monthly"
+			"monthly",
 		);
 		let currency = $(".donate-block").data("currency");
 		let widgetIdOnce = $(".donate-block").data("widgetidonce");
@@ -58,10 +58,10 @@
 				});
 
 				$(".donate-block__text-currency").insertAfter(
-					".donate-block__text-amount"
+					".donate-block__text-amount",
 				);
 				$(".donate-block__button-currency").insertAfter(
-					".donate-block__button-amount"
+					".donate-block__button-amount",
 				);
 			}
 		});
@@ -70,7 +70,7 @@
 			$(this).val(
 				$(this)
 					.val()
-					.replace(/[^0-9\,]/, "")
+					.replace(/[^0-9\,]/, ""),
 			);
 		});
 
@@ -85,13 +85,13 @@
 		$(".modal-currency__currency").click(function () {
 			let data = $(this).data("currency");
 			let url = window.location.origin + window.location.pathname;
-			
+
 			// Get existing URL parameters
 			let params = new URLSearchParams(window.location.search);
-			
+
 			// Update or add Currency parameter
-			params.set('Currency', data);
-			
+			params.set("Currency", data);
+
 			window.location.href = url + `?${params.toString()}`;
 		});
 
@@ -142,7 +142,7 @@
 
 		$(".donate-block__freq-option").click(function () {
 			$(".donate-block__freq-option--active").removeClass(
-				"donate-block__freq-option--active"
+				"donate-block__freq-option--active",
 			);
 
 			$(this).addClass("donate-block__freq-option--active");
@@ -176,7 +176,7 @@
 			if (freq == "monthly") {
 				$("#reason").html(reasonMonthly);
 				amount = $(".donate-block__options-option--active").data(
-					"amountmonthly"
+					"amountmonthly",
 				);
 				$(".donate-block__options-option").each(function () {
 					let textAmount = $(this).data("amountmonthly");
@@ -203,7 +203,7 @@
 
 			if (
 				$(".donate-block__options-option--custom").hasClass(
-					"donate-block__options-option--active"
+					"donate-block__options-option--active",
 				)
 			) {
 				amount = $(".donate-block__options-option--custom")
@@ -220,7 +220,7 @@
 
 		$(".donate-block__options-option").click(function () {
 			$(".donate-block__options-option").removeClass(
-				"donate-block__options-option--active"
+				"donate-block__options-option--active",
 			);
 			$(this).addClass("donate-block__options-option--active");
 			reason = $(this).data("reason");
@@ -362,6 +362,12 @@
 				} else {
 					url += "/donate-AUD-once/";
 				}
+			} else if (currency == "EUR") {
+				if (freq == "monthly") {
+					url += "/donate-EUR-regular/";
+				} else {
+					url += "/donate-EUR-once/";
+				}
 			}
 
 			if (widgetIdMonthly && freq == "monthly") {
@@ -401,7 +407,13 @@
 				}
 			}
 
-			if (useDonationApp && (currency == "GBP" || currency == "USD")) {
+			if (
+				useDonationApp &&
+				(currency == "GBP" ||
+					currency == "USD" ||
+					currency == "AUD" ||
+					currency == "EUR")
+			) {
 				url = `https://donate.hopeforjustice.org/?amount=${urlAmount}&givingFrequency=${freq}&currency=${currency.toLowerCase()}`;
 				if (campaign) {
 					url += `&campaign=${campaign}`;
@@ -426,7 +438,7 @@
 	if (window.acf) {
 		window.acf.addAction(
 			"render_block_preview/type=donate-block",
-			initializeBlock
+			initializeBlock,
 		);
 	}
 })(jQuery);

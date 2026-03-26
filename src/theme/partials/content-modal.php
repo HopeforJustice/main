@@ -2,24 +2,22 @@
 // modal.php template.
 
 // Set defaults.
-$args = wp_parse_args(
-    $args,
-    array(
-        'type' => 'basic',
-        'id' => 'modal'
-    )
-);
-?>
+$args = wp_parse_args($args, [
+	"type" => "basic",
+	"id" => "modal",
+]); ?>
 
 
-<?php if (($args['type']) == "basic") { ?>
+<?php if ($args["type"] == "basic") { ?>
 
     <!--
     --
     --  basic
     --
     -->
-    <div class="modal fade" id="<?php echo esc_html($args['id']); ?>" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal fade" id="<?php echo esc_html(
+    	$args["id"]
+    ); ?>" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal__dialog">
             <div class="modal__content">
                 <p class="modal__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Incidunt deserunt veritatis tempore alias quasi totam consectetur enim, at ea obcaecati velit pariatur amet distinctio culpa perferendis saepe suscipit illo! Pariatur.</p>
@@ -28,14 +26,16 @@ $args = wp_parse_args(
         </div>
     </div>
 
-<?php } else if (($args['type']) == "reference") { ?>
+<?php } elseif ($args["type"] == "reference") { ?>
 
     <!--
     --
     --  reference
     --
     -->
-    <div class="modal fade" id="<?php echo esc_html($args['id']); ?>" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal fade" id="<?php echo esc_html(
+    	$args["id"]
+    ); ?>" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal__dialog">
             <div class="modal__content modal__content--yellow">
                 <p class="modal__text">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
@@ -46,14 +46,16 @@ $args = wp_parse_args(
 
 
 
-<?php } else if (($args['type']) == "video") { ?>
+<?php } elseif ($args["type"] == "video") { ?>
 
     <!--
     --
     --  video
     --
     -->
-    <div class="modal modal--video fade" id="<?php echo esc_html($args['id']); ?>" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal modal--video fade" id="<?php echo esc_html(
+    	$args["id"]
+    ); ?>" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal__dialog modal__dialog--video">
             <div class="modal__content modal__content--video video-container">
                 <iframe class="video" src="" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
@@ -64,14 +66,16 @@ $args = wp_parse_args(
         </div>
     </div>
 
-<?php } else if (($args['type']) == "splash") { ?>
+<?php } elseif ($args["type"] == "splash") { ?>
 
     <!--
     --
     --  splash
     --
     -->
-    <div class="modal modal--splash fade" id="<?php echo esc_html($args['id']); ?>" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal modal--splash fade" id="<?php echo esc_html(
+    	$args["id"]
+    ); ?>" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal__dialog modal__dialog--splash">
             <div class="modal__content modal__content--splash">
                 <h3>Our new brand</h3>
@@ -88,35 +92,54 @@ $args = wp_parse_args(
         </div>
     </div>
 
-<?php } else if (($args['type']) == "payment-once") { ?>
+<?php } elseif ($args["type"] == "payment-once") { ?>
 
     <!--
     --
     --  payment once
     --
     -->
-    <div class="modal modal--payment fade" id="<?php echo esc_html($args['id']); ?>" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal modal--payment fade" id="<?php echo esc_html(
+    	$args["id"]
+    ); ?>" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal__dialog modal__dialog--payment">
             <div class="modal__content modal__content--payment">
-                <?php if ($GLOBALS['userInfo'] && in_array($GLOBALS['userInfo'], $GLOBALS['usa'])) { ?>
+                <?php if (
+                	$GLOBALS["userInfo"] &&
+                	in_array($GLOBALS["userInfo"], $GLOBALS["usa"])
+                ) { ?>
 
                     <!-- usa form -->
-                    <div id="usaForm"><?php echo do_shortcode("[give_form id=\"328\"]"); ?></div>
+                    <div id="usaForm"><?php echo do_shortcode(
+                    	"[give_form id=\"328\"]"
+                    ); ?></div>
 
-                <?php } else if ($GLOBALS['userInfo'] && in_array($GLOBALS['userInfo'], $GLOBALS['norway'])) { ?>
+                <?php } elseif (
+                	$GLOBALS["userInfo"] &&
+                	in_array($GLOBALS["userInfo"], $GLOBALS["norway"])
+                ) { ?>
 
                     <!-- norway form -->
-                    <div id="norwayForm"><?php echo do_shortcode("[give_form id=\"332\"]"); ?></div>
+                    <div id="norwayForm"><?php echo do_shortcode(
+                    	"[give_form id=\"332\"]"
+                    ); ?></div>
 
-                <?php } else if ($GLOBALS['userInfo'] && in_array($GLOBALS['userInfo'], $GLOBALS['aus'])) { ?>
+                <?php } elseif (
+                	$GLOBALS["userInfo"] &&
+                	in_array($GLOBALS["userInfo"], $GLOBALS["aus"])
+                ) { ?>
 
                     <!-- aus form -->
-                    <div id="ausForm"><?php echo do_shortcode("[give_form id=\"333\"]"); ?></div>
+                    <div id="ausForm"><?php echo do_shortcode(
+                    	"[give_form id=\"333\"]"
+                    ); ?></div>
 
                 <?php } else { ?>
 
                     <!-- uk form -->
-                    <div id="ukForm"><?php echo do_shortcode("[give_form id=\"314\"]"); ?></div>
+                    <div id="ukForm"><?php echo do_shortcode(
+                    	"[give_form id=\"314\"]"
+                    ); ?></div>
 
                 <?php } ?>
                 <a href="#" data-dismiss="modal" class="gi-close modal__close modal__close--payment">&times;<span class="accessibility">Close</span></a>
@@ -125,26 +148,37 @@ $args = wp_parse_args(
         </div>
     </div>
 
-<?php } else if (($args['type']) == "payment-regular") { ?>
+<?php } elseif ($args["type"] == "payment-regular") { ?>
 
     <!--
     --
     --  payment regular
     --
     -->
-    <div class="modal modal--payment fade" id="<?php echo esc_html($args['id']); ?>" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal modal--payment fade" id="<?php echo esc_html(
+    	$args["id"]
+    ); ?>" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal__dialog modal__dialog--payment">
             <div class="modal__content modal__content--payment">
-                <?php if ($GLOBALS['userInfo'] && in_array($GLOBALS['userInfo'], $GLOBALS['uk'])) { ?>
+                <?php if (
+                	$GLOBALS["userInfo"] &&
+                	in_array($GLOBALS["userInfo"], $GLOBALS["uk"])
+                ) { ?>
 
                     <!-- uk form reg -->
                     <?php echo do_shortcode("[give_form id=\"334\"]"); ?>
 
-                <?php } else if ($GLOBALS['userInfo'] && in_array($GLOBALS['userInfo'], $GLOBALS['norway'])) { ?>
+                <?php } elseif (
+                	$GLOBALS["userInfo"] &&
+                	in_array($GLOBALS["userInfo"], $GLOBALS["norway"])
+                ) { ?>
 
                     <!-- norway form redirect to solidus -->
 
-                <?php } else if ($GLOBALS['userInfo'] && in_array($GLOBALS['userInfo'], $GLOBALS['aus'])) { ?>
+                <?php } elseif (
+                	$GLOBALS["userInfo"] &&
+                	in_array($GLOBALS["userInfo"], $GLOBALS["aus"])
+                ) { ?>
 
                     <!-- aus form -->
                     <?php echo do_shortcode("[give_form id=\"336\"]"); ?>
@@ -160,14 +194,16 @@ $args = wp_parse_args(
             </div>
         </div>
     </div>
-<?php } else if (($args['type']) == "country") { ?>
+<?php } elseif ($args["type"] == "country") { ?>
 
     <!--
     --
     --  reference
     --
     -->
-    <div class="modal fade" id="<?php echo esc_html($args['id']); ?>" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal fade" id="<?php echo esc_html(
+    	$args["id"]
+    ); ?>" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal__dialog">
             <div class="modal__content">
                 <h2 class="modal__title modal__title--country">Lorem ipsum dolor</h2>
@@ -177,58 +213,82 @@ $args = wp_parse_args(
         </div>
     </div>
 
-<?php } else if (($args['type']) == "get-help") { ?>
+<?php } elseif ($args["type"] == "get-help") { ?>
 
     <!--
     --
     --  get help
     --
     -->
-    <div class="modal get-help-modal fade" id="<?php echo esc_html($args['id']); ?>" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal get-help-modal fade" id="<?php echo esc_html(
+    	$args["id"]
+    ); ?>" tabindex="-1" role="dialog" aria-hidden="false">
         <a href="#" data-dismiss="modal" class="gi-close modal__close">&times;<span class="accessibility">Close</span></a>
         <div class="modal__dialog get-help-modal__dialog">
             <div class="modal__content modal__content--yellow get-help-modal__content">
-                <?php if ($GLOBALS['userInfo'] && in_array($GLOBALS['userInfo'], $GLOBALS['uk'])) {
-                    echo do_shortcode("[gravityform id=\"33\" title=\"false\" ajax=\"true\" description=\"true\"]");
-                } else if ($GLOBALS['userInfo'] && in_array($GLOBALS['userInfo'], $GLOBALS['norway'])) {
-                    echo do_shortcode("[gravityform id=\"34\" title=\"false\" ajax=\"true\" description=\"true\"]");
-                } else if ($GLOBALS['userInfo'] && in_array($GLOBALS['userInfo'], $GLOBALS['usa'])) {
-                    echo do_shortcode("[gravityform id=\"35\" title=\"false\" ajax=\"true\" description=\"true\"]");
+                <?php if (
+                	$GLOBALS["userInfo"] &&
+                	in_array($GLOBALS["userInfo"], $GLOBALS["uk"])
+                ) {
+                	echo do_shortcode(
+                		"[gravityform id=\"33\" title=\"false\" ajax=\"true\" description=\"true\"]"
+                	);
+                } elseif (
+                	$GLOBALS["userInfo"] &&
+                	in_array($GLOBALS["userInfo"], $GLOBALS["norway"])
+                ) {
+                	echo do_shortcode(
+                		"[gravityform id=\"34\" title=\"false\" ajax=\"true\" description=\"true\"]"
+                	);
+                } elseif (
+                	$GLOBALS["userInfo"] &&
+                	in_array($GLOBALS["userInfo"], $GLOBALS["usa"])
+                ) {
+                	echo do_shortcode(
+                		"[gravityform id=\"35\" title=\"false\" ajax=\"true\" description=\"true\"]"
+                	);
                 } ?>
 
             </div>
         </div>
     </div>
 
-<?php } else if (($args['type']) == "currency-select") { ?>
+<?php } elseif ($args["type"] == "currency-select") { ?>
 
     <!--
     --
     --  currency select
     --
     -->
-    <div class="modal fade" id="<?php echo esc_html($args['id']); ?>" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal fade" id="<?php echo esc_html(
+    	$args["id"]
+    ); ?>" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal__dialog">
             <div class="modal__content modal__content--white modal__content--less-padding">
                 <h2 class="modal-currency__title modal-currency__title--mb">
-                <?php 
-                if ($GLOBALS['userInfo'] && in_array($GLOBALS['userInfo'], $GLOBALS['norway'])) { ?>
+                <?php if (
+                	$GLOBALS["userInfo"] &&
+                	in_array($GLOBALS["userInfo"], $GLOBALS["norway"])
+                ) { ?>
                     Velg valuta 
-                <?php } else {?>
+                <?php } else { ?>
                     Select a currency 
                 <?php } ?>
                 </h2>
                 <div class="modal-currency">
                     <a data-currency="GBP" class="modal-currency__currency">GBP £</a>
                     <a data-currency="USD" class="modal-currency__currency">USD $</a>
+                    <a data-currency="EUR" class="modal-currency__currency">EUR €</a>
                     <a data-currency="NOK" class="modal-currency__currency">NOK kr</a>
                     <a data-currency="AUD" class="modal-currency__currency">AUD $</a>
                 </div>
-                <?php 
-                if ($GLOBALS['userInfo'] && in_array($GLOBALS['userInfo'], $GLOBALS['norway'])) { ?>
+                <?php if (
+                	$GLOBALS["userInfo"] &&
+                	in_array($GLOBALS["userInfo"], $GLOBALS["norway"])
+                ) { ?>
                     
                     <p style="margin-top: 20px" class="modal-currency__text">Dersom du foretrekker en annen valuta enn de som vises her, <a href="/contact">kontakt oss.</a></p>
-                <?php } else {?>
+                <?php } else { ?>
                     <p style="margin-top: 20px" class="modal-currency__text">If you would like to donate in a currency not shown here, please <a href="/contact">contact us</a></p>
                 <?php } ?>
                 <a href="#" data-dismiss="modal" class="gi-close modal__close modal__close--white">&times;<span class="accessibility">Close</span></a>
