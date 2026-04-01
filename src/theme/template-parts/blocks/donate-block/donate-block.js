@@ -324,8 +324,9 @@
 			}
 		});
 
+		//donate submit button click
 		$(".donate-block__button").click(function () {
-			console.log(amount, freq, currency);
+			//console.log(amount, freq, currency);
 
 			let url = window.location.origin;
 			let urlAmount;
@@ -337,90 +338,12 @@
 				urlAmount = parseFloat(amount).toFixed(2);
 			}
 
-			if (currency == "GBP") {
-				if (freq == "monthly") {
-					// url = "https://donate.hopeforjustice.org/";
-				} else {
-					url += "/donate-GBP-once/";
-				}
-			} else if (currency == "USD") {
-				if (freq == "monthly") {
-					url += "/donate-USD-regular/";
-				} else {
-					url += "/donate-USD-once/";
-				}
-			} else if (currency == "NOK") {
-				if (freq == "monthly") {
-					url += "/donate-NOK-regular/";
-				} else {
-					url += "/donate-NOK-once/";
-				}
-				urlAmount = urlAmount.replace(".", ",");
-			} else if (currency == "AUD") {
-				if (freq == "monthly") {
-					url += "/donate-AUD-regular/";
-				} else {
-					url += "/donate-AUD-once/";
-				}
-			} else if (currency == "EUR") {
-				if (freq == "monthly") {
-					url += "/donate-EUR-regular/";
-				} else {
-					url += "/donate-EUR-once/";
-				}
+			url = `https://donate.hopeforjustice.org/?amount=${urlAmount}&givingFrequency=${freq}&currency=${currency.toLowerCase()}`;
+			if (campaign) {
+				url += `&campaign=${campaign}`;
 			}
-
-			if (widgetIdMonthly && freq == "monthly") {
-				url += `?Amount=${urlAmount}&wid=${widgetIdMonthly}`;
-			} else if (widgetIdOnce && freq != "monthly") {
-				url += `?Amount=${urlAmount}&wid=${widgetIdOnce}`;
-			} else {
-				url += `?Amount=${urlAmount}`;
-			}
-
-			if (emailEventMonthly && freq == "monthly") {
-				url += `&emailEvent=${emailEventMonthly}`;
-			} else if (emailEventOnce && freq != "monthly") {
-				url += `&emailEvent=${emailEventOnce}`;
-			}
-
-			if (thankyou) {
-				url += `&thankyou=${thankyou}`;
-			}
-
-			if (tracked && freq != "monthly") {
-				url += `&tracked=${tracked}`;
-			}
-
 			if (image) {
 				url += `&image=${encodeURIComponent(image)}`;
-			}
-
-			//force donation app if the currency is GBP and the frequency is monthly
-			if (!useDonationApp && currency == "GBP" && freq == "monthly") {
-				url = `https://donate.hopeforjustice.org/?amount=${urlAmount}`;
-				if (campaign) {
-					url += `&campaign=${campaign}`;
-				}
-				if (image) {
-					url += `&image=${encodeURIComponent(image)}`;
-				}
-			}
-
-			if (
-				useDonationApp &&
-				(currency == "GBP" ||
-					currency == "USD" ||
-					currency == "AUD" ||
-					currency == "EUR")
-			) {
-				url = `https://donate.hopeforjustice.org/?amount=${urlAmount}&givingFrequency=${freq}&currency=${currency.toLowerCase()}`;
-				if (campaign) {
-					url += `&campaign=${campaign}`;
-				}
-				if (image) {
-					url += `&image=${encodeURIComponent(image)}`;
-				}
 			}
 
 			window.location.href = url;
