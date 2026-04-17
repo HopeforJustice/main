@@ -191,7 +191,19 @@ class GF_Field_Repeater extends GF_Field {
 						$prefix = $sub_field->id . '_';
 					}
 
-					$field_items = $this->flatten( $values, $prefix, $sub_field->is_value_submission_array() );
+					if ( $sub_field instanceof GF_Field_List ) {
+						// List field expects an array. If we flatten the List Field values, we end up adding extra repeater items instead of populating the list.
+						if ( is_array( $values ) && is_array( $values[0] ) ) {
+							$field_items = array();
+							foreach ( $values as $key => $value ) {
+								$field_items[ $prefix . $key ] = $value;
+							}
+						} else {
+							$field_items = array( $prefix . '0' => $values );
+						}
+					} else {
+						$field_items = $this->flatten( is_array( $values ) ? $values : array( $values ), $prefix, $sub_field->is_value_submission_array() );
+					}
 				}
 				$items = array_merge( $items, $field_items );
 			}
@@ -282,7 +294,7 @@ class GF_Field_Repeater extends GF_Field {
 	public function get_input_top( $values ) {
 		$html = "<fieldset class='gfield_repeater gfield_repeater_container'>\n";
 		$label = esc_html( $this->label );
-		$html .= "<legend class='gfield_label'>{$label}</legend>";
+		$html .= "<legend class='gfield_label gform-field-label'>{$label}</legend>";
 		return $html;
 	}
 
@@ -385,8 +397,8 @@ class GF_Field_Repeater extends GF_Field {
 
 		$add_button_class = $this->addButtonText ? 'add_repeater_item_text' : 'add_repeater_item_plus';
 		$remove_button_class = $this->removeButtonText ? 'remove_repeater_item_text' : 'remove_repeater_item_minus';
-		$html = "<button type='button' class='add_repeater_item {$disabled_icon_class} {$add_button_class}' {$add_events}>" . $add_button_text . "</button>" .
-		        "<button type='button' class='remove_repeater_item {$remove_button_class}' {$delete_events} style='{$delete_display}'>" . $remove_button_text . "</button>";
+		$html = "<button type='button' class='add_repeater_item gform-theme-button gform-theme-button--secondary gform-theme-button--size-sm {$disabled_icon_class} {$add_button_class}' {$add_events}>" . $add_button_text . "</button>" .
+		        "<button type='button' class='remove_repeater_item gform-theme-button gform-theme-button--secondary gform-theme-button--size-sm {$remove_button_class}' {$delete_events} style='{$delete_display}'>" . $remove_button_text . "</button>";
 
 		return $html;
 	}
@@ -416,7 +428,7 @@ class GF_Field_Repeater extends GF_Field {
 
 		if ( $format == 'html' ) {
 			$media = $esc_html ? 'screen' :'email';
-			$merge_tag = $this->get_value_entry_detail( $raw_value, $entry['currency'], $use_text, $format, $media );
+			$merge_tag = $this->get_value_entry_detail( $raw_value, $entry, $use_text, $format, $media );
 		} else {
 			$merge_tag = $this->get_value_export_recursive( $entry, $input_id, $use_text, false, 0, '&nbsp;&nbsp;&nbsp;&nbsp;' );
 		}
@@ -449,16 +461,17 @@ class GF_Field_Repeater extends GF_Field {
 	 * Format the entry value safe for displaying on the entry detail page and for the {all_fields} merge tag.
 	 *
 	 * @since 2.4
+	 * @since 2.9.29 Changed the second parameter $currency (string) to $entry (array).
 	 *
 	 * @param string|array $item_values The field value.
-	 * @param string $currency The entry currency code.
-	 * @param bool|false $use_text When processing choice based fields should the choice text be returned instead of the value.
-	 * @param string $format The format requested for the location the merge is being used. Possible values: html, text or url.
-	 * @param string $media The location where the value will be displayed. Possible values: screen or email.
+	 * @param array        $entry       The entry.
+	 * @param bool|false   $use_text    When processing choice based fields should the choice text be returned instead of the value.
+	 * @param string       $format      The format requested for the location the merge is being used. Possible values: html, text or url.
+	 * @param string       $media       The location where the value will be displayed. Possible values: screen or email.
 	 *
 	 * @return string
 	 */
-	public function get_value_entry_detail( $item_values, $currency = '', $use_text = false, $format = 'html', $media = 'screen' ) {
+	public function get_value_entry_detail( $item_values, $entry = array(), $use_text = false, $format = 'html', $media = 'screen' ) {
 
 		if ( $format == 'text' ) {
 			return $this->get_value_export_recursive( array( $this->id => $item_values ), $this->id, $use_text, false, 0, '&nbsp;&nbsp;&nbsp;&nbsp;' );
@@ -472,7 +485,7 @@ class GF_Field_Repeater extends GF_Field {
 		$fields = $this->fields;
 		$html   = "<div class='gfield_repeater' {$repeater_style}>";
 		$repeater_label = $this->nestingLevel === 0 ? '' : $this->label;
-		$html   .= "<div class='gfield_label' {$label_style}>{$repeater_label}</div>";
+		$html   .= "<div class='gfield_label gform-field-label' {$label_style}>{$repeater_label}</div>";
 		$html   .= '<div class="gfield_repeater_items">';
 		foreach ( $item_values as $item_value ) {
 			$html .= '<div class="gfield_repeater_item">';
@@ -482,9 +495,9 @@ class GF_Field_Repeater extends GF_Field {
 				} else {
 					$sub_field_value = $this->get_field_value( $sub_field, $item_value );
 				}
-				$label = $sub_field->get_field_label( true, $item_values );
+				$label = wp_kses( $sub_field->get_field_label( true, $item_values ), wp_kses_allowed_html( 'post' ) );
 				$label = empty( $sub_field->fields ) ? "<div class='gfield_repeater_label' {$sub_field_label_style}>{$label}</div>" : '';
-				$value = $sub_field->get_value_entry_detail( $sub_field_value, $currency, $use_text, 'html', $media );
+				$value = wp_kses( $sub_field->get_value_entry_detail( $sub_field_value, $entry, $use_text, 'html', $media ), wp_kses_allowed_html( 'post' ) );
 				$value = "<div class='gfield_repeater_value' style='color:rgba(117, 117, 117, 1);font-size: 14px'>{$value}</div>";
 				$html .= '<div class="gfield_repeater_cell">' . $label . $value . '</div>';
 			}
@@ -549,6 +562,14 @@ class GF_Field_Repeater extends GF_Field {
 	 * @return mixed
 	 */
 	public function get_sub_field_input( $field, $form, $field_value, $entry, $index ) {
+		$target_page = rgpost( 'gform_target_page_number_' . $this->formId );
+		$source_page = rgpost( 'gform_source_page_number_' . $this->formId );
+		$validate    = $source_page == $field->pageNumber && rgpost( 'is_submit_' . $this->formId ) && ( $target_page == 0 || $target_page > $source_page );
+
+		if ( $validate ) {
+			$this-> validate_subfield( $field, $field_value, $form );
+		}
+
 		$field_content = $this->get_sub_field_content( $field, $field_value, $form, $entry );
 
 		// Adjust all the name attributes in the markup
@@ -581,37 +602,71 @@ class GF_Field_Repeater extends GF_Field {
 		$replaced = array();
 		foreach ( $matches as $match ) {
 			if ( ! in_array( $match[1], $replaced ) ) {
-				$input_id      = $match[1] . "-{$index}";
-				$field_content = str_replace( $match[1], $input_id, $field_content );
+				$input_id      = str_replace( $match[1], $match[1] . "-{$index}", $match[0] );
+				$field_content = str_replace( $match[0], $input_id, $field_content );
 				$replaced[]    = $match[1];
 			}
 		}
 
-		$target_page = rgpost( 'gform_target_page_number_' . $this->formId );
-		$source_page = rgpost( 'gform_source_page_number_' . $this->formId );
-		$validate = $source_page == $field->pageNumber && rgpost( 'is_submit_' . $this->formId ) && ( $target_page == 0 || $target_page > $source_page );
+		if ( $field->failed_validation ) {
+			// Adjust all the area-describedby attributes in the markup
+			preg_match_all( "/(aria-describedby=\"validation_message_[^\[|'\s]*)\"/", $field_content, $matches, PREG_SET_ORDER );
 
-		if ( $validate ) {
-			$field->failed_validation = false;
-			if ( $field->isRequired && $field->is_value_empty( $field_value ) ) {
-				$field->failed_validation  = true;
-				$field->validation_message = empty( $field->errorMessage ) ? __( 'This field is required.', 'gravityforms' ) : $field->errorMessage;
+			$replaced = array();
+			foreach ( $matches as $match ) {
+				if ( ! in_array( $match[0], $replaced ) ) {
+					$input_id      = str_replace( $match[1], $match[1] . "-{$index}", $match[0] );
+					$field_content = str_replace( $match[0], $input_id, $field_content );
+					$replaced[]    = $match[0];
+				}
 			}
 
-			if ( ! $field->failed_validation ) {
-				$field->validate( $field_value, $form );
-			}
+			// Adjust all the validation message IDs in the markup
+			preg_match_all( "/(id='validation_message_[^\[|']*)((\[[0-9]*\])*)'/", $field_content, $matches, PREG_SET_ORDER );
 
-			$custom_validation_result = gf_apply_filters( array( 'gform_field_validation', $form['id'], $field->id ), array(
-				'is_valid' => $field->failed_validation ? false : true,
-				'message'  => $field->validation_message
-			), $field_value, $form, $field );
-			$field->failed_validation  = rgar( $custom_validation_result, 'is_valid' ) ? false : true;
+			$replaced = array();
+			foreach ( $matches as $match ) {
+				if ( ! in_array( $match[0], $replaced ) ) {
+					$input_id      = str_replace( $match[1], $match[1] . "-{$index}", $match[0] );
+					$field_content = str_replace( $match[0], $input_id, $field_content );
+					$replaced[]    = $match[0];
+				}
+			}
+		} else {
+			// we need to add a gfield_valid class to the field wrapper so we can over-ride styles
+			$field_content = str_replace( 'gfield ', 'gfield gfield_valid ', $field_content );
 		}
 
-		$validation_message = ( $field->failed_validation && ! empty( $field->validation_message ) ) ? sprintf( "<div class='gfield_description validation_message'>%s</div>", $field->validation_message ) : '';
+		return $field_content;
+	}
 
-		return $field_content . $validation_message;
+	/**
+	 * Validates the sub field.
+	 *
+	 * @since 2.9.10
+	 *
+	 * @param GF_Field $field
+	 * @param string   $field_value
+	 * @param array    $form
+	 */
+	public function validate_subfield( $field, $field_value, $form ) {
+		$field->failed_validation = false;
+		if ( $field->isRequired && $field->is_value_empty( $field_value ) ) {
+			$field->failed_validation  = true;
+			$field->validation_message = empty( $field->errorMessage ) ? __( 'This field is required.', 'gravityforms' ) : $field->errorMessage;
+		}
+
+		if ( ! $field->failed_validation ) {
+			$field->validate( $field_value, $form );
+		}
+
+		$context = GFFormDisplay::get_submission_context();
+		$custom_validation_result = gf_apply_filters( array( 'gform_field_validation', $form['id'], $field->id ), array(
+			'is_valid' => $field->failed_validation ? false : true,
+			'message'  => $field->validation_message
+		), $field_value, $form, $field, $context );
+		$field->failed_validation  = rgar( $custom_validation_result, 'is_valid' ) ? false : true;
+		$field->validation_message = rgar( $custom_validation_result, 'message' );
 	}
 
 	/**
@@ -630,18 +685,15 @@ class GF_Field_Repeater extends GF_Field {
 
 		$validation_status = $field->failed_validation;
 
-		if ( empty( $field->fields ) ) {
-			// Validation will be handled later inside GF_Field_Repeater::get_sub_field_input so temporarily set failed_validation to false.
-			$field->failed_validation = false;
-		}
-
 		if ( ! class_exists( 'GFFormDisplay' ) ) {
 			require_once( GFCommon::get_base_path() .'/form_display.php' );
 		}
 
-		$field_content = GFFormDisplay::get_field_content( $field, $value, true, $form['id'], $form );
-
-		$field->failed_validation = $validation_status;
+		if ( $field->type === 'repeater' ) {
+			$field_content = GFFormDisplay::get_field_content( $field, $value, true, $form['id'], $form );
+		} else {
+			$field_content = GFFormDisplay::get_field( $field, $value, true, $form );
+		}
 
 		return $field_content;
 	}
@@ -688,6 +740,8 @@ class GF_Field_Repeater extends GF_Field {
 
 		$repeater_fields = array();
 
+		$is_new_entry = empty( $_POST[ 'is_submit_' . $this->formId ] ) && ! array_key_exists( 'id', $entry ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+
 		foreach ( $repeater_field->fields as $field ) {
 			if ( is_array( $field->fields ) ) {
 				$repeater_fields[] = $field;
@@ -702,7 +756,7 @@ class GF_Field_Repeater extends GF_Field {
 
 						$input_id = $input['id'];
 
-						$key = $input_id . $index . '_' . $i;
+						$key = $input_id . $index . ( $is_new_entry ? '' : '_' . $i );
 
 						$value = isset( $entry[ $key ] ) ? $entry[ $key ] : '';
 

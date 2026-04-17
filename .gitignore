@@ -47,3 +47,6 @@ local-config.php
 
 # Ignore Vendor
 src/theme/vendor
+
+# Ignore plugins
+src/plugins

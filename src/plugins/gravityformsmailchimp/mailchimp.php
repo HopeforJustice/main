@@ -1,15 +1,10 @@
 <?php
 
-// don't load directly
-if ( ! defined( 'ABSPATH' ) ) {
-	die();
-}
-
 /**
 Plugin Name: Gravity Forms Mailchimp Add-On
 Plugin URI: https://gravityforms.com
 Description: Integrates Gravity Forms with Mailchimp, allowing form submissions to be automatically sent to your Mailchimp account.
-Version: 5.1
+Version: 5.7.2
 Author: Gravity Forms
 Author URI: https://gravityforms.com
 License: GPL-2.0+
@@ -17,7 +12,7 @@ Text Domain: gravityformsmailchimp
 Domain Path: /languages
 
 ------------------------------------------------------------------------
-Copyright 2009-2022 Rocketgenius
+Copyright 2009-2025 Rocketgenius, Inc.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -34,7 +29,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
  **/
 
-define( 'GF_MAILCHIMP_VERSION', '5.1' );
+// don't load directly
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
+define( 'GF_MAILCHIMP_VERSION', '5.7.2' );
 
 // If Gravity Forms is loaded, bootstrap the Mailchimp Add-On.
 add_action( 'gform_loaded', array( 'GF_MailChimp_Bootstrap', 'load' ), 5 );
