@@ -1481,3 +1481,18 @@ add_filter("gform_ppcp_disable_funding", function ($disabled_funding) {
 	$disabled_funding[] = "paylater"; // Pay Later (US, UK), Pay in 4 (AU), 4X PayPal (France), Später Bezahlen (Germany).
 	return $disabled_funding;
 });
+
+// Auto-populate Gravity Forms country fields using WP Engine GeoIP
+add_filter("gform_field_value_user_country", "hfj_populate_country_from_geo");
+function hfj_populate_country_from_geo($value)
+{
+	if (class_exists("Wpengine\Geoip")) {
+		$geo = Wpengine\Geoip::instance();
+		$code = $geo->country();
+		if ($code && class_exists("Locale")) {
+			return Locale::getDisplayRegion("-" . $code, "en");
+		}
+		return $code;
+	}
+	return $value;
+}

@@ -1,141 +1,175 @@
 <article class="gform-splash" data-js="gform-splash-page">
+
 	<header class="gform-splash__header">
-		<img src="<?php echo esc_url( GFCommon::get_base_url() ); ?>/images/logos/gravity-logo-white.svg" alt="Gravity Forms"/>
-		<h1 class="screen-reader-text">Gravity Forms</h1>
-		<span class="gf-splash-version"><?php echo esc_html( $this->about_version ); ?></span>
+		<img class="gform-logo" src="<?php echo esc_url( GFCommon::get_base_url() ); ?>/images/logos/gravity-logo-white.svg" alt="Gravity Forms"/>
+		<h1><?php esc_html_e( 'New Fields Added in Gravity Forms 2.9!', 'gravityforms' ); ?></h1>
+		<p><?php esc_html_e( 'The new Image Choice and Multiple Choice fields give you more flexibility and control when creating forms.', 'gravityforms' ); ?></p>
+		<a class="gform-button gform-button--size-height-xxl gform-button--white gform-button--width-auto gform-button--icon-trailing"  href="<?php echo esc_url( admin_url( 'admin.php?page=gf_new_form' ) ); ?>" title="<?php esc_attr_e( 'Get started with a new form', 'gravityforms' ); ?>">
+			<span class="gform-button__text gform-button__text--inactive gform-typography--size-text-md"><?php esc_html_e( 'Get Started', 'gravityforms' ); ?></span>
+			<span class="gform-common-icon gform-common-icon--arrow-narrow-right gform-button__icon" aria-hidden="true"></span>
+		</a>
+		<div class="gform-reviews">
+            <ul class="gform-reviews__list">
+                <li class="gform-reviews__list-item gform-reviews__list-item--g2">
+                    <a
+                        href="https://www.g2.com/products/gravity-forms/reviews"
+                        title="<?php esc_html_e( 'Read reviews of Gravity Forms on G2', 'gravityforms' ); ?>"
+                        target="_blank"
+                        class="gform-reviews__link"
+                    >
+                        <span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'gravityforms' ); ?></span>
+                        <img
+                            src="<?php echo esc_attr( $this->img_dir ) . 'g2.svg';  ?>"
+                            alt="<?php esc_attr_e( 'G2 logo', 'gravityforms' ); ?>"
+                            class="gform-reviews__logo"
+                        />
+                        <span class="gform-reviews__stars gform-reviews__stars--icon" aria-hidden="true">
+                            <span class="gform-common-icon gform-common-icon--star"></span>
+                            <span class="gform-common-icon gform-common-icon--star"></span>
+                            <span class="gform-common-icon gform-common-icon--star"></span>
+                            <span class="gform-common-icon gform-common-icon--star"></span>
+                            <span class="gform-common-icon gform-common-icon--star"></span>
+				        </span>
+                        200+ <?php esc_html_e( '4.7 Stars', 'gravityforms' ); ?>
+                    </a>
+                </li>
+                <li class="gform-reviews__list-item gform-reviews__list-item--trustpilot">
+                    <a
+                        href="https://www.trustpilot.com/review/gravityforms.com"
+                        title="<?php esc_html_e( 'Read reviews of Gravity Forms on Trustpilot', 'gravityforms' ); ?>"
+                        class="gform-reviews__link"
+                        target="_blank"
+                    >
+                        <span class="screen-reader-text"><?php echo esc_html__( '(opens in a new tab)', 'gravityforms' ); ?></span>
+                        <img
+                            src="<?php echo esc_attr( $this->img_dir ) . 'trustpilot.svg'; ?>"
+                            alt="<?php esc_attr_e( 'Trustpilot logo', 'gravityforms' ); ?>"
+                            class="gform-reviews__logo"
+                        />
+                        <span class="gform-reviews__stars gform-reviews__stars--image">
+                            <img
+                                src="<?php echo esc_attr( $this->img_dir ) . 'trustpilot-rating.svg'; ?>"
+                                alt="<?php esc_attr_e( 'Trustpilot rating', 'gravityforms' ); ?>"
+                                class="gform-reviews__stars-image"
+                            />
+				        </span>
+                        50+ <?php esc_html_e( '4.4 Stars', 'gravityforms' ); ?>
+                    </a>
+                </li>
+            </ul>
+		</div>
 	</header>
 
 	<div class="gform-splash__body">
-		<?php
-		$text = __( 'Build Better Forms with Gravity Forms 2.6', 'gravityforms' );
-		echo wp_kses_post( $this->tags->headline( array( 'text' => $text ) ) );
 
-		$text  = '<h3>' . __( 'What’s New with 2.6!', 'gravityforms' ) . '</h3>
-			<p>' . __( 'Thanks for installing Gravity Forms 2.6. With this latest release you will find a number of exciting new features alongside numerous updates and additions to enhance your form building experience.', 'gravityforms' ) . '</p>
-			<p>' . __( 'From a new intuitive form embed process, to a relocated form Submit button, and an impressive redesign of the UI for the Choices based fields, 2.6 is packed full of the features you need to create beautiful, accessible, and high-converting forms.', 'gravityforms' ) . '</p>
-			<a href="https://www.gravityforms.com/blog/gravity-forms-2-6-release" target="_blank" class="gform-button gform-button--size-r gform-button--white" aria-label="' . __( 'Read more about the Gravity Forms 2.6 release', 'gravityforms' ) . '">' . __( 'Read More', 'gravityforms' ) . '</a>';
-		$image = array(
-			'src' => $this->img_dir . 'collage.png',
-			'alt' => __( 'Screenshot of a collection of new features in Gravity Forms 2.6', 'gravityforms' ),
-		);
-		echo wp_kses_post(
-			$this->tags->text_and_image(
-				array(
-					'text'              => $text,
-					'image'             => $image,
-					'image_placement'   => 'left',
-					'container_classes' => 'gform-splash__section--image-spread-right',
-				)
-			)
-		);
+        <div class="gform-splash__sections">
+            <?php
+            $text  = '<h3>' . esc_html__( 'Image Choice Field', 'gravityforms' ) . '</h3>
+                <p>' . esc_html__( 'A picture is worth a thousand words! The new Image Choice field lets you add stylish images straight from the media library to your choices. Easily create beautiful forms with eye-catching images that speak to your users.', 'gravityforms' ) . '</p>
+                <a href="https://docs.gravityforms.com/image-choice-field/" target="_blank" class="gform-button gform-button--size-height-xl gform-button--primary-new gform-button--width-auto" title="' . esc_attr__( 'Read more about the Image Choice field', 'gravityforms' ) . '">
+                <span class="gform-button__text gform-button__text--inactive gform-typography--size-text-sm">' . esc_html__( 'Read More', 'gravityforms' ) . '</span>
+                <span class="screen-reader-text">' . esc_html__( 'About the Image Choice field', 'gravityforms' ) . '</span>
+				<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'gravityforms' ) . '</span>
+				&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>';
+            $image = array(
+                'src' => $this->img_dir . 'image-choice-field.png',
+                'alt' => esc_attr__( 'Screenshot of the Image Choice field in Gravity Forms 2.9', 'gravityforms' ),
+            );
 
-		$text  = '<h3>' . __( 'An Inline Form Submit Button', 'gravityforms' ) . '</h3>
-			<p>' . __( 'In 2.6 the form Submit button has been moved out of Form Settings and into the form editor - a feature long awaited by many.', 'gravityforms' ) . '</p>
-			<p>' . __( 'Due to this relocation, you will now be able to easily inline your Submit button, as well as alter the settings, all without needing to leave the editor or use CSS Ready Classes.', 'gravityforms' ) . '</p>  
-			<p>' . __( 'You can select to position the Submit button at the bottom of a form or within the last line alongside other form fields - creating form layouts to your exact specifications has never been easier!', 'gravityforms' ) . '</p>
-			<a href="https://docs.gravityforms.com/submit-button" target="_blank" class="gform-button gform-button--size-r gform-button--white" aria-label="' . __( 'Read more about the inline form submit button', 'gravityforms' ) . '">' . __( 'Read More', 'gravityforms' ) . '</a>';
-		$image = array(
-			'src' => $this->img_dir . 'submit-button.png',
-			'alt' => __( 'Screenshot of the submit button in Gravity Forms 2.6.', 'gravityforms' ),
-		);
-		echo wp_kses_post(
-			$this->tags->text_and_image(
-				array(
-					'text'              => $text,
-					'image'             => $image,
-					'image_placement'   => 'right',
-					'container_classes' => 'gform-splash__section--image-spread-left gform-splash__section--image-spread-right gform-splash__section--image-spread-down',
-				)
-			)
-		);
+            echo wp_kses_post(
+                $this->tags->equal_columns(
+                    array(
+                        'columns' => array(
+                            $this->tags->build_image_html( $image ),
+                            $text,
+                        ),
+                        'container_classes' => 'column--vertical-center',
+                    ),
+                )
+            );
 
-		$text  = '<h3>' . __( 'A New Form Embed Process', 'gravityforms' ) . '</h3>
-			<p>' . __( 'The process of embedding a form in your website has been reimagined with the Gravity Forms 2.6 new Embed Form flyout.', 'gravityforms' ) . '</p>
-			<p>' . __( 'From within the form editor, you can now select where you would like a form to be displayed. This can include an existing page, post, or custom post type (with the use of filters).', 'gravityforms' ) . '</p>
-			<p>' . __( 'Equally, if you would like to embed a form in a new page or post, you have the option of creating both directly from within the Embed Form flyout. You can also view the form ID, as well as copy the form’s shortcode if required.', 'gravityforms' ) . '</p>
-			<p>' . __( 'This new intuitive Embed Form flyout will streamline your form creation process, saving time and enabling you to publish your forms faster than ever before.', 'gravityforms' ) . '</p>
-			<a href="https://docs.gravityforms.com/embed-form-flyout/" target="_blank" class="gform-button gform-button--size-r gform-button--white" aria-label="' . __( 'Read more about the new Embed Form flyout', 'gravityforms' ) . '">' . __( 'Read More', 'gravityforms' ) . '</a>';
-		$image = array(
-			'src' => $this->img_dir . 'embed.png',
-			'alt' => __( 'Screenshot of the embed form UI in Gravity Forms 2.6.', 'gravityforms' ),
-		);
-		echo wp_kses_post(
-			$this->tags->text_and_image(
-				array(
-					'text'              => $text,
-					'image'             => $image,
-					'image_placement'   => 'left',
-					'container_classes' => 'gform-splash__section--image-spread-left gform-splash__section--image-spread-right gform-splash__section--image-spread-down',
-				)
-			)
-		);
+            $text  = '<h3>' . esc_html__( 'Multiple Choice Field', 'gravityforms' ) . '</h3>
+                <p>' . esc_html__( 'The Multiple Choice field is a new, flexible way to let users choose one or many options. Gather the information you need, while ensuring a high-end experience for those submitting the form.', 'gravityforms' ) . '</p>
+                <a href="https://docs.gravityforms.com/multiple-choice-field/" target="_blank" class="gform-button gform-button--size-height-xl gform-button--primary-new gform-button--width-auto" title="' . esc_attr__( 'Read more about the Multiple Choice field', 'gravityforms' ) . '">
+                <span class="gform-button__text gform-button__text--inactive gform-typography--size-text-sm">' . esc_html__( 'Read More', 'gravityforms' ) . '</span>
+                <span class="screen-reader-text">' . esc_html__( 'About the Multiple Choice field', 'gravityforms' ) . '</span>
+				<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'gravityforms' ) . '</span>
+                &nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a>';
+            $image = array(
+                'src' => $this->img_dir . 'multiple-choice-field.png',
+                'alt' => esc_attr__( 'Screenshot of the Multiple Choice field in Gravity Forms 2.9', 'gravityforms' ),
+            );
 
-		$text  = '<h3>' . __( 'An Updated Choices UI', 'gravityforms' ) . '</h3>
-			<p>' . __( 'If you regularly use fields that utilize Choices - Radio Buttons, Checkboxes, and Multi Select, to name a few - then you’re going to love the updated 2.6 Choices user interface.', 'gravityforms' ) . '</p>
-			<p>' . __( 'With Gravity Forms 2.6 you will find a new and improved Choices flyout that is responsive to page width. This extra space allows for a much better user experience, enabling you to easily view and manage the Choices options within the form editor.', 'gravityforms' ) . '</p>
-			<p>' . __( 'The expandable Choices flyout also sees support for Bulk Choices, as well as our most popular third-party add-ons, again ensuring you can easily edit each choice alongside making any necessary alterations to settings.', 'gravityforms' ) . '</p>
-			<a href="https://docs.gravityforms.com/edit-choices-flyout/" target="_blank" class="gform-button gform-button--size-r gform-button--white" aria-label="' . __( 'Read more about the updated Choices UI', 'gravityforms' ) . '">' . __( 'Read More', 'gravityforms' ) . '</a>';
-		$image = array(
-			'src' => $this->img_dir . 'choices.png',
-			'alt' => __( 'Screenshot of the choices UI in Gravity Forms 2.6.', 'gravityforms' ),
-		);
-		echo wp_kses_post(
-			$this->tags->text_and_image(
-				array(
-					'text'              => $text,
-					'image'             => $image,
-					'image_placement'   => 'right',
-					'container_classes' => 'gform-splash__section--image-spread-left gform-splash__section--image-spread-right gform-splash__section--image-spread-down',
-				)
-			)
-		);
+            echo wp_kses_post(
+                $this->tags->equal_columns(
+                    array(
+                        'columns' => array(
+                            $text,
+                            $this->tags->build_image_html( $image ),
+                        ),
+                        'container_classes' => 'column--vertical-center',
+                    ),
+                )
+            );
 
-		$text = __( 'Developer Features', 'gravityforms' );
-		echo wp_kses_post( $this->tags->headline( array( 'text' => $text ) ) );
+            $col1_icon = $style_icon = $this->tags->build_image_html(
+                array(
+                    'src' => $this->img_dir . 'editor-design-improvements-icon.svg',
+                    'alt' => esc_attr__( 'Icon of color swatches', 'gravityforms' ),
+                    'width' => '52px',
+                    'height' => '52px',
+                    'class' => 'image--width-auto',
+                )
+            );
+            $col1 = $col1_icon . '<h4>' . esc_html__( 'Editor Design Improvements', 'gravityforms' ) . '</h4>
+                <p>' . esc_html__( 'We’ve brought our beautiful Orbital form theme into the form editor! With 2.9 you’ll find a more consistent and visually-pleasing form editing experience, closely mirroring how your form will look on the front end.', 'gravityforms' ) . ' <a href="https://docs.gravityforms.com/gravity-forms-2-9-key-features/" title="' . esc_attr__( 'Read more about the Gravity Forms 2.9 editor design improvements', 'gravityforms' ) . '" target="_blank">' . esc_html__( 'Read More', 'gravityforms' ) . '<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'gravityforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a></p>';
 
-		$image = array(
-			'src' => $this->img_dir . 'submit-code.png',
-			'alt' => __( 'Screenshot of submit button code.', 'gravityforms' ),
-		);
-		echo wp_kses_post(
-			$this->tags->full_width_image(
-				array(
-					'image'             => $image,
-					'container_classes' => 'gform-splash__section--image-spread-left gform-splash__section--image-spread-right gform-splash__section--image-spread-down',
-				)
-			)
-		);
+            $col2_icon = $style_icon = $this->tags->build_image_html(
+                array(
+                    'src' => $this->img_dir . 'editor-accessibility-improvements-icon.svg',
+                    'alt' => esc_attr__( 'Icon of accessibility symbol', 'gravityforms' ),
+                    'width' => '52px',
+                    'height' => '52px',
+                    'class' => 'image--width-auto',
+                )
+            );
+            $col2 = $col2_icon . '<h4>' . esc_html__( 'Editor Accessibility Improvements', 'gravityforms' ) . '</h4>
+                <p>' . esc_html__( 'As part of our continuing commitment to make form building available to everyone, we have improved the accessibility of the form editor. If you rely on keyboard navigation or screen readers, you’ll now have an easier time navigating the field settings.', 'gravityforms' ) . ' <a href="https://docs.gravityforms.com/gravity-forms-2-9-key-features/" title="' . esc_attr__( 'Read more about the Gravity Forms 2.9 editor accessibility improvements', 'gravityforms' ) . '" target="_blank">' . esc_html__( 'Read More', 'gravityforms' ) . '<span class="screen-reader-text">' . esc_html__( '(opens in a new tab)', 'gravityforms' ) . '</span>&nbsp;<span class="gform-icon gform-icon--external-link" aria-hidden="true"></span></a></p>';
 
-		$text = '<h3>' . __( 'Submit Button Layout Options', 'gravityforms' ) . '</h3>
-			<p>' . __( 'The submit button and its settings have been moved to the form editor, but the underlying data structure hasn\'t changed, so button settings will continue to work the same way they always have. This gives users the power to create more flexible layouts without resorting to Ready Classes or custom CSS. Creating single-line forms that fit in a footer or widget is now easier than ever!', 'gravityforms' ) . '</p>';
-		echo wp_kses_post( $this->tags->full_width_text( array( 'text' => $text ) ) );
-
-		$column_1 = '<h4>' . __( 'Ajax Saving for Forms', 'gravityforms' ) . '</h4>
-			<p>' . __( 'The form editor now saves your form changes using Ajax, giving you a much faster experience when making updates. There are also some new', 'gravityforms' ) . ' <a href="https://docs.gravityforms.com/gform_form_saving_action_event" target="_blank">' . __( 'actions', 'gravityforms' ) . '</a> ' . __( 'and', 'gravityforms' ) . ' <a href="https://docs.gravityforms.com/gform_form_saving_filter_event" target="_blank">' . __( 'filters', 'gravityforms' ) . '</a> ' . __( 'available that ship with this new feature.', 'gravityforms' ) . '</p>';
-		$column_2 = '<h4>' . __( 'Support for Custom Post Types', 'gravityforms' ) . '</h4>
-			<p>' . __( 'The new Embed Form flyout allows you to quickly embed your current form into new or existing content. The post types available in the UI are filterable, so make sure to', 'gravityforms' ) . ' <a href="https://docs.gravityforms.com/gform_embed_post_types" target="_blank">' . __( 'check our documentation', 'gravityforms' ) . '</a> ' . __( 'if you wish to add any of your own custom post types. ', 'gravityforms' ) . '</p>';
-		$column_3 = '<h4>' . __( 'Developer Tools (Coming Soon!)', 'gravityforms' ) . '</h4>
-			<p>' . __( 'We have performed major upgrades to our tooling, build process, and libraries, and in the coming releases we’ll be sharing these with you in the form of NPM packages that will be at your disposal. Stay tuned!', 'gravityforms' ) . '</p>';
-		$columns  = array(
-			$column_1,
-			$column_2,
-			$column_3,
-		);
-		echo wp_kses_post( $this->tags->equal_columns( array( 'columns' => $columns ) ) );
-		?>
+            echo wp_kses_post(
+                $this->tags->equal_columns(
+                    array(
+                        'columns' => array(
+                            $col1,
+                            $col2,
+                        ),
+                        'container_classes' => 'column--vertical-center',
+                    ),
+                )
+            );
+            ?>
+        </div>
 
 		<footer class="gform-splash__footer">
-			<img src="<?php echo esc_url( $this->img_dir ); ?>support.png" alt="<?php esc_attr_e( 'Avatars of Gravity Forms support team members', 'gravityforms' ); ?>">
 			<h4>
-				<?php esc_html_e( 'Still have questions?', 'gravityforms' ); ?>
+				<?php esc_html_e( 'Ready to get started?', 'gravityforms' ); ?>
 			</h4>
 			<p>
-				<?php esc_html_e( 'Can\'t find what you\'re looking for? Please chat with our friendly team.', 'gravityforms' ); ?>
+				<?php esc_html_e( 'We believe there\'s a better way to manage your data and forms. Are you ready to create a form? Let\'s go!', 'gravityforms' ); ?>
 			</p>
-			<a class="gform-button gform-button--primary gform-button--size-l" href="https://www.gravityforms.com/help/" target="blank" title="<?php esc_attr_e( 'Submit a ticket to our support team', 'gravityforms' ); ?>">
-				<?php esc_html_e( 'Submit A Ticket', 'gravityforms' ); ?>
+			<a class="gform-button gform-button--size-height-xxl gform-button--white gform-button--width-auto gform-button--icon-trailing"  href="<?php echo esc_url( admin_url( 'admin.php?page=gf_new_form' ) ); ?>" title="<?php esc_attr_e( 'Get started with a new form', 'gravityforms' ); ?>">
+				<span class="gform-button__text gform-button__text--inactive gform-typography--size-text-md"><?php esc_html_e( 'Get Started', 'gravityforms' ); ?></span>
+				<span class="gform-common-icon gform-common-icon--arrow-narrow-right gform-button__icon" aria-hidden="true"></span>
 			</a>
 		</footer>
+
+		<div class="gform-splash__background gform-splash__background-one"></div>
+		<div class="gform-splash__background gform-splash__background-two"></div>
+		<div class="gform-splash__background gform-splash__background-three"></div>
+		<div class="gform-splash__background gform-splash__background-four"></div>
+		<div class="gform-splash__background gform-splash__background-five"></div>
+		<div class="gform-splash__background gform-splash__background-six"></div>
+		<div class="gform-splash__background gform-splash__background-seven"></div>
 
 	</div>
 
