@@ -13,7 +13,11 @@ if ($get_records["body"] == "[]") {
 
 <div class="better-grid careers-block">
     <?php if (!$hideCezanne) { ?>
-        <?php foreach (json_decode($get_records["body"]) as $body) { ?>
+        <?php foreach (json_decode($get_records["body"]) as $body) {
+
+        	$locationPart1 = $body->location ?: $body->region;
+        	$locationPart2 = $body->nation;
+        	?>
         <?php if (strpos($body->project_label, "SFA") === false) { ?>
 
             <div class="careers-block__card">
@@ -24,19 +28,30 @@ if ($get_records["body"] == "[]") {
                     </h3>
 
                     <!-- location -->
-                    <div class="careers-block__location">
-                        <img src="<?php echo get_template_directory_uri() .
-                        	"/assets/img/balloon.svg"; ?>" />
-                        <p>
-                        <?php echo $body->location
-                        	? $body->location
-                        	: $body->region; ?>,&nbsp;<?php echo $body->nation; ?>
-                        </p>
-                    </div>
+                    <?php if ($locationPart1 || $locationPart2) { ?>
+                        <div class="careers-block__location">
+                            <img src="<?php echo get_template_directory_uri() .
+                            	"/assets/img/balloon.svg"; ?>" />
+                            <p>
+                            <?php
+                            if ($locationPart1) {
+                            	echo $locationPart1;
+                            }
+                            if ($locationPart1 && $locationPart2) {
+                            	echo ",&nbsp;";
+                            }
+                            if ($locationPart2) {
+                            	echo $locationPart2;
+                            }
+                            ?>
+                            </p>
+                        </div>
+                    <?php } ?>
                 </a>
             </div>
             <?php } ?>
-        <?php } ?>
+        <?php
+        } ?>
     <?php } ?>
     <?php if (have_rows("non_cezanne")):
     	while (have_rows("non_cezanne")):
