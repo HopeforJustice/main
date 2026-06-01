@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.6.3");
+	define("_S_VERSION", "6.6.4");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -1495,4 +1495,102 @@ function hfj_populate_country_from_geo($value)
 		return $code;
 	}
 	return $value;
+}
+
+/**
+ * Build a safe, deterministic course key from the course title.
+ */
+function hfj_course_key($course_title)
+{
+	return sanitize_title(wp_unslash((string) $course_title));
+}
+
+/**
+ * Map a course title to the destination URL.
+ */
+function hfj_get_course_redirect_url($course_title)
+{
+	$normalized_title = trim(wp_unslash((string) $course_title));
+	$course_map = [
+		"Keeping Kids Safe in the Digital World" =>
+			"https://hopeforjustice.org/training-pages/keeping-kids-safe-online/",
+		"Human Trafficking in the United States" =>
+			"https://hopeforjustice.org/training-pages/human-trafficking-in-the-united-states/",
+		"Human Trafficking in a U.S Clinical Setting" =>
+			"https://hopeforjustice.org/training-pages/human-trafficking-in-a-clinical-setting/",
+		"Human Trafficking in the U.S. Hospitality Industry" =>
+			"https://hopeforjustice.org/training-pages/human-trafficking-in-the-us-hospitality-industry/",
+		"Modern Slavery and Human Trafficking in the United Kingdom" =>
+			"https://hopeforjustice.org/training-pages/modern-slavery-and-human-trafficking-in-the-united-kingdom",
+	];
+
+	if (isset($course_map[$normalized_title])) {
+		return $course_map[$normalized_title];
+	}
+
+	return add_query_arg(
+		"courseTitle",
+		$normalized_title,
+		"https://hopeforjustice.org/course-content/"
+	);
+}
+
+/**
+ * Set a per-course registration cookie for 3 months after form submission.
+ */
+add_action(
+	"gform_after_submission_68",
+	"hfj_set_training_registration_cookie",
+	10,
+	2
+);
+
+function hfj_set_training_registration_cookie($entry, $form)
+{
+	$course_title = isset($_GET["courseTitle"])
+		? sanitize_text_field(wp_unslash($_GET["courseTitle"]))
+		: "";
+
+	if (empty($course_title)) {
+		return;
+	}
+
+	$cookie_name = "registered_" . hfj_course_key($course_title);
+	$expires = strtotime("+3 months");
+
+	setcookie($cookie_name, "1", $expires, "/", "", is_ssl(), true);
+	$_COOKIE[$cookie_name] = "1";
+}
+
+/**
+ * If user is already registered for the requested course, skip signup page.
+ */
+add_action("template_redirect", "hfj_redirect_registered_training_user");
+function hfj_redirect_registered_training_user()
+{
+	if (is_admin() || !is_page("training-module-sign-up")) {
+		return;
+	}
+
+	if (!isset($_GET["courseTitle"])) {
+		return;
+	}
+
+	$course_title = sanitize_text_field(wp_unslash($_GET["courseTitle"]));
+	if (empty($course_title)) {
+		return;
+	}
+
+	$cookie_name = "registered_" . hfj_course_key($course_title);
+	if (empty($_COOKIE[$cookie_name])) {
+		return;
+	}
+
+	$redirect_url = hfj_get_course_redirect_url($course_title);
+	if (empty($redirect_url)) {
+		return;
+	}
+
+	wp_safe_redirect($redirect_url);
+	exit();
 }
