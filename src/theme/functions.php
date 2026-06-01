@@ -1563,7 +1563,7 @@ function hfj_set_training_registration_cookie($entry, $form)
 }
 
 /**
- * If user is already registered for the requested course, skip signup page.
+ * If user is already registered for the requested course, skip signup page
  */
 add_action("template_redirect", "hfj_redirect_registered_training_user");
 function hfj_redirect_registered_training_user()
