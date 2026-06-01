@@ -70,7 +70,7 @@ if (!get_field("no_news")) { ?>
                 ) {
                 	echo "/report-a-concern/";
                 } else {
-                	echo "/get-help/";
+                	echo "/report-a-concern/";
                 } ?>" class="get-help__help-button">
                     Get&nbsp;Help
                 </a>
