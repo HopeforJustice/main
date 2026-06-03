@@ -428,6 +428,18 @@ function my_acf_init_block_types()
 		//     wp_enqueue_style('geo_target_styles', get_template_directory_uri() . '/template-parts/blocks/geo-target.css', array(), _S_VERSION);
 		// }
 
+		//register geo-target-2
+		acf_register_block_type([
+			"name" => "geo-target-2",
+			"title" => __("Geo-target (multi-country)"),
+			"description" => __("Show content to one or more selected countries, including an 'All other countries' option"),
+			"render_template" => "template-parts/blocks/geo-target-2/geo-target-2.php",
+			"category" => "hfj-design-system",
+			"supports" => [
+				"jsx" => true,
+			],
+		]);
+
 		//register video-modal
 		acf_register_block_type([
 			"name" => "video-modal",
