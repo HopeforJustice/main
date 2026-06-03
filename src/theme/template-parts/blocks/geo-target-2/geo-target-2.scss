@@ -1,0 +1,19 @@
+.geo-target-2 {
+    position: relative;
+
+    &__admin-text {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateY(-100%);
+        line-height: 1;
+        margin: 0;
+        z-index: 1;
+        color: white;
+        background-color: rgb(106, 13, 173);
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
