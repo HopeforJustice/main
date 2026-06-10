@@ -317,7 +317,27 @@
                     </svg>
                 </a>
                 <div class="header__navigation">
-                    <a id="donate" class="button button--red button--nav bold" href="/donate">GIVE</a>
+                    <?php
+                    $donate_url = '/donate';
+                    if ($GLOBALS['userInfo']) {
+                        if (in_array($GLOBALS['userInfo'], $GLOBALS['uk'])) {
+                            $donate_url = get_field('donate_url_uk', 'option') ?: '/donate';
+                        } elseif (in_array($GLOBALS['userInfo'], $GLOBALS['norway'])) {
+                            $donate_url = get_field('donate_url_nok', 'option') ?: '/donate';
+                        } elseif (in_array($GLOBALS['userInfo'], $GLOBALS['usa'])) {
+                            $donate_url = get_field('donate_url_usa', 'option') ?: '/donate';
+                        } elseif (in_array($GLOBALS['userInfo'], $GLOBALS['aus'])) {
+                            $donate_url = get_field('donate_url_aus', 'option') ?: '/donate';
+                        } elseif (in_array($GLOBALS['userInfo'], $GLOBALS['eur'])) {
+                            $donate_url = get_field('donate_url_eur', 'option') ?: '/donate';
+                        } else {
+                            $donate_url = get_field('donate_url_default', 'option') ?: '/donate';
+                        }
+                    } else {
+                        $donate_url = get_field('donate_url_default', 'option') ?: '/donate';
+                    }
+                    ?>
+                    <a id="donate" class="button button--red button--nav bold" href="<?php echo esc_url($donate_url); ?>">GIVE</a>
                     <div id="burger-menu" class="header__burger">
                         <div class="burger">
                             <span></span>
