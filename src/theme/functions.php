@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.6.5");
+	define("_S_VERSION", "6.6.6");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -1522,6 +1522,8 @@ function hfj_get_course_redirect_url($course_title)
 			"https://hopeforjustice.org/training-pages/human-trafficking-in-the-us-hospitality-industry/",
 		"Modern Slavery and Human Trafficking in the United Kingdom" =>
 			"https://hopeforjustice.org/training-pages/modern-slavery-and-human-trafficking-in-the-united-kingdom",
+		"Modern Slavery and Human Trafficking in Northern Ireland" =>
+			"https://hopeforjustice.org/training-pages/modern-slavery-and-human-trafficking-in-northern-ireland",
 	];
 
 	if (isset($course_map[$normalized_title])) {
