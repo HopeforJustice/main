@@ -440,6 +440,15 @@ function my_acf_init_block_types()
 			],
 		]);
 
+		//register geo-redirect
+		acf_register_block_type([
+			"name" => "geo-redirect",
+			"title" => __("Geo-redirect"),
+			"description" => __("Redirect visitors to a country-specific URL"),
+			"render_template" => "template-parts/blocks/geo-redirect/geo-redirect.php",
+			"category" => "hfj-design-system",
+		]);
+
 		//register video-modal
 		acf_register_block_type([
 			"name" => "video-modal",
