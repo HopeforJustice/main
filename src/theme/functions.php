@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.6.6");
+	define("_S_VERSION", "6.6.8");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -1116,6 +1116,120 @@ add_filter("https_ssl_verify", "__return_false");
 if (function_exists("acf_add_options_page")) {
 	acf_add_options_page();
 }
+
+add_action("template_redirect", function () {
+	if (is_admin() || !is_singular()) {
+		return;
+	}
+
+	$post = get_post();
+	if (!$post || !has_block("acf/geo-redirect", $post)) {
+		return;
+	}
+
+	$data = [];
+	foreach (parse_blocks($post->post_content) as $block) {
+		if ($block["blockName"] === "acf/geo-redirect") {
+			$data = $block["attrs"]["data"] ?? [];
+			break;
+		}
+	}
+	if (empty($data)) {
+		return;
+	}
+
+	$user_country = class_exists("Wpengine\Geoip")
+		? Wpengine\Geoip::instance()->country()
+		: null;
+
+	$norway = ["NO"];
+	$uk = ["GB"];
+	$aus = ["AU", "NZ"];
+	$usa = [
+		"AG",
+		"AR",
+		"BB",
+		"BS",
+		"BO",
+		"BR",
+		"BZ",
+		"CA",
+		"CL",
+		"CO",
+		"CR",
+		"DO",
+		"DM",
+		"EC",
+		"KH",
+		"LC",
+		"GD",
+		"GF",
+		"GP",
+		"GT",
+		"GY",
+		"HN",
+		"HT",
+		"JM",
+		"MQ",
+		"MX",
+		"NI",
+		"PA",
+		"PE",
+		"PR",
+		"PY",
+		"SR",
+		"SV",
+		"TT",
+		"US",
+		"UM",
+		"UY",
+		"VC",
+		"VE",
+		"VI",
+	];
+	$eur = [
+		"AT",
+		"BE",
+		"CY",
+		"EE",
+		"FI",
+		"FR",
+		"DE",
+		"GR",
+		"IE",
+		"IT",
+		"LV",
+		"LT",
+		"LU",
+		"MT",
+		"NL",
+		"PT",
+		"SK",
+		"SI",
+		"ES",
+	];
+
+	if ($user_country && in_array($user_country, $uk)) {
+		$url = $data["redirect_url_uk"] ?? "";
+	} elseif ($user_country && in_array($user_country, $norway)) {
+		$url = $data["redirect_url_nok"] ?? "";
+	} elseif ($user_country && in_array($user_country, $usa)) {
+		$url = $data["redirect_url_usa"] ?? "";
+	} elseif ($user_country && in_array($user_country, $aus)) {
+		$url = $data["redirect_url_aus"] ?? "";
+	} elseif ($user_country && in_array($user_country, $eur)) {
+		$url = $data["redirect_url_eur"] ?? "";
+	} else {
+		$url = $data["redirect_url_default"] ?? "";
+	}
+
+	$url = $url ?: $data["redirect_url_default"] ?? "";
+
+	if ($url) {
+		wp_redirect(esc_url_raw($url), 302);
+		exit();
+	}
+});
 
 //shortcodes
 include "custom-shortcodes.php";
