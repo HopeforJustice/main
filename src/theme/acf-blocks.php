@@ -432,8 +432,11 @@ function my_acf_init_block_types()
 		acf_register_block_type([
 			"name" => "geo-target-2",
 			"title" => __("Geo-target (multi-country)"),
-			"description" => __("Show content to one or more selected countries, including an 'All other countries' option"),
-			"render_template" => "template-parts/blocks/geo-target-2/geo-target-2.php",
+			"description" => __(
+				"Show content to one or more selected countries, including an 'All other countries' option"
+			),
+			"render_template" =>
+				"template-parts/blocks/geo-target-2/geo-target-2.php",
 			"category" => "hfj-design-system",
 			"supports" => [
 				"jsx" => true,
@@ -445,7 +448,8 @@ function my_acf_init_block_types()
 			"name" => "geo-redirect",
 			"title" => __("Geo-redirect"),
 			"description" => __("Redirect visitors to a country-specific URL"),
-			"render_template" => "template-parts/blocks/geo-redirect/geo-redirect.php",
+			"render_template" =>
+				"template-parts/blocks/geo-redirect/geo-redirect.php",
 			"category" => "hfj-design-system",
 		]);
 
@@ -701,6 +705,16 @@ function my_acf_init_block_types()
 			"render_template" => "template-parts/blocks/scroll-down/scroll-down.php",
 			"category" => "hfj-design-system",
 		]);
+
+		//register 50-days of Hope block
+		acf_register_block_type([
+			"name" => "days-of-hope",
+			"title" => __("50 Days of Hope Block"),
+			"description" => __(""),
+			"render_template" =>
+				"template-parts/blocks/days-of-hope/days-of-hope.php",
+			"category" => "hfj-design-system",
+		]);
 	}
 }
 
@@ -716,19 +730,6 @@ add_action("admin_enqueue_scripts", "register_acf_block_styles");
 
 function register_acf_block_styles(): void
 {
-	//allways enqueue block-title and block text
-	// wp_enqueue_style('block-text', get_template_directory_uri() . '/template-parts/blocks/block-text.css', array(), _S_VERSION);
-	// wp_enqueue_style('title-assets', get_template_directory_uri() . '/template-parts/blocks/block-title.css', array(), _S_VERSION);
-	// wp_enqueue_style('post_block_styles', get_template_directory_uri() . '/template-parts/blocks/posts.css', array(), _S_VERSION);
-
-	// if (has_block('acf/full-header')) {
-	//     wp_enqueue_style('full-header', get_template_directory_uri() . '/template-parts/blocks/full-header.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/two-col-title-and-text')) {
-	//     wp_enqueue_style('title_and_text_2col_assets', get_template_directory_uri() . '/template-parts/blocks/two-col-title-and-text.css', array(), _S_VERSION);
-	// }
-
 	if (has_block("acf/cards-thirds")) {
 		// wp_enqueue_style('card_third_styles', get_template_directory_uri() . '/template-parts/blocks/cards-thirds.css', array(), _S_VERSION);
 		wp_enqueue_script(
@@ -750,26 +751,6 @@ function register_acf_block_styles(): void
 			_S_VERSION
 		);
 	}
-
-	// if (has_block('acf/big-image-card')) {
-	//     // wp_enqueue_style('big_image_card_assets', get_template_directory_uri() . '/template-parts/blocks/big-image-card.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/button')) {
-	//     wp_enqueue_style('button_assets', get_template_directory_uri() . '/template-parts/blocks/button.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/cards-half')) {
-	//     wp_enqueue_style('card_half_assets', get_template_directory_uri() . '/template-parts/blocks/cards-half.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/event-header')) {
-	//     wp_enqueue_style('event_header_assets', get_template_directory_uri() . '/template-parts/blocks/event-header.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/event-categories')) {
-	//     wp_enqueue_style('event_categories_assets', get_template_directory_uri() . '/template-parts/blocks/event-categories.css', array(), _S_VERSION);
-	// }
 
 	if (has_block("acf/donate-block")) {
 		wp_enqueue_script(
@@ -797,41 +778,6 @@ function register_acf_block_styles(): void
 		]);
 	}
 
-	// if (has_block('acf/form-block')) {
-	//     wp_enqueue_style('form_block_styles', get_template_directory_uri() . '/template-parts/blocks/form-block.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/event-series')) {
-	//     wp_enqueue_style('event_series_styles', get_template_directory_uri() . '/template-parts/blocks/event-series.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/hfj-spacer')) {
-	//     wp_enqueue_style('spacer_assets', get_template_directory_uri() . '/template-parts/blocks/spacer.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/btc-event-series')) {
-	//     wp_enqueue_style('event_series_styles', get_template_directory_uri() . '/template-parts/blocks/event-series.css', array(), _S_VERSION);
-	//     wp_enqueue_style('btc_event_series_assets', get_template_directory_uri() . '/template-parts/blocks/btc-event-series.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/events')) {
-	//     wp_enqueue_style('events_styles', get_template_directory_uri() . '/template-parts/blocks/events.css', array(), _S_VERSION);
-	//     wp_enqueue_style('event_series_styles', get_template_directory_uri() . '/template-parts/blocks/event-series.css', array(), _S_VERSION);
-	//     wp_enqueue_style('btc_event_series_assets', get_template_directory_uri() . '/template-parts/blocks/btc-event-series.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/btc-header')) {
-	//     wp_enqueue_style('btc_header_styles', get_template_directory_uri() . '/template-parts/blocks/btc-header.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/image-and-text')) {
-	//     wp_enqueue_style('image_text_styles', get_template_directory_uri() . '/template-parts/blocks/image-and-text.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/image')) {
-	//     wp_enqueue_style('image_styles', get_template_directory_uri() . '/template-parts/blocks/image.css', array(), _S_VERSION);
-	// }
-
 	if (has_block("acf/dropdown")) {
 		// wp_enqueue_style('dropdown_styles', get_template_directory_uri() . '/template-parts/blocks/dropdown.css', array(), _S_VERSION);
 		wp_enqueue_script(
@@ -842,18 +788,6 @@ function register_acf_block_styles(): void
 			_S_VERSION
 		);
 	}
-
-	// if (has_block('acf/social')) {
-	//     wp_enqueue_style('social_styles', get_template_directory_uri() . '/template-parts/blocks/social.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/geo-target')) {
-	//     wp_enqueue_style('geo_target_styles', get_template_directory_uri() . '/template-parts/blocks/geo-target.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/cta-grid')) {
-	//     wp_enqueue_style('cta_grid_styles', get_template_directory_uri() . '/template-parts/blocks/cta-grid.css', array(), _S_VERSION);
-	// }
 
 	if (has_block("acf/cards-quarter")) {
 		// wp_enqueue_style('cards_quarter_styles', get_template_directory_uri() . '/template-parts/blocks/cards-quarter.css', array(), _S_VERSION);
@@ -866,10 +800,6 @@ function register_acf_block_styles(): void
 		);
 	}
 
-	// if (has_block('acf/posts-block')) {
-	//     wp_enqueue_style('post_block_styles', get_template_directory_uri() . '/template-parts/blocks/posts.css', array(), _S_VERSION);
-	// }
-
 	if (has_block("acf/accordion")) {
 		// wp_enqueue_style('accordion_styles', get_template_directory_uri() . '/template-parts/blocks/accordion.css', array(), _S_VERSION);
 		wp_enqueue_script(
@@ -880,28 +810,4 @@ function register_acf_block_styles(): void
 			_S_VERSION
 		);
 	}
-
-	// if (has_block('acf/featured-stories')) {
-	//     wp_enqueue_style('featured_stories_styles', get_template_directory_uri() . '/template-parts/blocks/featured-stories.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/carousel')) {
-	//     wp_enqueue_style('carousel_styles', get_template_directory_uri() . '/template-parts/blocks/carousel.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/grid-break') && (!is_admin())) {
-	//     wp_enqueue_style('grid_break_styles', get_template_directory_uri() . '/template-parts/blocks/grid-break.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/grid-block')) {
-	//     wp_enqueue_style('grid_block_styles', get_template_directory_uri() . '/template-parts/blocks/grid-block.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/resources-block')) {
-	//     wp_enqueue_style('resources_block_styles', get_template_directory_uri() . '/template-parts/blocks/resources-block.css', array(), _S_VERSION);
-	// }
-
-	// if (has_block('acf/careers-block')) {
-	//     wp_enqueue_style('careers_block_styles', get_template_directory_uri() . '/template-parts/blocks/careers.css', array(), _S_VERSION);
-	// }
 }
