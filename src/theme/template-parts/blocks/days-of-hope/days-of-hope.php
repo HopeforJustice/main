@@ -41,7 +41,7 @@
         We choose to give our time and energy so others can live in freedom and dignity.</p>
         <div class="days-of-hope__buttons">
 
-            <a href="https://campaigns.hopeforjustice.org/summer/?tlxs=campaignblockdonatebtn&tlxm=organic&tlxc=2026_summer&utm_source=campaignblockdonatebtn&utm_medium=organic&utm_campaign=2026_summer#donate" class="days-of-hope__button days-of-hope__button--donate"><div>Donate</div></a>
+            <a href="https://campaigns.hopeforjustice.org/summer/?tlxs=campaignblockdonatebtn&tlxm=organic&tlxc=2026_summer&utm_source=campaignblockdonatebtn&utm_medium=organic&utm_campaign=2026_summer#donate" class="days-of-hope__button days-of-hope__button--donate"><div>Give</div></a>
             <a href="https://campaigns.hopeforjustice.org/summer/?tlxs=campaignblockfundraisebtn&tlxm=organic&tlxc=2026_summer&utm_source=campaignblockfundraisebtn&utm_medium=organic&utm_campaign=2026_summer#fundraiseforfreedom" class="days-of-hope__button"><div>Fundraise</div></a>
             <div class="days-of-hope__red-star days-of-hope__decorative-svg"><img alt="decorative" src="<?php echo get_template_directory_uri() .
             	"/assets/img/red-star.svg"; ?>"></div>
