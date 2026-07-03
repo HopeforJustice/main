@@ -6,7 +6,7 @@
  * @package Hope_for_Justice_2022
  */
 
-get_header('', array('page_class' => 'site--full campaign-page')); ?>
+get_header("", ["page_class" => "site--full campaign-page"]); ?>
 
 <main style="background-color: #212322;" id="main" class="site-main men-are-victims loading" role="main">
 
@@ -29,7 +29,7 @@ get_header('', array('page_class' => 'site--full campaign-page')); ?>
 
 		<h2 class="gsapReveal font-fk men-are-victims__title men-are-victims__title--a">Over 22.8 million victims of modern slavery are men</h2>
 
-		<div data-toggle="modal" data-target="#video-modal" data-src="https://player.vimeo.com/video/721431463?h=abdb8c870e&badge=0&autopause=0&player_id=0&app_id=58479%22&autoplay=1" class="video-trigger men-are-victims__video gsapReveal" style="background-image: url('https://hopeforjustice.org/wp-content/uploads/2022/06/Video-Preview-1.jpg');">
+		<div data-toggle="modal" data-target="#video-modal" data-src="https://www.youtube.com/embed/PLkb_LKtQEQ?si=dojwIjdEYcN09NBO&autoplay=1" class="video-trigger men-are-victims__video gsapReveal" style="background-image: url('https://hopeforjustice.org/wp-content/uploads/2022/06/Video-Preview-1.jpg');">
 			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 36">
 				<path id="Polygon_2" data-name="Polygon 2" d="M16.257,3.1a2,2,0,0,1,3.486,0l14.58,25.921A2,2,0,0,1,32.58,32H3.42a2,2,0,0,1-1.743-2.981Z" transform="translate(32) rotate(90)" fill="#fff" opacity="0.88" />
 			</svg>
@@ -59,7 +59,9 @@ get_header('', array('page_class' => 'site--full campaign-page')); ?>
 		<div class="men-are-victims__cta gsapStagger">
 			<a id="donateButton" href="https://hopeforjustice.org/donate/?utm_source=mavPage&utm_medium=landingPage&utm_campaign=MAV23" class="men-are-victims__cta-donate cta">Donate</a>
 			<a href="/resources-and-statistics/" id="resources" class="men-are-victims__cta-download cta">Browse resources</a>
-			<div class="men-are-victims__cta-form cta"><!-- 39 on live 33 local --><?php echo do_shortcode('[gravityform id="39" title="false"]') ?></div>
+			<div class="men-are-victims__cta-form cta"><!-- 39 on live 33 local --><?php echo do_shortcode(
+   	'[gravityform id="39" title="false"]'
+   ); ?></div>
 		</div>
 
 		<div class="men-are-victims__block-content"><?php the_content(); ?></div>
@@ -151,7 +153,9 @@ get_header('', array('page_class' => 'site--full campaign-page')); ?>
 				We want to raise awareness about modern slavery across the world and educate more people on the issue, so that they can spot the signs and play a part in ending human trafficking.
 			</p>
 			<!-- 39 on live 33 local-->
-			<div class="men-are-victims__flex-item men-are-victims__cta-form gsapReveal"><?php echo do_shortcode('[gravityform id="39" title="false"]') ?></div>
+			<div class="men-are-victims__flex-item men-are-victims__cta-form gsapReveal"><?php echo do_shortcode(
+   	'[gravityform id="39" title="false"]'
+   ); ?></div>
 		</div>
 
 
@@ -168,14 +172,10 @@ get_header('', array('page_class' => 'site--full campaign-page')); ?>
 -- video modal
 -- 
 -->
-<?php get_template_part(
-	'partials/content',
-	'modal',
-	array(
-		'type' => 'video',
-		'id' => 'video-modal'
-	)
-); ?>
+<?php get_template_part("partials/content", "modal", [
+	"type" => "video",
+	"id" => "video-modal",
+]); ?>
 
 
 
