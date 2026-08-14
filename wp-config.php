@@ -103,10 +103,16 @@ if (WP_LOCAL_SERVER) {
 	define("WP_DEBUG_DISPLAY", true);
 	define("SCRIPT_DEBUG", true);
 	define("SAVEQUERIES", true);
-	define("WP_SITEURL", "http://" . $_SERVER["SERVER_NAME"] . "/core");
-	define("WP_HOME", "http://" . $_SERVER["HTTP_HOST"]);
+	$scheme =
+		(!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] !== "off") ||
+		(!empty($_SERVER["HTTP_X_FORWARDED_PROTO"]) &&
+			$_SERVER["HTTP_X_FORWARDED_PROTO"] === "https")
+			? "https://"
+			: "http://";
+	define("WP_SITEURL", $scheme . $_SERVER["SERVER_NAME"] . "/core");
+	define("WP_HOME", $scheme . $_SERVER["HTTP_HOST"]);
 	define("WP_CONTENT_DIR", $_SERVER["DOCUMENT_ROOT"] . "/build");
-	define("WP_CONTENT_URL", "http://" . $_SERVER["HTTP_HOST"] . "/build");
+	define("WP_CONTENT_URL", $scheme . $_SERVER["HTTP_HOST"] . "/build");
 } else {
 	define("WP_DEBUG", false);
 } /*

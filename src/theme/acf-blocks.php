@@ -19,9 +19,7 @@ function my_acf_init_block_types()
 		acf_register_block_type([
 			"name" => "full-header",
 			"title" => __("Full header"),
-			"description" => __(
-				"Custom HfJ block. Full header for the top of a page"
-			),
+			"description" => __("Custom HfJ block. Full header for the top of a page"),
 			"render_template" => "template-parts/blocks/full-header/full-header.php",
 			"category" => "hfj-design-system",
 			"icon" => "cover-image",
@@ -85,8 +83,7 @@ function my_acf_init_block_types()
 			"name" => "two-col-title-and-text",
 			"title" => __("Title and text - 2 columns"),
 			"description" => __("Custom HfJ block. Two titles and two bits of text."),
-			"render_template" =>
-				"template-parts/blocks/title-and-text/two-col-title-and-text.php",
+			"render_template" => "template-parts/blocks/title-and-text/two-col-title-and-text.php",
 			"category" => "hfj-design-system",
 			"icon" => "text",
 			"enqueue_assets" => "title_and_text_2col_assets",
@@ -101,9 +98,7 @@ function my_acf_init_block_types()
 		acf_register_block_type([
 			"name" => "cards-thirds",
 			"title" => __("Cards - Thirds"),
-			"description" => __(
-				"Custom HfJ cards. Best to have either 3 or 6 cards."
-			),
+			"description" => __("Custom HfJ cards. Best to have either 3 or 6 cards."),
 			"render_template" => "template-parts/blocks/cards/cards-thirds.php",
 			"category" => "hfj-design-system",
 			"icon" => "cover-image",
@@ -115,8 +110,7 @@ function my_acf_init_block_types()
 			// wp_enqueue_style('card_third_styles', get_template_directory_uri() . '/template-parts/blocks/cards-thirds.css', array(), _S_VERSION);
 			wp_enqueue_script(
 				"card_scripts",
-				get_template_directory_uri() .
-					"/template-parts/blocks/cards/cards-scripts.js",
+				get_template_directory_uri() . "/template-parts/blocks/cards/cards-scripts.js",
 				[],
 				_S_VERSION
 			);
@@ -158,9 +152,7 @@ function my_acf_init_block_types()
 		acf_register_block_type([
 			"name" => "cards-half",
 			"title" => __("Cards - Halves"),
-			"description" => __(
-				"Custom HfJ cards. Best to have either a multiple of 2."
-			),
+			"description" => __("Custom HfJ cards. Best to have either a multiple of 2."),
 			"render_template" => "template-parts/blocks/cards/cards-half.php",
 			"category" => "hfj-design-system",
 			"icon" => "cover-image",
@@ -179,8 +171,7 @@ function my_acf_init_block_types()
 			"description" => __(
 				"Use to show the title, time and location of the current event post"
 			),
-			"render_template" =>
-				"template-parts/blocks/event-header/event-header.php",
+			"render_template" => "template-parts/blocks/event-header/event-header.php",
 			"category" => "hfj-design-system",
 			"enqueue_assets" => "event_header_assets",
 		]);
@@ -197,8 +188,7 @@ function my_acf_init_block_types()
 			"description" => __(
 				"Use to show the title, time and location of the current event post"
 			),
-			"render_template" =>
-				"template-parts/blocks/event-categories/event-categories.php",
+			"render_template" => "template-parts/blocks/event-categories/event-categories.php",
 			"category" => "hfj-design-system",
 			"enqueue_assets" => "event_header_assets",
 		]);
@@ -213,8 +203,7 @@ function my_acf_init_block_types()
 			"name" => "donate-block",
 			"title" => __("Donate block"),
 			"description" => __("International donate widget"),
-			"render_template" =>
-				"template-parts/blocks/donate-block/donate-block.php",
+			"render_template" => "template-parts/blocks/donate-block/donate-block.php",
 			"category" => "hfj-design-system",
 			"enqueue_assets" => "donate_block_assets",
 			"supports" => [
@@ -239,9 +228,7 @@ function my_acf_init_block_types()
 		acf_register_block_type([
 			"name" => "form-block",
 			"title" => __("Form"),
-			"description" => __(
-				"Custom form block. Put a gravity form inside this block"
-			),
+			"description" => __("Custom form block. Put a gravity form inside this block"),
 			"render_template" => "template-parts/blocks/form-block/form-block.php",
 			"category" => "hfj-design-system",
 			"enqueue_assets" => "form_block_assets",
@@ -262,8 +249,7 @@ function my_acf_init_block_types()
 			"description" => __(
 				"Shows upcoming events in a category with an advert for that category"
 			),
-			"render_template" =>
-				"template-parts/blocks/event-series/event-series.php",
+			"render_template" => "template-parts/blocks/event-series/event-series.php",
 			"category" => "hfj-design-system",
 			"enqueue_assets" => "event_series_assets",
 			"supports" => [
@@ -296,8 +282,7 @@ function my_acf_init_block_types()
 			"name" => "btc-event-series",
 			"title" => __("BTC Event series"),
 			"description" => __("Displays BTC events"),
-			"render_template" =>
-				"template-parts/blocks/btc-event-series/btc-event-series.php",
+			"render_template" => "template-parts/blocks/btc-event-series/btc-event-series.php",
 			"category" => "hfj-design-system",
 			"enqueue_assets" => "btc_event_series_assets",
 		]);
@@ -345,8 +330,7 @@ function my_acf_init_block_types()
 			"name" => "image-and-text",
 			"title" => __("Image and Text"),
 			"description" => __("Block for image and text"),
-			"render_template" =>
-				"template-parts/blocks/image-and-text/image-and-text.php",
+			"render_template" => "template-parts/blocks/image-and-text/image-and-text.php",
 			"category" => "hfj-design-system",
 			"enqueue_assets" => "image_text_assets",
 		]);
@@ -389,8 +373,7 @@ function my_acf_init_block_types()
 			// wp_enqueue_style('dropdown_styles', get_template_directory_uri() . '/template-parts/blocks/dropdown.css', array(), _S_VERSION);
 			wp_enqueue_script(
 				"dropdown_scripts",
-				get_template_directory_uri() .
-					"/template-parts/blocks/dropdown/dropdown.js",
+				get_template_directory_uri() . "/template-parts/blocks/dropdown/dropdown.js",
 				["jquery"],
 				_S_VERSION
 			);
@@ -435,8 +418,7 @@ function my_acf_init_block_types()
 			"description" => __(
 				"Show content to one or more selected countries, including an 'All other countries' option"
 			),
-			"render_template" =>
-				"template-parts/blocks/geo-target-2/geo-target-2.php",
+			"render_template" => "template-parts/blocks/geo-target-2/geo-target-2.php",
 			"category" => "hfj-design-system",
 			"supports" => [
 				"jsx" => true,
@@ -448,8 +430,7 @@ function my_acf_init_block_types()
 			"name" => "geo-redirect",
 			"title" => __("Geo-redirect"),
 			"description" => __("Redirect visitors to a country-specific URL"),
-			"render_template" =>
-				"template-parts/blocks/geo-redirect/geo-redirect.php",
+			"render_template" => "template-parts/blocks/geo-redirect/geo-redirect.php",
 			"category" => "hfj-design-system",
 		]);
 
@@ -457,9 +438,7 @@ function my_acf_init_block_types()
 		acf_register_block_type([
 			"name" => "video-modal",
 			"title" => __("Video modal"),
-			"description" => __(
-				"Video modal no configuration needed but link must be setup"
-			),
+			"description" => __("Video modal no configuration needed but link must be setup"),
 			"render_template" => "template-parts/blocks/video-modal/video-modal.php",
 			"category" => "hfj-design-system",
 		]);
@@ -494,8 +473,7 @@ function my_acf_init_block_types()
 			// wp_enqueue_style('card_quarter_styles', get_template_directory_uri() . '/template-parts/blocks/cards-quarter.css', array(), _S_VERSION);
 			wp_enqueue_script(
 				"card_scripts",
-				get_template_directory_uri() .
-					"/template-parts/blocks/cards/cards-scripts.js",
+				get_template_directory_uri() . "/template-parts/blocks/cards/cards-scripts.js",
 				[],
 				_S_VERSION
 			);
@@ -534,8 +512,7 @@ function my_acf_init_block_types()
 			// wp_enqueue_style('accordion_styles', get_template_directory_uri() . '/template-parts/blocks/accordion.css', array(), _S_VERSION);
 			wp_enqueue_script(
 				"accordion_scripts",
-				get_template_directory_uri() .
-					"/template-parts/blocks/accordion/accordion.js",
+				get_template_directory_uri() . "/template-parts/blocks/accordion/accordion.js",
 				["jquery"],
 				_S_VERSION
 			);
@@ -546,8 +523,7 @@ function my_acf_init_block_types()
 			"name" => "accordion-header",
 			"title" => __("Accordion Header"),
 			"description" => __("Accordion header block"),
-			"render_template" =>
-				"template-parts/blocks/accordion/accordion-header.php",
+			"render_template" => "template-parts/blocks/accordion/accordion-header.php",
 			"category" => "hfj-design-system",
 			"supports" => [
 				"jsx" => true,
@@ -559,8 +535,7 @@ function my_acf_init_block_types()
 			"name" => "accordion-content",
 			"title" => __("Accordion Content"),
 			"description" => __("Accordion content block"),
-			"render_template" =>
-				"template-parts/blocks/accordion/accordion-content.php",
+			"render_template" => "template-parts/blocks/accordion/accordion-content.php",
 			"category" => "hfj-design-system",
 			"supports" => [
 				"jsx" => true,
@@ -572,8 +547,7 @@ function my_acf_init_block_types()
 			"name" => "featured-stories",
 			"title" => __("Featured Stories"),
 			"description" => __("Featured Stories block"),
-			"render_template" =>
-				"template-parts/blocks/featured-stories/featured-stories.php",
+			"render_template" => "template-parts/blocks/featured-stories/featured-stories.php",
 			"category" => "hfj-design-system",
 		]);
 
@@ -640,8 +614,7 @@ function my_acf_init_block_types()
 			"name" => "publications-block",
 			"title" => __("Publications Block"),
 			"description" => __(""),
-			"render_template" =>
-				"template-parts/blocks/publications/publications.php",
+			"render_template" => "template-parts/blocks/publications/publications.php",
 			"category" => "hfj-design-system",
 		]);
 
@@ -663,8 +636,7 @@ function my_acf_init_block_types()
 			"name" => "gpf-block",
 			"title" => __("GPF Block"),
 			"description" => __(""),
-			"render_template" =>
-				"template-parts/blocks/gpf-documents/gpf-documents.php",
+			"render_template" => "template-parts/blocks/gpf-documents/gpf-documents.php",
 			"category" => "hfj-design-system",
 		]);
 
@@ -682,8 +654,7 @@ function my_acf_init_block_types()
 			"name" => "pre-donation",
 			"title" => __("Pre Donation Block"),
 			"description" => __("Used to ask the user how they would like to donate"),
-			"render_template" =>
-				"template-parts/blocks/pre-donation/pre-donation.php",
+			"render_template" => "template-parts/blocks/pre-donation/pre-donation.php",
 			"category" => "hfj-design-system",
 		]);
 
@@ -692,8 +663,7 @@ function my_acf_init_block_types()
 			"name" => "other-ways-to-give",
 			"title" => __("Other ways to give block"),
 			"description" => __(""),
-			"render_template" =>
-				"template-parts/blocks/other-ways-to-give/other-ways-to-give.php",
+			"render_template" => "template-parts/blocks/other-ways-to-give/other-ways-to-give.php",
 			"category" => "hfj-design-system",
 		]);
 
@@ -711,8 +681,7 @@ function my_acf_init_block_types()
 			"name" => "days-of-hope",
 			"title" => __("50 Days of Hope Block"),
 			"description" => __(""),
-			"render_template" =>
-				"template-parts/blocks/days-of-hope/days-of-hope.php",
+			"render_template" => "template-parts/blocks/days-of-hope/days-of-hope.php",
 			"category" => "hfj-design-system",
 		]);
 	}
@@ -734,8 +703,7 @@ function register_acf_block_styles(): void
 		// wp_enqueue_style('card_third_styles', get_template_directory_uri() . '/template-parts/blocks/cards-thirds.css', array(), _S_VERSION);
 		wp_enqueue_script(
 			"card_scripts",
-			get_template_directory_uri() .
-				"/template-parts/blocks/cards/cards-scripts.js",
+			get_template_directory_uri() . "/template-parts/blocks/cards/cards-scripts.js",
 			[],
 			_S_VERSION
 		);
@@ -745,8 +713,7 @@ function register_acf_block_styles(): void
 		// wp_enqueue_style('card_third_styles', get_template_directory_uri() . '/template-parts/blocks/cards-thirds.css', array(), _S_VERSION);
 		wp_enqueue_script(
 			"scroll_down",
-			get_template_directory_uri() .
-				"/template-parts/blocks/scroll-down/scroll-down.js",
+			get_template_directory_uri() . "/template-parts/blocks/scroll-down/scroll-down.js",
 			[],
 			_S_VERSION
 		);
@@ -755,8 +722,7 @@ function register_acf_block_styles(): void
 	if (has_block("acf/donate-block")) {
 		wp_enqueue_script(
 			"donate_block_scripts",
-			get_template_directory_uri() .
-				"/template-parts/blocks/donate-block/donate-block.js",
+			get_template_directory_uri() . "/template-parts/blocks/donate-block/donate-block.js",
 			[],
 			_S_VERSION
 		);
@@ -765,8 +731,7 @@ function register_acf_block_styles(): void
 	if (has_block("acf/resources-block")) {
 		wp_enqueue_script(
 			"resources_block_scripts",
-			get_template_directory_uri() .
-				"/template-parts/blocks/resources/resources.js",
+			get_template_directory_uri() . "/template-parts/blocks/resources/resources.js",
 			[],
 			_S_VERSION,
 			true
@@ -782,8 +747,7 @@ function register_acf_block_styles(): void
 		// wp_enqueue_style('dropdown_styles', get_template_directory_uri() . '/template-parts/blocks/dropdown.css', array(), _S_VERSION);
 		wp_enqueue_script(
 			"dropdown_scripts",
-			get_template_directory_uri() .
-				"/template-parts/blocks/dropdown/dropdown.js",
+			get_template_directory_uri() . "/template-parts/blocks/dropdown/dropdown.js",
 			["jquery"],
 			_S_VERSION
 		);
@@ -793,8 +757,7 @@ function register_acf_block_styles(): void
 		// wp_enqueue_style('cards_quarter_styles', get_template_directory_uri() . '/template-parts/blocks/cards-quarter.css', array(), _S_VERSION);
 		wp_enqueue_script(
 			"card_scripts",
-			get_template_directory_uri() .
-				"/template-parts/blocks/cards/cards-scripts.js",
+			get_template_directory_uri() . "/template-parts/blocks/cards/cards-scripts.js",
 			[],
 			_S_VERSION
 		);
@@ -804,8 +767,7 @@ function register_acf_block_styles(): void
 		// wp_enqueue_style('accordion_styles', get_template_directory_uri() . '/template-parts/blocks/accordion.css', array(), _S_VERSION);
 		wp_enqueue_script(
 			"accordion_scripts",
-			get_template_directory_uri() .
-				"/template-parts/blocks/accordion/accordion.js",
+			get_template_directory_uri() . "/template-parts/blocks/accordion/accordion.js",
 			["jquery"],
 			_S_VERSION
 		);

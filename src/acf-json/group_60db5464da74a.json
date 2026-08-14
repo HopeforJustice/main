@@ -6,6 +6,7 @@
             "key": "field_60db5510d45fa",
             "label": "General Text",
             "name": "general_text",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_60e349b1842e0",
             "label": "Choose Between Field",
             "name": "choose_between_field",
+            "aria-label": "",
             "type": "radio",
             "instructions": "",
             "required": 1,
@@ -49,6 +51,7 @@
             "key": "field_60db54dad45f9",
             "label": "Upload Pdf",
             "name": "upload_pdf",
+            "aria-label": "",
             "type": "file",
             "instructions": "",
             "required": 1,
@@ -80,6 +83,7 @@
             "key": "field_60e349a8842df",
             "label": "External Link",
             "name": "external_link",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 1,
@@ -113,13 +117,6 @@
             {
                 "param": "post_taxonomy",
                 "operator": "==",
-                "value": "categories:annual-reports"
-            }
-        ],
-        [
-            {
-                "param": "post_taxonomy",
-                "operator": "==",
                 "value": "categories:policies-documents"
             }
         ],
@@ -136,6 +133,20 @@
                 "operator": "==",
                 "value": "categories:us-financial-reports"
             }
+        ],
+        [
+            {
+                "param": "post_taxonomy",
+                "operator": "==",
+                "value": "categories:annual-reviews"
+            }
+        ],
+        [
+            {
+                "param": "post_taxonomy",
+                "operator": "==",
+                "value": "categories:modern-slavery-statement-archive"
+            }
         ]
     ],
     "menu_order": 0,
@@ -144,7 +155,11 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
-    "modified": 1636642053
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1670860430
 }

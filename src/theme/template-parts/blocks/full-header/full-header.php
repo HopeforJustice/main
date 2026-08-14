@@ -21,6 +21,7 @@ if (!empty($block["className"])) {
 }
 
 $hasGradient = get_field("has_gradient");
+$hasGradientBottom = get_field("has_gradient_bottom");
 $gradientColor = get_field("gradient_color");
 $gradientColorB = get_field("gradient_color_b");
 $dont_split_content = get_field("dont_split_content");
@@ -40,8 +41,8 @@ if ($image) {
 $image_src = wp_get_attachment_image_src($id, "full");
 
 $wrapper_class = "full-header";
-if (!$dont_split_content) {
-	$wrapper_class .= " full-header--split-on-mobile";
+if ($dont_split_content) {
+	$wrapper_class .= " full-header--dont-split";
 }
 $wrapper_class .= " " . $class_name . " hfj-block";
 $image_background_position = $left . "% " . $top . "%";
@@ -82,6 +83,11 @@ $content_style =
 
         <?php if ($hasGradient) { ?>
             <div class="full-header__gradient full-header__gradient--left" style="<?php echo $gradient_style; ?>">
+            </div>
+        <?php } ?>
+
+        <?php if ($hasGradientBottom) { ?>
+            <div class="full-header__gradient full-header__gradient--bottom" style="<?php echo $gradient_style; ?>">
             </div>
         <?php } ?>
 

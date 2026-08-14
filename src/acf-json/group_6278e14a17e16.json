@@ -6,6 +6,7 @@
             "key": "field_6278e176a0ad8",
             "label": "Subtitle",
             "name": "subtitle",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_6278e186a0ad9",
             "label": "Profile Image",
             "name": "profile_image",
+            "aria-label": "",
             "type": "image",
             "instructions": "",
             "required": 0,
@@ -49,6 +51,7 @@
             "key": "field_6278e1b0a0ada",
             "label": "Second Title",
             "name": "second_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -68,6 +71,7 @@
             "key": "field_6278e1c3a0adb",
             "label": "About Content",
             "name": "about_content",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "",
             "required": 0,
@@ -87,6 +91,7 @@
             "key": "field_6278e1f0a0adc",
             "label": "Pull quote",
             "name": "pull_quote",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -106,6 +111,7 @@
             "key": "field_6278e208a0add",
             "label": "Video source",
             "name": "video_source",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -125,6 +131,7 @@
             "key": "field_6278e21ca0ade",
             "label": "Video Image",
             "name": "video_image",
+            "aria-label": "",
             "type": "image",
             "instructions": "",
             "required": 0,
@@ -149,6 +156,7 @@
             "key": "field_6278e3fe0028f",
             "label": "Video Title",
             "name": "video_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -168,6 +176,7 @@
             "key": "field_6278e2baa0adf",
             "label": "Video text",
             "name": "video_text",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "",
             "required": 0,
@@ -189,7 +198,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-natalie-grant.php"
+                "value": "templates/page-natalie-grant.php"
             }
         ]
     ],
@@ -202,5 +211,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "modified": 1652089865
 }

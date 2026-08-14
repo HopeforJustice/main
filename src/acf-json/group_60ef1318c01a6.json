@@ -6,6 +6,7 @@
             "key": "field_60ef15c4cb33f",
             "label": "Title Color",
             "name": "title_color",
+            "aria-label": "",
             "type": "color_picker",
             "instructions": "",
             "required": 0,
@@ -15,12 +16,18 @@
                 "class": "",
                 "id": ""
             },
-            "default_value": "#000"
+            "default_value": "#000",
+            "enable_opacity": false,
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
         },
         {
             "key": "field_60ef163f35cb2",
             "label": "End Result",
             "name": "end_result",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "",
             "required": 0,
@@ -52,7 +59,11 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "modified": 1636642091
 }

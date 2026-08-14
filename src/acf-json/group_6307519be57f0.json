@@ -6,6 +6,7 @@
             "key": "field_6307519bee133",
             "label": "Cards",
             "name": "half_cards",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "Add some cards to this block.",
             "required": 0,
@@ -19,12 +20,14 @@
             "min": 0,
             "max": 0,
             "layout": "block",
-            "button_label": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_6307519bf13bf",
                     "label": "Image",
                     "name": "image",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -43,12 +46,14 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "0.2",
-                    "mime_types": ""
+                    "mime_types": "",
+                    "parent_repeater": "field_6307519bee133"
                 },
                 {
                     "key": "field_6307519bf13e3",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -62,12 +67,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_6307519bee133"
                 },
                 {
                     "key": "field_6307519bf1401",
                     "label": "Text",
                     "name": "text",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -81,12 +88,14 @@
                     "placeholder": "",
                     "maxlength": "",
                     "rows": "",
-                    "new_lines": ""
+                    "new_lines": "",
+                    "parent_repeater": "field_6307519bee133"
                 },
                 {
                     "key": "field_6307519bf1409",
                     "label": "Link",
                     "name": "link",
+                    "aria-label": "",
                     "type": "link",
                     "instructions": "",
                     "required": 0,
@@ -96,7 +105,8 @@
                         "class": "",
                         "id": ""
                     },
-                    "return_format": "url"
+                    "return_format": "url",
+                    "parent_repeater": "field_6307519bee133"
                 }
             ]
         },
@@ -104,6 +114,7 @@
             "key": "field_6307519bee16a",
             "label": "Block margin bottom mobile",
             "name": "block_margin_bottom_mobile",
+            "aria-label": "",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -131,12 +142,15 @@
             "ui": 0,
             "return_format": "value",
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         },
         {
             "key": "field_6307519bee197",
             "label": "Block margin bottom desktop",
             "name": "block_margin_bottom_desktop",
+            "aria-label": "",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -164,7 +178,9 @@
             "ui": 0,
             "return_format": "value",
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         }
     ],
     "location": [
@@ -172,7 +188,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/cards-half"
+                "value": "acf/cards-half"
             }
         ]
     ],
@@ -185,5 +201,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1661425354
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1670860417
 }

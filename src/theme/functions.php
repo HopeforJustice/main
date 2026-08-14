@@ -1456,34 +1456,10 @@ add_filter(
  *
  */
 
-// save json
-
-add_filter("acf/settings/save_json", "my_acf_json_save_point");
-
-function my_acf_json_save_point($path)
-{
-	// update path
-	$path = get_template_directory_uri() . "/acf-json";
-
-	// return
-	return $path;
-}
-
-// load json
-
-add_filter("acf/settings/load_json", "my_acf_json_load_point");
-
-function my_acf_json_load_point($paths)
-{
-	// remove original path (optional)
-	unset($paths[0]);
-
-	// append path
-	$paths[] = get_template_directory_uri() . "/acf-json";
-
-	// return
-	return $paths;
-}
+// ACF's own default already points save_json/load_json at
+// get_stylesheet_directory() . '/acf-json' (see
+// includes/local-json.php in the ACF plugin), which is exactly this
+// theme's acf-json folder. No override needed here.
 
 //remove inner blocks container on front end
 add_filter(

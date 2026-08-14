@@ -6,6 +6,7 @@
             "key": "field_60e332a777ad4",
             "label": "Choose Between",
             "name": "choose_between",
+            "aria-label": "",
             "type": "radio",
             "instructions": "",
             "required": 0,
@@ -30,6 +31,7 @@
             "key": "field_60e331d7b8f87",
             "label": "Upload Pdf",
             "name": "upload_pdf",
+            "aria-label": "",
             "type": "file",
             "instructions": "",
             "required": 1,
@@ -59,9 +61,10 @@
         },
         {
             "key": "field_60e33200b8f88",
-            "label": "Link",
+            "label": "External Link",
             "name": "link",
-            "type": "text",
+            "aria-label": "",
+            "type": "url",
             "instructions": "",
             "required": 1,
             "conditional_logic": [
@@ -83,15 +86,13 @@
                 "id": ""
             },
             "default_value": "",
-            "placeholder": "",
-            "prepend": "",
-            "append": "",
-            "maxlength": ""
+            "placeholder": ""
         },
         {
             "key": "field_61b0e51ca30f3",
             "label": "Hide download symbol",
             "name": "no_download",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -123,7 +124,11 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
-    "modified": 1638983731
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1638982988
 }

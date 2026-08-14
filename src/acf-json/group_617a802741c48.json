@@ -6,6 +6,7 @@
             "key": "field_617a80912523c",
             "label": "Subtitle",
             "name": "subtitle",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -27,7 +28,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-thankyou.php"
+                "value": "templates/page-thankyou.php"
             }
         ]
     ],
@@ -37,7 +38,11 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "modified": 1636642093
 }

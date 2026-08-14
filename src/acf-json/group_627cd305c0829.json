@@ -6,6 +6,7 @@
             "key": "field_627cd330e7da3",
             "label": "Campaigns and Widgets",
             "name": "campaigns_and_widgets",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -19,12 +20,14 @@
             "min": 0,
             "max": 0,
             "layout": "table",
-            "button_label": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_627cd357e7da5",
                     "label": "Campaign name",
                     "name": "campaign_name",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -38,12 +41,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_627cd330e7da3"
                 },
                 {
                     "key": "field_627cd35ae7da6",
                     "label": "Widget Id",
                     "name": "widget_id",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -57,7 +62,8 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_627cd330e7da3"
                 }
             ]
         }
@@ -67,35 +73,35 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-guardian-uk.php"
+                "value": "templates/page-guardian-uk.php"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-guardian-usa.php"
+                "value": "templates/page-guardian-usa.php"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-one-off-norway.php"
+                "value": "templates/page-one-off-norway.php"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-one-off-uk.php"
+                "value": "templates/page-one-off-uk.php"
             }
         ],
         [
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-one-off-usa.php"
+                "value": "templates/page-one-off-usa.php"
             }
         ]
     ],
@@ -108,5 +114,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "modified": 1652878665
 }

@@ -6,6 +6,7 @@
             "key": "field_61efea29d887b",
             "label": "Hero content",
             "name": "hero_content",
+            "aria-label": "",
             "type": "wysiwyg",
             "instructions": "Content for above the fold",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_61f023f12bbd3",
             "label": "Modal Content",
             "name": "modal_content",
+            "aria-label": "",
             "type": "wysiwyg",
             "instructions": "",
             "required": 0,
@@ -46,7 +48,7 @@
             {
                 "param": "post_template",
                 "operator": "==",
-                "value": "templates\/page-simple-page.php"
+                "value": "templates/page-simple-page.php"
             }
         ]
     ],
@@ -59,5 +61,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "modified": 1643127818
 }

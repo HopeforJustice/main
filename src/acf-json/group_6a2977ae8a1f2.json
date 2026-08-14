@@ -1,0 +1,148 @@
+{
+    "key": "group_6a2977ae8a1f2",
+    "title": "Donate button url options",
+    "fields": [
+        {
+            "key": "field_6a2977aeb55ac",
+            "label": "Default link",
+            "name": "donate_url_default",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "/donate",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a297829b55ad",
+            "label": "UK",
+            "name": "donate_url_uk",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a29784db55ae",
+            "label": "USA (group)",
+            "name": "donate_url_usa",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "\"AG\",\r\n    \t\"AR\",\r\n    \t\"BB\",\r\n    \t\"BS\",\r\n    \t\"BO\",\r\n    \t\"BR\",\r\n    \t\"BZ\",\r\n    \t\"CA\",\r\n    \t\"CL\",\r\n    \t\"CO\",\r\n    \t\"CR\",\r\n    \t\"DO\",\r\n    \t\"DM\",\r\n    \t\"EC\",\r\n    \t\"KH\",\r\n    \t\"LC\",\r\n    \t\"GD\",\r\n    \t\"GF\",\r\n    \t\"GP\",\r\n    \t\"GT\",\r\n    \t\"GY\",\r\n    \t\"HN\",\r\n    \t\"HT\",\r\n    \t\"JM\",\r\n    \t\"MQ\",\r\n    \t\"MX\",\r\n    \t\"NI\",\r\n    \t\"PA\",\r\n    \t\"PE\",\r\n    \t\"PR\",\r\n    \t\"PY\",\r\n    \t\"SR\",\r\n    \t\"SV\",\r\n    \t\"TT\",\r\n    \t\"US\",\r\n    \t\"UM\",\r\n    \t\"UY\",\r\n    \t\"VC\",\r\n    \t\"VE\",\r\n    \t\"VI\",",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a297870b55af",
+            "label": "Norway",
+            "name": "donate_url_nok",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a297886b55b0",
+            "label": "Australia + NZ",
+            "name": "donate_url_aus",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6a2978b0b55b2",
+            "label": "EU (Group)",
+            "name": "donate_url_eur",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "\"AT\", // Austria\r\n    \t\"BE\", // Belgium\r\n    \t\"CY\", // Cyprus\r\n    \t\"EE\", // Estonia\r\n    \t\"FI\", // Finland\r\n    \t\"FR\", // France\r\n    \t\"DE\", // Germany\r\n    \t\"GR\", // Greece\r\n    \t\"IE\", // Ireland\r\n    \t\"IT\", // Italy\r\n    \t\"LV\", // Latvia\r\n    \t\"LT\", // Lithuania\r\n    \t\"LU\", // Luxembourg\r\n    \t\"MT\", // Malta\r\n    \t\"NL\", // Netherlands\r\n    \t\"PT\", // Portugal\r\n    \t\"SK\", // Slovakia\r\n    \t\"SI\", // Slovenia\r\n    \t\"ES\", // Spain",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1781099734
+}

@@ -6,6 +6,7 @@
             "key": "field_6166eec33abaa",
             "label": "Top section",
             "name": "top_section",
+            "aria-label": "",
             "type": "group",
             "instructions": "Use the main WYSWIG above for the content. \r\nUse featured image for the image.\r\nUse the page title for the title.",
             "required": 0,
@@ -21,6 +22,7 @@
                     "key": "field_6166e4b4a53a9",
                     "label": "Subtitle",
                     "name": "subtitle",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -40,6 +42,7 @@
                     "key": "field_6166ee9cd4e62",
                     "label": "Button Text",
                     "name": "button_text",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -59,6 +62,7 @@
                     "key": "field_6166e4cca53aa",
                     "label": "Video url",
                     "name": "video",
+                    "aria-label": "",
                     "type": "url",
                     "instructions": "",
                     "required": 0,
@@ -69,7 +73,7 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "placeholder": "https:\/\/player.vimeo.com\/video\/561295870"
+                    "placeholder": "https://player.vimeo.com/video/561295870"
                 }
             ]
         },
@@ -77,6 +81,7 @@
             "key": "field_6166f2d295aab",
             "label": "Statement and text",
             "name": "statement_and_text",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -92,6 +97,7 @@
                     "key": "field_6166f35d6286b",
                     "label": "Statement",
                     "name": "statement",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -111,6 +117,7 @@
                     "key": "field_6166f3736286c",
                     "label": "Text",
                     "name": "text",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -132,6 +139,7 @@
             "key": "field_616956196b177",
             "label": "CEO and message",
             "name": "image_and_text",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -147,6 +155,7 @@
                     "key": "field_6169562f6b178",
                     "label": "Image",
                     "name": "image",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -171,6 +180,7 @@
                     "key": "field_616956546b179",
                     "label": "Text",
                     "name": "text",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -190,6 +200,7 @@
                     "key": "field_61ccab342c264",
                     "label": "Linked in link",
                     "name": "linked_in_link",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -211,6 +222,7 @@
             "key": "field_61697f0d7aac0",
             "label": "Global Executive Team",
             "name": "global_exec",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -226,6 +238,7 @@
                     "key": "field_61697f72a90e8",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -245,6 +258,7 @@
                     "key": "field_61697fb6a90e9",
                     "label": "Subtitle",
                     "name": "subtitle",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -266,6 +280,7 @@
             "key": "field_61697ffba90ea",
             "label": "Global Executive Members",
             "name": "global_exec_members",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -279,12 +294,14 @@
             "min": 0,
             "max": 0,
             "layout": "row",
-            "button_label": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_61698033a90eb",
                     "label": "Image",
                     "name": "image",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -303,12 +320,14 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": ""
+                    "mime_types": "",
+                    "parent_repeater": "field_61697ffba90ea"
                 },
                 {
                     "key": "field_6169806ea90ec",
                     "label": "Text",
                     "name": "text",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -322,12 +341,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_61697ffba90ea"
                 },
                 {
                     "key": "field_61a4f5fa0ebf3",
                     "label": "Linked in link",
                     "name": "linked_in_link",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -341,7 +362,8 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_61697ffba90ea"
                 }
             ]
         },
@@ -349,6 +371,7 @@
             "key": "field_61699167f6fe5",
             "label": "Country leadership",
             "name": "country_leadership",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -364,6 +387,7 @@
                     "key": "field_61699167f6fe6",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -385,6 +409,7 @@
             "key": "field_61699354f6fe8",
             "label": "Country leadership members",
             "name": "country_leadership_members",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -398,12 +423,14 @@
             "min": 0,
             "max": 0,
             "layout": "row",
-            "button_label": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_61699354f6fe9",
                     "label": "Image",
                     "name": "image",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -422,12 +449,14 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": ""
+                    "mime_types": "",
+                    "parent_repeater": "field_61699354f6fe8"
                 },
                 {
                     "key": "field_61699354f6fea",
                     "label": "Text",
                     "name": "text",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -441,12 +470,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_61699354f6fe8"
                 },
                 {
                     "key": "field_61ccab612c265",
                     "label": "Linked in link",
                     "name": "linked_in_link",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -460,7 +491,8 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_61699354f6fe8"
                 }
             ]
         },
@@ -468,6 +500,7 @@
             "key": "field_61699ce2b03ad",
             "label": "Senior Leadership",
             "name": "senior_leadership",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -483,6 +516,7 @@
                     "key": "field_61699ce2b03ae",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -504,6 +538,7 @@
             "key": "field_61699cebb03af",
             "label": "Senior leadership members",
             "name": "senior_leadership_members",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -517,12 +552,14 @@
             "min": 0,
             "max": 0,
             "layout": "row",
-            "button_label": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_61699cebb03b0",
                     "label": "Image",
                     "name": "image",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -541,12 +578,14 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": ""
+                    "mime_types": "",
+                    "parent_repeater": "field_61699cebb03af"
                 },
                 {
                     "key": "field_61699cebb03b1",
                     "label": "Text",
                     "name": "text",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -560,12 +599,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_61699cebb03af"
                 },
                 {
                     "key": "field_61ccab712c266",
                     "label": "Linked in link",
                     "name": "linked_in_link",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -579,7 +620,8 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_61699cebb03af"
                 }
             ]
         },
@@ -587,6 +629,7 @@
             "key": "field_61699d00b03b5",
             "label": "Trustees",
             "name": "trustees",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -602,6 +645,7 @@
                     "key": "field_61699d00b03b6",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -621,6 +665,7 @@
                     "key": "field_61ccab822c267",
                     "label": "Linked in link",
                     "name": "linked_in_link",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -642,6 +687,7 @@
             "key": "field_61699cf8b03b2",
             "label": "Trustee members",
             "name": "trustee_members",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -655,12 +701,14 @@
             "min": 0,
             "max": 0,
             "layout": "row",
-            "button_label": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_61699cf8b03b3",
                     "label": "Image",
                     "name": "image",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -679,12 +727,14 @@
                     "max_width": "",
                     "max_height": "",
                     "max_size": "",
-                    "mime_types": ""
+                    "mime_types": "",
+                    "parent_repeater": "field_61699cf8b03b2"
                 },
                 {
                     "key": "field_61699cf8b03b4",
                     "label": "Text",
                     "name": "text",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -698,12 +748,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_61699cf8b03b2"
                 },
                 {
                     "key": "field_61ccab962c268",
                     "label": "Linked in link",
                     "name": "linked_in_link",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -717,7 +769,8 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_61699cf8b03b2"
                 }
             ]
         },
@@ -725,6 +778,7 @@
             "key": "field_616e8445b9dbd",
             "label": "Bottom - plain text",
             "name": "plain_text",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -740,6 +794,7 @@
                     "key": "field_616e847ab9dbe",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -759,6 +814,7 @@
                     "key": "field_616e8484b9dbf",
                     "label": "Text",
                     "name": "text",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -795,5 +851,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "modified": 1640803239
 }

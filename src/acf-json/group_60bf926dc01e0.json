@@ -1,11 +1,12 @@
 {
     "key": "group_60bf926dc01e0",
-    "title": "News Post",
+    "title": "Vimeo",
     "fields": [
         {
             "key": "field_60bf928245fd0",
             "label": "Enter Vimeo Link",
             "name": "upload_video",
+            "aria-label": "",
             "type": "oembed",
             "instructions": "",
             "required": 0,
@@ -34,7 +35,11 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
-    "modified": 1636642072
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1679309419
 }
