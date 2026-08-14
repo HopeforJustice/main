@@ -6,6 +6,7 @@
             "key": "field_6290a755cfafc",
             "label": "Alternate Image",
             "name": "alternate_image",
+            "aria-label": "",
             "type": "image",
             "instructions": "",
             "required": 0,
@@ -32,7 +33,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "templates\/page-donate-new.php"
+                "value": "templates/page-donate-new.php"
             }
         ]
     ],
@@ -45,5 +46,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1653649453
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1670860426
 }

@@ -1,0 +1,162 @@
+{
+    "key": "group_6319d84f56fb7",
+    "title": "Event Settings",
+    "fields": [
+        {
+            "key": "field_6319d84f60436",
+            "label": "",
+            "name": "range_of_dates",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Multi-day event?",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_6319d84f60445",
+            "label": "Start Date",
+            "name": "event_date_start",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6319d84f60436",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "F j, Y",
+            "return_format": "F j, Y",
+            "first_day": 1,
+            "default_to_current_date": 0
+        },
+        {
+            "key": "field_6319d84f60451",
+            "label": "Date of the event",
+            "name": "event_date_end",
+            "aria-label": "",
+            "type": "date_picker",
+            "instructions": "If the event has multiple dates enter the end date here",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "display_format": "F j, Y",
+            "return_format": "F j, Y",
+            "first_day": 1,
+            "default_to_current_date": 0
+        },
+        {
+            "key": "field_6319d84f60460",
+            "label": "Type of event",
+            "name": "event_type",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "offline": "Offline",
+                "online": "Online"
+            },
+            "default_value": false,
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_6319d84f60474",
+            "label": "Event location",
+            "name": "event_location",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Enter a location. Try to keep consistent formatting e.g. Manchester, UK or Dallas, Texas. If this is an online event specify this e.g Online via Zoom or Online via Facebook Live",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_6319d84f60486",
+            "label": "Link",
+            "name": "link",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "If an event is setup with Classy or Eventbrite etc put the URL to the signup page here to allow the user to be redirected there instead of this event post.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "events"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1670860426
+}

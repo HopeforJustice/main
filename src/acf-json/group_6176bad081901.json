@@ -6,6 +6,7 @@
             "key": "field_6176bade25a49",
             "label": "Subtitle",
             "name": "subtitle",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_6176baf725a4a",
             "label": "Vacancies title",
             "name": "vacancies_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -44,6 +46,7 @@
             "key": "field_6176bb0a25a4b",
             "label": "Vacancies description",
             "name": "vacancies_description",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "",
             "required": 0,
@@ -63,6 +66,7 @@
             "key": "field_61fbbd43fb181",
             "label": "Non Cezanne Jobs",
             "name": "non_cezanne",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "",
             "required": 0,
@@ -76,12 +80,14 @@
             "min": 0,
             "max": 0,
             "layout": "table",
-            "button_label": "",
+            "button_label": "Add Row",
+            "rows_per_page": 20,
             "sub_fields": [
                 {
                     "key": "field_61fbbda2fb183",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -95,12 +101,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_61fbbd43fb181"
                 },
                 {
                     "key": "field_61fbbdb1fb184",
                     "label": "Location",
                     "name": "location",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -114,12 +122,14 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_61fbbd43fb181"
                 },
                 {
                     "key": "field_61fbef0130f31",
                     "label": "Description",
                     "name": "description",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -133,12 +143,14 @@
                     "placeholder": "",
                     "maxlength": 150,
                     "rows": "",
-                    "new_lines": ""
+                    "new_lines": "",
+                    "parent_repeater": "field_61fbbd43fb181"
                 },
                 {
                     "key": "field_61fbbdd7fb185",
                     "label": "Link",
                     "name": "link",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -152,7 +164,8 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "maxlength": ""
+                    "maxlength": "",
+                    "parent_repeater": "field_61fbbd43fb181"
                 }
             ]
         },
@@ -160,6 +173,7 @@
             "key": "field_6176bb2d25a4c",
             "label": "Volunteering title",
             "name": "volunteering_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -179,6 +193,7 @@
             "key": "field_6176bb3d25a4d",
             "label": "Volunteering description",
             "name": "volunteering_description",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "",
             "required": 0,
@@ -198,6 +213,7 @@
             "key": "field_6176bb6125a4e",
             "label": "Volunteering button text",
             "name": "volunteering_button_text",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -217,6 +233,7 @@
             "key": "field_617966d222257",
             "label": "Volunteering button link",
             "name": "volunteering_button_link",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -251,5 +268,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1643901209
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1670860424
 }

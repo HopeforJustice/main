@@ -6,6 +6,7 @@
             "key": "field_615adbe345607",
             "label": "Form title",
             "name": "form_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_61572f5f9eac6",
             "label": "US form shortcode",
             "name": "us_form",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -44,6 +46,7 @@
             "key": "field_615adc0445608",
             "label": "Norway form title",
             "name": "norway_form_title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -63,6 +66,7 @@
             "key": "field_61572f989eac8",
             "label": "Norway form shortcode",
             "name": "norway_form",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -82,6 +86,7 @@
             "key": "field_61572f709eac7",
             "label": "AUS form shortcode",
             "name": "aus_form",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -101,6 +106,7 @@
             "key": "field_61572e629eac5",
             "label": "UK form shortcode",
             "name": "uk_form",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -122,14 +128,14 @@
             {
                 "param": "post_template",
                 "operator": "==",
-                "value": "templates\/page-form.php"
+                "value": "templates/page-form.php"
             }
         ],
         [
             {
                 "param": "post_template",
                 "operator": "==",
-                "value": "templates\/page-form-picture.php"
+                "value": "templates/page-form-picture.php"
             }
         ]
     ],
@@ -139,7 +145,11 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "modified": 1636642065
 }

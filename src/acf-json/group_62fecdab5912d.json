@@ -6,6 +6,7 @@
             "key": "field_62fecdb3ccd92",
             "label": "Title",
             "name": "title",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_6304090111aa8",
             "label": "",
             "name": "title_weight",
+            "aria-label": "",
             "type": "button_group",
             "instructions": "",
             "required": 0,
@@ -47,6 +49,7 @@
             "key": "field_630115872b8ff",
             "label": "",
             "name": "size",
+            "aria-label": "",
             "type": "button_group",
             "instructions": "",
             "required": 0,
@@ -71,6 +74,7 @@
             "key": "field_63036f93d2d0d",
             "label": "",
             "name": "font",
+            "aria-label": "",
             "type": "button_group",
             "instructions": "",
             "required": 0,
@@ -82,17 +86,19 @@
             },
             "choices": {
                 "font-canela": "Canela",
-                "font-apercu": "Apercu"
+                "font-apercu": "Apercu",
+                "font-fk": "FK"
             },
-            "allow_null": 0,
             "default_value": "font-canela",
-            "layout": "horizontal",
-            "return_format": "value"
+            "return_format": "value",
+            "allow_null": 0,
+            "layout": "horizontal"
         },
         {
             "key": "field_62ffb4503153e",
             "label": "Margin bottom mobile",
             "name": "margin_bottom_mobile",
+            "aria-label": "",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -120,12 +126,15 @@
             "ui": 0,
             "return_format": "value",
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
         },
         {
             "key": "field_63069c59e8487",
             "label": "Margin bottom desktop",
             "name": "margin_bottom_desktop",
+            "aria-label": "",
             "type": "select",
             "instructions": "",
             "required": 0,
@@ -153,7 +162,34 @@
             "ui": 0,
             "return_format": "value",
             "ajax": 0,
-            "placeholder": ""
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
+            "key": "field_633472a8e754e",
+            "label": "",
+            "name": "indent",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "Indent": "Indent"
+            },
+            "default_value": [],
+            "return_format": "value",
+            "allow_custom": 0,
+            "layout": "vertical",
+            "toggle": 0,
+            "save_custom": 0,
+            "custom_choice_button_text": "Add new choice"
         }
     ],
     "location": [
@@ -161,7 +197,7 @@
             {
                 "param": "block",
                 "operator": "==",
-                "value": "acf\/title"
+                "value": "acf/title"
             }
         ]
     ],
@@ -174,5 +210,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1661378510
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1670860423
 }

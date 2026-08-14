@@ -1,0 +1,148 @@
+{
+    "key": "group_geo_redirect",
+    "title": "Geo Redirect URLs",
+    "fields": [
+        {
+            "key": "field_geo_redirect_default",
+            "label": "Redirect URL (Default / Other)",
+            "name": "redirect_url_default",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Fallback URL for visitors not matched to a specific region. Leave all fields empty to disable the redirect.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://example.com/donate",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_geo_redirect_uk",
+            "label": "Redirect URL (UK)",
+            "name": "redirect_url_uk",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Overrides the default for visitors detected in the UK (GB).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://example.com/donate",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_geo_redirect_usa",
+            "label": "Redirect URL (USA)",
+            "name": "redirect_url_usa",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Overrides the default for visitors detected in the USA group (US, Canada, Latin America, etc.).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://example.com/donate",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_geo_redirect_nok",
+            "label": "Redirect URL (Norway)",
+            "name": "redirect_url_nok",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Overrides the default for visitors detected in Norway (NO).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://example.com/donate",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_geo_redirect_aus",
+            "label": "Redirect URL (Australia / NZ)",
+            "name": "redirect_url_aus",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Overrides the default for visitors detected in Australia or New Zealand (AU, NZ).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://example.com/donate",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_geo_redirect_eur",
+            "label": "Redirect URL (Eurozone)",
+            "name": "redirect_url_eur",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Overrides the default for Eurozone visitors (AT, BE, CY, EE, FI, FR, DE, GR, IE, IT, LV, LT, LU, MT, NL, PT, SK, SI, ES).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "https://example.com/donate",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/geo-redirect"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Per-country redirect URLs for the Geo Redirect block.",
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1781100301
+}

@@ -6,6 +6,7 @@
             "key": "field_619ccbefaddc2",
             "label": "Hide news ticker",
             "name": "no_news",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -25,6 +26,7 @@
             "key": "field_619ccc36addc3",
             "label": "Hide get help",
             "name": "no_get_help",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -44,6 +46,7 @@
             "key": "field_61c20e4b1056f",
             "label": "Hide Weglot (Norway)",
             "name": "no_weglot",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -63,6 +66,47 @@
             "key": "field_623b4a030f8f9",
             "label": "Hide email push",
             "name": "no_email_push",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 0,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_6352bbcf52afc",
+            "label": "Thank you scripts",
+            "name": "thank_you_scripts",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 0
+        },
+        {
+            "key": "field_6447e4313ada4",
+            "label": "Boost impact scripts",
+            "name": "boost_impact_scripts",
+            "aria-label": "",
             "type": "true_false",
             "instructions": "",
             "required": 0,
@@ -118,5 +162,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1648052783
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1682429507
 }

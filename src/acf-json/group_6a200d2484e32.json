@@ -1,0 +1,57 @@
+{
+    "key": "group_6a200d2484e32",
+    "title": "Block: Geo-Target (multiple countries)",
+    "fields": [
+        {
+            "key": "field_6a200d240cb65",
+            "label": "Countries to show this content to",
+            "name": "countries",
+            "aria-label": "",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "USA": "USA",
+                "UK": "UK",
+                "NOK": "Norway (NOK)",
+                "AUS": "Australia (AUS)",
+                "ALL_OTHER": "All other countries"
+            },
+            "default_value": [],
+            "return_format": "value",
+            "allow_custom": 0,
+            "layout": "vertical",
+            "toggle": 0,
+            "save_custom": 0,
+            "custom_choice_button_text": "Add new choice"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/geo-target-2"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1780481931
+}

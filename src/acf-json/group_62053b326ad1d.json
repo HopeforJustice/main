@@ -6,6 +6,7 @@
             "key": "field_62053b3a2940d",
             "label": "Page Hero",
             "name": "page_hero",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -21,6 +22,7 @@
                     "key": "field_6205418229411",
                     "label": "Subtitle",
                     "name": "subtitle",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -40,6 +42,7 @@
                     "key": "field_6205418c29412",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -59,6 +62,7 @@
                     "key": "field_6205419829413",
                     "label": "Description",
                     "name": "description",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -78,6 +82,7 @@
                     "key": "field_6205429629414",
                     "label": "Button text",
                     "name": "button_text",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -97,6 +102,7 @@
                     "key": "field_620542ab29415",
                     "label": "Button link",
                     "name": "button_link",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -116,6 +122,7 @@
                     "key": "field_620542bc29416",
                     "label": "More link text",
                     "name": "more_link_text",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "Scrolls the page to the accordion",
                     "required": 0,
@@ -137,6 +144,7 @@
             "key": "field_62053b582940e",
             "label": "Below main image",
             "name": "below_image",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -152,6 +160,7 @@
                     "key": "field_6205440429417",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -171,6 +180,7 @@
                     "key": "field_6205440d29418",
                     "label": "Description",
                     "name": "description",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -190,6 +200,7 @@
                     "key": "field_6205442429419",
                     "label": "Dropdown",
                     "name": "dropdown",
+                    "aria-label": "",
                     "type": "repeater",
                     "instructions": "",
                     "required": 0,
@@ -203,12 +214,14 @@
                     "min": 0,
                     "max": 0,
                     "layout": "table",
-                    "button_label": "",
+                    "button_label": "Add Row",
+                    "rows_per_page": 20,
                     "sub_fields": [
                         {
                             "key": "field_6205444a2941a",
                             "label": "Title",
                             "name": "title",
+                            "aria-label": "",
                             "type": "text",
                             "instructions": "",
                             "required": 0,
@@ -222,12 +235,14 @@
                             "placeholder": "",
                             "prepend": "",
                             "append": "",
-                            "maxlength": ""
+                            "maxlength": "",
+                            "parent_repeater": "field_6205442429419"
                         },
                         {
                             "key": "field_620544592941b",
                             "label": "Description",
                             "name": "description",
+                            "aria-label": "",
                             "type": "textarea",
                             "instructions": "",
                             "required": 0,
@@ -241,7 +256,8 @@
                             "placeholder": "",
                             "maxlength": "",
                             "rows": "",
-                            "new_lines": ""
+                            "new_lines": "",
+                            "parent_repeater": "field_6205442429419"
                         }
                     ]
                 }
@@ -251,6 +267,7 @@
             "key": "field_62053f4b2940f",
             "label": "Second section",
             "name": "second_section",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -266,6 +283,7 @@
                     "key": "field_62053fd229410",
                     "label": "Image",
                     "name": "img",
+                    "aria-label": "",
                     "type": "image",
                     "instructions": "",
                     "required": 0,
@@ -290,6 +308,7 @@
                     "key": "field_620a3c1dce159",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -309,6 +328,7 @@
                     "key": "field_620a3c23ce15a",
                     "label": "Description",
                     "name": "description",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -330,6 +350,7 @@
             "key": "field_620a3c76ce15b",
             "label": "Quote",
             "name": "quote",
+            "aria-label": "",
             "type": "group",
             "instructions": "",
             "required": 0,
@@ -345,6 +366,7 @@
                     "key": "field_620a3c76ce15d",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -364,6 +386,7 @@
                     "key": "field_620a3c76ce15e",
                     "label": "Source",
                     "name": "credit",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -387,7 +410,7 @@
             {
                 "param": "post_template",
                 "operator": "==",
-                "value": "templates\/page-training.php"
+                "value": "templates/page-training.php"
             }
         ]
     ],
@@ -400,5 +423,8 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "modified": 1644838130
 }

@@ -6,6 +6,7 @@
             "key": "field_60ccf5e65bb5e",
             "label": "External News Link",
             "name": "external_news_link",
+            "aria-label": "",
             "type": "link",
             "instructions": "",
             "required": 0,
@@ -33,7 +34,11 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "modified": 1636642044
 }

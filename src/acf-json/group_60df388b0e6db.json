@@ -6,6 +6,7 @@
             "key": "field_60df389a3b1e4",
             "label": "External Link",
             "name": "external_link",
+            "aria-label": "",
             "type": "text",
             "instructions": "",
             "required": 1,
@@ -37,7 +38,11 @@
     "label_placement": "top",
     "instruction_placement": "label",
     "hide_on_screen": "",
-    "active": 1,
+    "active": true,
     "description": "",
+    "show_in_rest": false,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
     "modified": 1636642056
 }
