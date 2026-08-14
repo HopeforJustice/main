@@ -6,58 +6,60 @@
  */
 
 // Load values and assign defaults.
-$event_category = get_field('event_category');
-$number = get_field('how_many_posts') ?: -1;
-$style = get_field('style');
-$today = date('Ymd');
+$event_category = get_field("event_category");
+$number = get_field("how_many_posts") ?: -1;
+$style = get_field("style");
+$today = date("Ymd");
 ?>
 
-<?php
-$the_query = new WP_Query(array(
-    'post_type' => 'events',
-    'posts_per_page'    => $number,
-    'meta_key'            => 'event_date_end',
-    'orderby'            => 'meta_value',
-    'order'                => 'ASC',
-    'meta_query' => array(
-        array(
-            'key' => 'event_date_end',
-            'value' => $today,
-            'type' => 'DATE',
-            'compare' => '>=',
-        )
-    ),
-    'tax_query' => array(
-        array(
-            'taxonomy' => 'event_categories',
-            'field' => 'term_id',
-            'terms' => $event_category,
-        )
-    ),
-));
-?>
+<?php $the_query = new WP_Query([
+	"post_type" => "events",
+	"posts_per_page" => $number,
+	"meta_key" => "event_date_end",
+	"orderby" => "meta_value",
+	"order" => "ASC",
+	"meta_query" => [
+		[
+			"key" => "event_date_end",
+			"value" => $today,
+			"type" => "DATE",
+			"compare" => ">=",
+		],
+	],
+	"tax_query" => [
+		[
+			"taxonomy" => "event_categories",
+			"field" => "term_id",
+			"terms" => $event_category,
+		],
+	],
+]); ?>
 
 
-<div class="better-grid hfj-block events <?php if ($style == 'no-image') echo ' event-series event-series--btc' ?>">
-    <?php if ($the_query->have_posts()) :
-        while ($the_query->have_posts()) :
-            $the_query->the_post(); ?>
+<div class="better-grid hfj-block events <?php if ($style == "no-image") {
+	echo " event-series event-series--btc";
+} ?>">
+    <?php
+    if ($the_query->have_posts()):
+    	while ($the_query->have_posts()):
+    		$the_query->the_post(); ?>
             <?php
-            $image = wp_get_attachment_url(get_post_thumbnail_id(get_the_ID()), 'thumbnail');
-            $event_date_start = get_field('event_date_start', get_the_ID());
-            $event_location = get_field('event_location', get_the_ID());
-            $event_date_end = get_field('event_date_end', get_the_ID());
-            $link = get_field('link', get_the_ID()) ?: get_permalink(get_the_ID());
+            $image = wp_get_attachment_url(get_post_thumbnail_id(get_the_ID()), "thumbnail");
+            $event_date_start = get_field("event_date_start", get_the_ID());
+            $event_location = get_field("event_location", get_the_ID());
+            $event_date_end = get_field("event_date_end", get_the_ID());
+            $link = get_field("link", get_the_ID()) ?: get_permalink(get_the_ID());
             $title = get_the_title(get_the_ID());
-            $event_type = get_field('event_type', get_the_ID());
+            $event_type = get_field("event_type", get_the_ID());
             //modify date formats
             $start_date_mod = date("M j", strtotime($event_date_start));
             $end_date_mod = date("M j", strtotime($event_date_end));
-
             ?>
 
-            <?php if ($style == 'no-image') { ?>
-                <a <?php if (!is_admin()) echo 'href="' . $link . '"' ?> class="event-series__event">
+            <?php if ($style == "no-image") { ?>
+                <a <?php if (!is_admin()) {
+                	echo 'href="' . $link . '"';
+                } ?> class="event-series__event">
 
                     <div class="event-series__event-content">
 
@@ -68,10 +70,15 @@ $the_query = new WP_Query(array(
                                     <path id="Path_17203" data-name="Path 17203" d="M7.04,7.109H6.969a.4.4,0,0,1-.4-.4V3.567a.4.4,0,0,1,.4-.4H7.04a.4.4,0,0,1,.4.4V6.711a.4.4,0,0,1-.4.4" transform="translate(-1.095 -0.528)" fill="#212322" />
                                     <path id="Path_17204" data-name="Path 17204" d="M6.569,7.237l.089-.1a.367.367,0,0,1,.519-.021L8.949,8.754a.367.367,0,0,1,.021.518l-.091.1a.365.365,0,0,1-.517.021L6.589,7.755a.366.366,0,0,1-.02-.518" transform="translate(-1.078 -1.17)" fill="#212322" />
                                 </svg>
-                                <p><?php if ($event_date_start) echo $start_date_mod . ' - ' ?><?php echo $end_date_mod ?></p>
+                                <p><?php
+                                if ($event_date_start) {
+                                	echo $start_date_mod . " - ";
+                                }
+                                echo $end_date_mod;
+                                ?></p>
                             </div>
                             <div class="event-series__event-location">
-                                <?php if ($event_type == 'online') { ?>
+                                <?php if ($event_type == "online") { ?>
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="15" viewBox="0 0 15 15">
                                         <g id="Group_7450" data-name="Group 7450" transform="translate(0 0)">
                                             <g id="Group_7440" data-name="Group 7440" transform="translate(0 0)" clip-path="url(#clip-path)">
@@ -90,12 +97,13 @@ $the_query = new WP_Query(array(
                                         <path id="Path_17616" data-name="Path 17616" d="M4.573,0A4.573,4.573,0,0,1,9.145,4.573C9.145,7.1,4.573,13,4.573,13S0,7.1,0,4.573A4.573,4.573,0,0,1,4.573,0Z" fill="#d6001c" />
                                     </svg>
                                 <?php } ?>
-                                <p><?php echo $event_location ?></p>
+                                <p><?php echo $event_location; ?></p>
                             </div>
 
                         </div>
                         <p class="event-series__event-title">
-                            <b><?php echo $title ?><span class="event-series__event-arrow">&nbsp;<img alt="arrow" src="<?php echo get_template_directory_uri() . '/assets/img/link-arrow.svg'; ?>"></span>
+                            <b><?php echo $title; ?><span class="event-series__event-arrow">&nbsp;<img alt="arrow" src="<?php echo get_template_directory_uri() .
+	"/assets/img/link-arrow.svg"; ?>"></span>
                             </b>
                         </p>
                     </div>
@@ -103,12 +111,17 @@ $the_query = new WP_Query(array(
 
             <?php } else { ?>
 
-                <a <?php if (!is_admin()) echo 'href="' . $link . '"' ?> class="event-series__event">
+                <a <?php if (!is_admin()) {
+                	echo 'href="' . $link . '"';
+                } ?> class="event-series__event">
 
-                    <div class="event-series__event-img" <?php if ($image) { ?> style="background-image: url('<?php echo $image ?>');">
+                    <div class="event-series__event-img" <?php if (
+                    	$image
+                    ) { ?> style="background-image: url('<?php echo $image; ?>');">
                     <?php } else { ?>
                         style="background-color: var(--black);">
-                        <img class="event-series__event-img-placeholder" alt="event image placeholder" src="<?php echo get_template_directory_uri() . '/assets/img/hfj-vertical-logo.svg'; ?>" alt="">
+                        <img class="event-series__event-img-placeholder" alt="event image placeholder" src="<?php echo get_template_directory_uri() .
+                        	"/assets/img/hfj-vertical-logo.svg"; ?>" alt="">
                     <?php } ?>
                     </div>
 
@@ -120,15 +133,21 @@ $the_query = new WP_Query(array(
                                     <path id="Path_17203" data-name="Path 17203" d="M7.04,7.109H6.969a.4.4,0,0,1-.4-.4V3.567a.4.4,0,0,1,.4-.4H7.04a.4.4,0,0,1,.4.4V6.711a.4.4,0,0,1-.4.4" transform="translate(-1.095 -0.528)" fill="#212322" />
                                     <path id="Path_17204" data-name="Path 17204" d="M6.569,7.237l.089-.1a.367.367,0,0,1,.519-.021L8.949,8.754a.367.367,0,0,1,.021.518l-.091.1a.365.365,0,0,1-.517.021L6.589,7.755a.366.366,0,0,1-.02-.518" transform="translate(-1.078 -1.17)" fill="#212322" />
                                 </svg>
-                                <p><?php if ($event_date_start) echo $start_date_mod . ' - ' ?><?php echo $end_date_mod ?></p>
+                                <p><?php
+                                if ($event_date_start) {
+                                	echo $start_date_mod . " - ";
+                                }
+                                echo $end_date_mod;
+                                ?></p>
                             </div>
                         </div>
                         <p class="event-series__event-title">
-                            <b><?php echo $title ?><span class="event-series__event-arrow">&nbsp;<img alt="arrow" src="<?php echo get_template_directory_uri() . '/assets/img/link-arrow.svg'; ?>"></span>
+                            <b><?php echo $title; ?><span class="event-series__event-arrow">&nbsp;<img alt="arrow" src="<?php echo get_template_directory_uri() .
+	"/assets/img/link-arrow.svg"; ?>"></span>
                             </b>
                         </p>
                         <div class="event-series__event-location">
-                            <?php if ($event_type == 'online') { ?>
+                            <?php if ($event_type == "online") { ?>
                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="15" viewBox="0 0 15 15">
                                     <g id="Group_7450" data-name="Group 7450" transform="translate(0 0)">
                                         <g id="Group_7440" data-name="Group 7440" transform="translate(0 0)" clip-path="url(#clip-path)">
@@ -147,18 +166,23 @@ $the_query = new WP_Query(array(
                                     <path id="Path_17616" data-name="Path 17616" d="M4.573,0A4.573,4.573,0,0,1,9.145,4.573C9.145,7.1,4.573,13,4.573,13S0,7.1,0,4.573A4.573,4.573,0,0,1,4.573,0Z" fill="#d6001c" />
                                 </svg>
                             <?php } ?>
-                            <p><?php echo $event_location ?></p>
+                            <p><?php echo $event_location; ?></p>
                         </div>
                     </div>
                 </a>
             <?php } ?>
-    <?php endwhile;
-    else : if (is_admin()) echo '<p style="grid-column: span 12;">Select an event category</p>';
+    <?php
+    	endwhile;
+    else:
+    	if (is_admin()) {
+    		echo '<p style="grid-column: span 12;">Select an event category</p>';
+    	}
     endif;
 
     /* Restore original Post Data
-* NB: Because we are using new WP_Query we aren't stomping on the
-* original $wp_query and it does not need to be reset.
-*/
-    wp_reset_postdata(); ?>
+     * NB: Because we are using new WP_Query we aren't stomping on the
+     * original $wp_query and it does not need to be reset.
+     */
+    wp_reset_postdata();
+    ?>
 </div>

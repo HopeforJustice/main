@@ -58,9 +58,7 @@ if ($get_records["body"] == "[]") {
     		the_row(); ?>
 
             <div class="careers-block__card">
-                <a class="careers-block__inner" href="<?php echo get_sub_field(
-                	"link"
-                ); ?>">
+                <a class="careers-block__inner" href="<?php echo get_sub_field("link"); ?>">
                     <!-- Card title -->
                     <h3 class="careers-block__title">
                         <?php echo get_sub_field("title"); ?>

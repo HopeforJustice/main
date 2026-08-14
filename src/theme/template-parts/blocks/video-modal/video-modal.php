@@ -1,4 +1,6 @@
-<?php if (is_admin()) echo '<p>Invisible block: Video modal</p>' ?>
+<?php if (is_admin()) {
+	echo "<p>Invisible block: Video modal</p>";
+} ?>
 
 <div style="display: none;" class="modal modal--video fade" id="video-modal" tabindex="-1" role="dialog" aria-hidden="false">
     <div class="modal__dialog modal__dialog--video">

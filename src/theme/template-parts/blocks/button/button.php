@@ -71,9 +71,7 @@ if (!empty($block["align"])) {
  	echo "#video-modal";
  } ?>" data-src="<?php echo $video_link_a; ?>" <?php } ?> href="<?php echo $link_url_a; ?>" target="<?php echo $link_target_a; ?>" style="background-color: <?php echo $color_a; ?>; color: <?php echo $text_color_a; ?>" class="<?php if (
 	$button_style_a !== "plain"
-) { ?>button button--tighter<?php } else { ?>button--plain<?php } ?> <?php if (
- 	$video_link_a
- ) {
+) { ?>button button--tighter<?php } else { ?>button--plain<?php } ?> <?php if ($video_link_a) {
  	echo "video-trigger";
  } ?>  <?php echo $button_style_a; ?>" <?php if ($download_a) {
 	echo "download";
@@ -95,9 +93,7 @@ if (!empty($block["align"])) {
  	echo "#video-modal";
  } ?>" data-src="<?php echo $video_link_b; ?>" <?php } ?>href="<?php echo $link_url_b; ?>" target="<?php echo $link_target_b; ?>" style="background-color: <?php echo $color_b; ?>; color: <?php echo $text_color_b; ?>" class="block-button__second-button <?php if (
 	$button_style_b !== "plain"
-) { ?>button button--tighter<?php } else { ?>button--plain<?php } ?> <?php if (
- 	$video_link_b
- ) {
+) { ?>button button--tighter<?php } else { ?>button--plain<?php } ?> <?php if ($video_link_b) {
  	echo "video-trigger";
  } ?>  <?php echo $button_style_b; ?>" <?php if ($download_b) {
 	echo "download";

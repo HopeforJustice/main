@@ -1,7 +1,6 @@
 <?php
 // Load values and assign defaults.
 //$title = get_field('title') ?: 'Add a title';
-
 ?>
 
 
@@ -12,10 +11,13 @@
         <div class="event-categories__text">Event categories:</div>
         <div class="event-categories__categories">
             <?php
-            $terms = get_the_terms(get_the_ID(), 'event_categories');
+            $terms = get_the_terms(get_the_ID(), "event_categories");
             if ($terms) {
-                foreach ($terms as $term) { ?>
-                    <a href="<?php echo get_term_link($term->term_id, 'event_categories'); ?>" class="event-categories__category">
+            	foreach ($terms as $term) { ?>
+                    <a href="<?php echo get_term_link(
+                    	$term->term_id,
+                    	"event_categories"
+                    ); ?>" class="event-categories__category">
                         <div class="event-categories__category-text">
                             <?php echo $term->name; ?>
                         </div>
@@ -24,7 +26,9 @@
                         </svg>
                     </a>
                 <?php } ?>
-            <?php } ?>
+            <?php
+            }
+            ?>
         </div>
     </div>
 

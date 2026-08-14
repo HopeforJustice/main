@@ -6,22 +6,22 @@
  */
 
 // Load values and assign defaults.
-$margin_bottom_mobile = get_field('margin_bottom_mobile') ?: '40px';
-$image = get_field('image');
-$title = get_field('title') ?: 'Add a title';
-$first_link = get_field('first_link');
-$second_link = get_field('second_link');
+$margin_bottom_mobile = get_field("margin_bottom_mobile") ?: "40px";
+$image = get_field("image");
+$title = get_field("title") ?: "Add a title";
+$first_link = get_field("first_link");
+$second_link = get_field("second_link");
 
 if ($first_link) {
-    $link_url_a = $first_link['url'] ?: '#';
-    $link_title_a = $first_link['title'] ?: 'Button text';
-    $link_target_a = $first_link['target'] ?: '_self';
+	$link_url_a = $first_link["url"] ?: "#";
+	$link_title_a = $first_link["title"] ?: "Button text";
+	$link_target_a = $first_link["target"] ?: "_self";
 }
 
 if ($second_link) {
-    $link_url_b = $second_link['url'] ?: '#';
-    $link_title_b = $second_link['title'] ?: 'Link text';
-    $link_target_b = $second_link['target'] ?: '_self';
+	$link_url_b = $second_link["url"] ?: "#";
+	$link_title_b = $second_link["title"] ?: "Link text";
+	$link_target_b = $second_link["target"] ?: "_self";
 }
 ?>
 
@@ -68,16 +68,17 @@ if ($second_link) {
                 </svg>
             </div>
 
-            <h3 class="font-canela btc-header__title"><?php echo $title ?></h3>
+            <h3 class="font-canela btc-header__title"><?php echo $title; ?></h3>
 
             <div class="btc-header__links">
-                <a target="<?php echo $link_target_a ?>" href="<?php echo $link_url_a ?>" class="button button--tighter"><?php echo $link_title_a ?></a>
-                <a target="<?php echo $link_target_b ?>" href="<?php echo $link_url_b ?>" class="btc-header__links-plain"><span style="text-decoration: underline;"><?php echo $link_title_b ?></span><span style="white-space: pre;">&nbsp;<img src="<?php echo get_template_directory_uri() . '/assets/img/link-arrow.svg'; ?>"></span></a>
+                <a target="<?php echo $link_target_a; ?>" href="<?php echo $link_url_a; ?>" class="button button--tighter"><?php echo $link_title_a; ?></a>
+                <a target="<?php echo $link_target_b; ?>" href="<?php echo $link_url_b; ?>" class="btc-header__links-plain"><span style="text-decoration: underline;"><?php echo $link_title_b; ?></span><span style="white-space: pre;">&nbsp;<img src="<?php echo get_template_directory_uri() .
+	"/assets/img/link-arrow.svg"; ?>"></span></a>
             </div>
         </div>
 
         <div class="btc-header__img-container">
-            <?php echo wp_get_attachment_image($image, 'full') ?>
+            <?php echo wp_get_attachment_image($image, "full"); ?>
         </div>
     </div>
 </div>

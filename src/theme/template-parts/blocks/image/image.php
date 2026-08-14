@@ -1,28 +1,36 @@
 <?php
-$image = get_field('image') ?: '309';
-$indent = get_field('indent');
-$caption = get_field('caption');
-$video = get_field('video_source');
-$link = get_field('link');
-$max_width = get_field('max_width') ?: '960';
-if (!empty($block['align'])) {
-    $align = 'image--align-' . $block['align'];
+$image = get_field("image") ?: "309";
+$indent = get_field("indent");
+$caption = get_field("caption");
+$video = get_field("video_source");
+$link = get_field("link");
+$max_width = get_field("max_width") ?: "960";
+if (!empty($block["align"])) {
+	$align = "image--align-" . $block["align"];
 }
 ?>
 
-<?php if ($link && (!is_admin())) { ?>
-    <a href="<?php echo $link ?>" class="better-grid image <?php echo $align ?> ">
+<?php if ($link && !is_admin()) { ?>
+    <a href="<?php echo $link; ?>" class="better-grid image <?php echo $align; ?> ">
     <?php } else { ?>
-        <div class="better-grid image <?php echo $align ?> ">
+        <div class="better-grid image <?php echo $align; ?> ">
         <?php } ?>
-        <div style="max-width: <?php echo $max_width ?>px;" <?php if ($video) { ?> data-toggle="modal" data-target="#video-modal" data-src="<?php echo $video ?>" <?php } ?> class="image__container <?php if ($video) echo 'video-trigger' ?> <?php if ($indent) echo 'image__container--indent' ?>"><?php echo wp_get_attachment_image($image, 'full') ?>
+        <div style="max-width: <?php echo $max_width; ?>px;" <?php if (
+	$video
+) { ?> data-toggle="modal" data-target="#video-modal" data-src="<?php echo $video; ?>" <?php } ?> class="image__container <?php if (
+ 	$video
+ ) {
+ 	echo "video-trigger";
+ } ?> <?php if ($indent) {
+ 	echo "image__container--indent";
+ } ?>"><?php echo wp_get_attachment_image($image, "full"); ?>
             <?php if ($caption) { ?>
                 <div class="caption">
-                    <p class="small"><?php echo $caption ?></p>
+                    <p class="small"><?php echo $caption; ?></p>
                 </div>
             <?php } ?>
         </div>
-        <?php if ($link  && (!is_admin())) { ?>
+        <?php if ($link && !is_admin()) { ?>
     </a>
 <?php } else { ?>
     </div>
