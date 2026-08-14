@@ -323,10 +323,7 @@ if ($tracked && $target) {
                 <?php echo $once_text; ?>
             </p>
 
-            <?php if (
-            	$tracked !== "false" &&
-            	($currency == "USD" || $currency == "GBP")
-            ) { ?>
+            <?php if ($tracked !== "false" && ($currency == "USD" || $currency == "GBP")) { ?>
 
                 <div class="donate-block__tracker">
                     <div class="donate-block__tracker-bar">
@@ -353,9 +350,7 @@ if ($tracked && $target) {
             <?php } ?>
 
             <div class="donate-block__options">
-                <div class="donate-block__options-option <?php if (
-                	$default_level == "a"
-                ) {
+                <div class="donate-block__options-option <?php if ($default_level == "a") {
                 	echo "donate-block__options-option--active";
                 } ?>" data-amount="<?php echo $amount_once_a; ?>" data-amountmonthly="<?php echo $amount_monthly_a; ?>" data-reason="<?php echo htmlspecialchars(
 	$reason_once_a
@@ -366,9 +361,7 @@ if ($tracked && $target) {
                     </span>
                 </div>
 
-                <div class="donate-block__options-option <?php if (
-                	$default_level == "b"
-                ) {
+                <div class="donate-block__options-option <?php if ($default_level == "b") {
                 	echo "donate-block__options-option--active";
                 } ?>" data-amount="<?php echo $amount_once_b; ?>" data-amountmonthly="<?php echo $amount_monthly_b; ?>" data-reason="<?php echo htmlspecialchars(
 	$reason_once_b
@@ -379,9 +372,7 @@ if ($tracked && $target) {
                     </span>
                 </div>
 
-                <div class="donate-block__options-option <?php if (
-                	$default_level == "c"
-                ) {
+                <div class="donate-block__options-option <?php if ($default_level == "c") {
                 	echo "donate-block__options-option--active";
                 } ?>" data-amount="<?php echo $amount_once_c; ?>" data-amountmonthly="<?php echo $amount_monthly_c; ?>" data-reason="<?php echo htmlspecialchars(
 	$reason_once_c
@@ -392,9 +383,7 @@ if ($tracked && $target) {
                     </span>
                 </div>
 
-                <div class="donate-block__options-option <?php if (
-                	$default_level == "d"
-                ) {
+                <div class="donate-block__options-option <?php if ($default_level == "d") {
                 	echo "donate-block__options-option--active";
                 } ?>" data-amount="<?php echo $amount_once_d; ?>" data-amountmonthly="<?php echo $amount_monthly_d; ?>" data-reason="<?php echo htmlspecialchars(
 	$reason_once_d
@@ -405,9 +394,7 @@ if ($tracked && $target) {
                     </span>
                 </div>
 
-                <div class="donate-block__options-option <?php if (
-                	$default_level == "e"
-                ) {
+                <div class="donate-block__options-option <?php if ($default_level == "e") {
                 	echo "donate-block__options-option--active";
                 } ?>" data-amount="<?php echo $amount_once_e; ?>" data-amountmonthly="<?php echo $amount_monthly_e; ?>" data-reason="<?php echo htmlspecialchars(
 	$reason_once_e
@@ -420,9 +407,7 @@ if ($tracked && $target) {
 
                 <div class="donate-block__options-option donate-block__options-option--custom" data-amount="custom" data-reason="<?php echo htmlspecialchars(
                 	$reason_once_f
-                ); ?>" data-monthly="<?php echo htmlspecialchars(
-	$reason_monthly_f
-); ?>">
+                ); ?>" data-monthly="<?php echo htmlspecialchars($reason_monthly_f); ?>">
                     <span class="text">
                         <?php if ($currency == "NOK") { ?>
                             Valgfritt<br />beløp
@@ -489,10 +474,7 @@ if ($tracked && $target) {
                     <?php } ?>
                 </a>
             </div>
-            <?php if (
-            	($currency == "GBP" || $currency == "USD") &&
-            	$use_donation_app
-            ) { ?>
+            <?php if (($currency == "GBP" || $currency == "USD") && $use_donation_app) { ?>
             <div class="donate-block__payment-methods">
                 <ul>
 

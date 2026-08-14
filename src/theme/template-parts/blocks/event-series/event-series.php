@@ -6,52 +6,63 @@
  */
 
 // Load values and assign defaults.
-$event_category = get_field('event_category');
-$big_card_image = get_field('big_card_image') ?: '309';
-$big_card_text = get_field('big_card_text') ?: 'Add some text...';
-$big_card_title = get_field('big_card_title') ?: 'Add a title';
-$featured_posts = get_field('featured_posts');
-$today = date('Ymd');
-$expiry = get_field('expiry');
+$event_category = get_field("event_category");
+$big_card_image = get_field("big_card_image") ?: "309";
+$big_card_text = get_field("big_card_text") ?: "Add some text...";
+$big_card_title = get_field("big_card_title") ?: "Add a title";
+$featured_posts = get_field("featured_posts");
+$today = date("Ymd");
+$expiry = get_field("expiry");
 ?>
 
 
 
-<?php if ($today <= $expiry) : ?>
-    <?php if ($event_category) : ?>
+<?php if ($today <= $expiry): ?>
+    <?php if ($event_category): ?>
 
-        <div class="better-grid hfj-block event-series" style="--margin-bottom-mobile:<?php echo $margin_bottom_mobile ?>; --margin-bottom-desktop: <?php echo $margin_bottom_desktop ?>;">
+        <div class="better-grid hfj-block event-series" style="--margin-bottom-mobile:<?php echo $margin_bottom_mobile; ?>; --margin-bottom-desktop: <?php echo $margin_bottom_desktop; ?>;">
 
             <div class="event-series__big-card">
-                <div class="event-series__big-card-image"><?php echo wp_get_attachment_image($big_card_image, 'full') ?></div>
-                <h4 class="block-title event-series__big-card-title"><?php echo $big_card_title ?></h4>
-                <p class="block-text event-series__big-card-text"><?php echo $big_card_text ?></p>
-                <a href="<?php echo get_term_link($event_category) ?>" class="button button--tighter">See all events</a>
+                <div class="event-series__big-card-image"><?php echo wp_get_attachment_image(
+                	$big_card_image,
+                	"full"
+                ); ?></div>
+                <h4 class="block-title event-series__big-card-title"><?php echo $big_card_title; ?></h4>
+                <p class="block-text event-series__big-card-text"><?php echo $big_card_text; ?></p>
+                <a href="<?php echo get_term_link(
+                	$event_category
+                ); ?>" class="button button--tighter">See all events</a>
             </div>
-            <?php
-
-            if ($featured_posts) : ?>
-                <?php foreach ($featured_posts as $featured_post) : ?>
+            <?php if ($featured_posts): ?>
+                <?php foreach ($featured_posts as $featured_post): ?>
                     <?php
-                    $image = wp_get_attachment_url(get_post_thumbnail_id($featured_post->ID), 'thumbnail');
-                    $event_date_start = get_field('event_date_start', $featured_post->ID);
-                    $event_location = get_field('event_location', $featured_post->ID);
-                    $event_date_end = get_field('event_date_end', $featured_post->ID);
-                    $link = get_field('link', $featured_post->ID) ?: get_permalink($featured_post->ID);
+                    $image = wp_get_attachment_url(
+                    	get_post_thumbnail_id($featured_post->ID),
+                    	"thumbnail"
+                    );
+                    $event_date_start = get_field("event_date_start", $featured_post->ID);
+                    $event_location = get_field("event_location", $featured_post->ID);
+                    $event_date_end = get_field("event_date_end", $featured_post->ID);
+                    $link =
+                    	get_field("link", $featured_post->ID) ?: get_permalink($featured_post->ID);
                     $title = get_the_title($featured_post->ID);
-                    $event_type = get_field('event_type', $featured_post->ID);
+                    $event_type = get_field("event_type", $featured_post->ID);
                     //modify date formats
                     $start_date_mod = date("M j", strtotime($event_date_start));
                     $end_date_mod = date("M j", strtotime($event_date_end));
-
                     ?>
 
-                    <a <?php if (!is_admin()) echo 'href="' . $link . '"' ?> class="event-series__event">
+                    <a <?php if (!is_admin()) {
+                    	echo 'href="' . $link . '"';
+                    } ?> class="event-series__event">
 
-                        <div class="event-series__event-img" <?php if ($image) { ?> style="background-image: url('<?php echo $image ?>');">
+                        <div class="event-series__event-img" <?php if (
+                        	$image
+                        ) { ?> style="background-image: url('<?php echo $image; ?>');">
                         <?php } else { ?>
                             style="background-color: var(--black);">
-                            <img class="event-series__event-img-placeholder" alt="event image placeholder" src="<?php echo get_template_directory_uri() . '/assets/img/hfj-vertical-logo.svg'; ?>" alt="">
+                            <img class="event-series__event-img-placeholder" alt="event image placeholder" src="<?php echo get_template_directory_uri() .
+                            	"/assets/img/hfj-vertical-logo.svg"; ?>" alt="">
                         <?php } ?>
                         </div>
 
@@ -63,15 +74,21 @@ $expiry = get_field('expiry');
                                         <path id="Path_17203" data-name="Path 17203" d="M7.04,7.109H6.969a.4.4,0,0,1-.4-.4V3.567a.4.4,0,0,1,.4-.4H7.04a.4.4,0,0,1,.4.4V6.711a.4.4,0,0,1-.4.4" transform="translate(-1.095 -0.528)" fill="#212322" />
                                         <path id="Path_17204" data-name="Path 17204" d="M6.569,7.237l.089-.1a.367.367,0,0,1,.519-.021L8.949,8.754a.367.367,0,0,1,.021.518l-.091.1a.365.365,0,0,1-.517.021L6.589,7.755a.366.366,0,0,1-.02-.518" transform="translate(-1.078 -1.17)" fill="#212322" />
                                     </svg>
-                                    <p><?php if ($event_date_start) echo $start_date_mod . ' - ' ?><?php echo $end_date_mod ?></p>
+                                    <p><?php
+                                    if ($event_date_start) {
+                                    	echo $start_date_mod . " - ";
+                                    }
+                                    echo $end_date_mod;
+                                    ?></p>
                                 </div>
                             </div>
                             <p class="event-series__event-title">
-                                <b><?php echo $title ?><span class="event-series__event-arrow">&nbsp;<img alt="arrow" src="<?php echo get_template_directory_uri() . '/assets/img/link-arrow.svg'; ?>"></span>
+                                <b><?php echo $title; ?><span class="event-series__event-arrow">&nbsp;<img alt="arrow" src="<?php echo get_template_directory_uri() .
+	"/assets/img/link-arrow.svg"; ?>"></span>
                                 </b>
                             </p>
                             <div class="event-series__event-location">
-                                <?php if ($event_type == 'online') { ?>
+                                <?php if ($event_type == "online") { ?>
                                     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="15" height="15" viewBox="0 0 15 15">
                                         <g id="Group_7450" data-name="Group 7450" transform="translate(0 0)">
                                             <g id="Group_7440" data-name="Group 7440" transform="translate(0 0)" clip-path="url(#clip-path)">
@@ -90,7 +107,7 @@ $expiry = get_field('expiry');
                                         <path id="Path_17616" data-name="Path 17616" d="M4.573,0A4.573,4.573,0,0,1,9.145,4.573C9.145,7.1,4.573,13,4.573,13S0,7.1,0,4.573A4.573,4.573,0,0,1,4.573,0Z" fill="#d6001c" />
                                     </svg>
                                 <?php } ?>
-                                <p><?php echo $event_location ?></p>
+                                <p><?php echo $event_location; ?></p>
                             </div>
                         </div>
                     </a>
@@ -101,13 +118,16 @@ $expiry = get_field('expiry');
 
     <?php endif; ?>
 
-    <?php
-        // Reset the global post object so that the rest of the page works correctly.
-        wp_reset_postdata(); ?>
+    <?php // Reset the global post object so that the rest of the page works correctly.
+    wp_reset_postdata(); ?>
 
-<?php else : ?>
-    <?php if (is_admin()) echo "<p>Setup this block with featured posts and an event category to get started</p>" ?>
+<?php else: ?>
+    <?php if (is_admin()) {
+    	echo "<p>Setup this block with featured posts and an event category to get started</p>";
+    } ?>
 <?php endif; ?>
-<?php else : ?>
-    <?php if (is_admin()) echo "This content has expired. You can edit the settings or delete it.</p>" ?>
+<?php else: ?>
+    <?php if (is_admin()) {
+    	echo "This content has expired. You can edit the settings or delete it.</p>";
+    } ?>
 <?php endif; ?>

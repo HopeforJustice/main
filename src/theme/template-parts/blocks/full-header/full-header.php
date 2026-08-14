@@ -10,50 +10,82 @@
  */
 
 // Create id attribute allowing for custom "anchor" value.
-$id = 'full-header-' . $block['id'];
-if (!empty($block['anchor'])) {
-    $id = $block['anchor'];
+$id = "full-header-" . $block["id"];
+if (!empty($block["anchor"])) {
+	$id = $block["anchor"];
 }
 
-if (!empty($block['className'])) {
-    $class_name .= ' ' . $block['className'];
+$class_name = "";
+if (!empty($block["className"])) {
+	$class_name .= " " . $block["className"];
 }
 
-$hasGradient = get_field('has_gradient');
-$gradientColor = get_field('gradient_color');
-$gradientColorB = get_field('gradient_color_b');
-//$split_on_mobile = get_field('split_on_mobile');
-$align_content = get_field('align_content');
-$max_width = get_field('content_max_width');
+$hasGradient = get_field("has_gradient");
+$gradientColor = get_field("gradient_color");
+$gradientColorB = get_field("gradient_color_b");
+$dont_split_content = get_field("dont_split_content");
+$align_content = get_field("align_content");
+$max_width = get_field("content_max_width");
 
-$image = get_field('image');
+$image = get_field("image");
 if ($image) {
-    $top = $image['top'];
-    $left = $image['left'];
-    $id = $image['id'];
+	$top = $image["top"];
+	$left = $image["left"];
+	$id = $image["id"];
 } else {
-    $top = 0;
-    $left = 0;
-    $id = '309';
+	$top = 0;
+	$left = 0;
+	$id = "309";
 }
-$image_src = wp_get_attachment_image_src($id, 'full');
+$image_src = wp_get_attachment_image_src($id, "full");
 
+$wrapper_class = "full-header";
+if (!$dont_split_content) {
+	$wrapper_class .= " full-header--split-on-mobile";
+}
+$wrapper_class .= " " . $class_name . " hfj-block";
+$image_background_position = $left . "% " . $top . "%";
+$image_style =
+	"background-image: url('" .
+	esc_url($image_src[0]) .
+	"'); background-position: " .
+	esc_attr($image_background_position) .
+	";";
+
+$gradient_style =
+	"--gradient-a:" .
+	esc_attr($gradientColor) .
+	"; --gradient-b: " .
+	esc_attr($gradientColorB) .
+	";";
+
+$content_class = "full-header__content";
+if ($align_content === "center") {
+	$content_class .= " full-header__content--no-padding";
+}
+$content_style =
+	"--align-content: " .
+	esc_attr($align_content) .
+	"; --max-width: " .
+	esc_attr($max_width) .
+	"px;";
 ?>
 
 
-<!-- grid -->
-<div id="<?php echo esc_attr($id); ?>" class="full-header full-header--split-on-mobile <?php echo $class_name ?> hfj-block">
+<!-- wrapper -->
+<div id="<?php echo esc_attr($id); ?>" class="<?php echo esc_attr($wrapper_class); ?>">
+    <!-- grid -->
     <div class="better-grid">
-
-        <div style="background-image: url('<?php echo $image_src[0]; ?>'); background-position: <?php echo $image['left'] . '% ' . $image['top']; ?>%;" class="full-header__image">
+        <!-- image -->
+        <div style="<?php echo $image_style; ?>" class="full-header__image">
         </div>
 
         <?php if ($hasGradient) { ?>
-            <div class="full-header__gradient full-header__gradient--left" style="--gradient-a:<?php echo $gradientColor ?>; --gradient-b: <?php echo $gradientColorB ?>;">
+            <div class="full-header__gradient full-header__gradient--left" style="<?php echo $gradient_style; ?>">
             </div>
         <?php } ?>
 
-        <div class="full-header__content <?php if ($align_content === 'center') echo 'full-header__content--no-padding' ?>" style="--align-content: <?php echo $align_content; ?>; --max-width: <?php echo $max_width; ?>px;">
+        <div class="<?php echo esc_attr($content_class); ?>" style="<?php echo $content_style; ?>">
             <InnerBlocks />
         </div>
 

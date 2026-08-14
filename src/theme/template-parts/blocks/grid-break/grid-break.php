@@ -1,4 +1,5 @@
-<?php //grid-break 
+<?php
+//grid-break
 ?>
 <div class="grid-break">
     <InnerBlocks />

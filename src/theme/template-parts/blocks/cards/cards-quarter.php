@@ -10,64 +10,87 @@
  */
 
 // Load values and assign defaults.
-$has_video = false;
-
-?>
+$has_video = false; ?>
 
 
 <div class="better-grid cards-quarter hfj-block">
 
 
-    <?php while (have_rows('quarter_cards')) : the_row(); ?>
+    <?php while (have_rows("quarter_cards")):
+    	the_row(); ?>
         <?php
-        $download = get_sub_field('download');
-        $video = get_sub_field('video');
-        $dropdown = get_sub_field('dropdown');
-        $dropdown_content = get_sub_field('dropdown_content');
-        if ($video) $has_video = true;
-        $link = get_sub_field('link');
+        $download = get_sub_field("download");
+        $video = get_sub_field("video");
+        $dropdown = get_sub_field("dropdown");
+        $dropdown_content = get_sub_field("dropdown_content");
+        if ($video) {
+        	$has_video = true;
+        }
+        $link = get_sub_field("link");
         if ($link) {
-            $link_url = $link['url'];
-            $link_target = $link['target'];
+        	$link_url = $link["url"];
+        	$link_target = $link["target"];
         } else {
-            $link_url = '#';
-            $link_target = '_self';
+        	$link_url = "#";
+        	$link_target = "_self";
         }
-        $image = get_sub_field('img');
+        $image = get_sub_field("img");
         if ($image) {
-            $top = $image['top'];
-            $left = $image['left'];
-            $id = $image['id'];
+        	$top = $image["top"];
+        	$left = $image["left"];
+        	$id = $image["id"];
         } else {
-            $top = 0;
-            $left = 0;
-            $id = '309';
+        	$top = 0;
+        	$left = 0;
+        	$id = "309";
         }
-        $image_src = wp_get_attachment_image_src($id, 'full');
-        $title_size = get_sub_field('title_size');
+        $image_src = wp_get_attachment_image_src($id, "full");
+        $title_size = get_sub_field("title_size");
         ?>
         <<?php if ($dropdown) {
-                echo 'div';
-            } else {
-                echo 'a';
-            } ?> <?php if ($video) { ?> data-toggle="modal" data-target="#video-modal-cards-quarters" data-src="<?php echo $video ?>" <?php } else if (!$dropdown) { ?><?php if ($target) echo 'target="' . $link_target . '"' ?> <?php if (!is_admin()) { ?>href="<?php echo $link_url ?>" <?php } ?> <?php } ?> class="<?php if ($dropdown) echo 'block-card--dropdown' ?> block-card <?php if ($video) echo 'video-trigger' ?>" <?php if ($download) echo 'download' ?>>
-            <div style="background-image: url('<?php echo $image_src[0]; ?>'); background-position: <?php echo $image['left'] . '% ' . $image['top']; ?>%;" class="block-card__image-container">
+        	echo "div";
+        } else {
+        	echo "a";
+        } ?> <?php if (
+ 	$video
+ ) { ?> data-toggle="modal" data-target="#video-modal-cards-quarters" data-src="<?php echo $video; ?>" <?php } elseif (
+ 	!$dropdown
+ ) {
+ 	if ($target) {
+ 		echo 'target="' . $link_target . '"';
+ 	} ?> <?php if (!is_admin()) { ?>href="<?php echo $link_url; ?>" <?php } ?> <?php
+ } ?> class="<?php if ($dropdown) {
+ 	echo "block-card--dropdown";
+ } ?> block-card <?php if ($video) {
+ 	echo "video-trigger";
+ } ?>" <?php if ($download) {
+	echo "download";
+} ?>>
+            <div style="background-image: url('<?php echo $image_src[0]; ?>'); background-position: <?php echo $image[
+	"left"
+] .
+	"% " .
+	$image["top"]; ?>%;" class="block-card__image-container">
             </div>
             <div class="block-card__content">
-                <h4 class="block-title block-card__title <?php echo $title_size; ?>"><b><?php echo (get_sub_field('title')) ?></b><span style="white-space: pre;" class="block-card__arrow">&nbsp;<img alt="arrow" src="<?php echo get_template_directory_uri() . '/assets/img/link-arrow.svg'; ?>"></span></h4>
+                <h4 class="block-title block-card__title <?php echo $title_size; ?>"><b><?php echo get_sub_field(
+	"title"
+); ?></b><span style="white-space: pre;" class="block-card__arrow">&nbsp;<img alt="arrow" src="<?php echo get_template_directory_uri() .
+	"/assets/img/link-arrow.svg"; ?>"></span></h4>
                 <?php if ($dropdown) { ?>
                     <div class="block-card__dropdown-content">
-                        <p><?php echo $dropdown_content ?></p>
+                        <p><?php echo $dropdown_content; ?></p>
                     </div>
                 <?php } ?>
             </div>
         </<?php if ($dropdown) {
-                echo 'div';
-            } else {
-                echo 'a';
-            } ?>>
+        	echo "div";
+        } else {
+        	echo "a";
+        } ?>>
 
-    <?php endwhile; ?>
+    <?php
+    endwhile; ?>
 
 </div>
 

@@ -73,48 +73,47 @@
 
     <!-- Global GeoIP lookup -->
     <?php
-    // Antigua and Barbuda(AG),Argentina(AR),Bahamas(BS),Barbados(BB),Belize(BZ),Bolivia(BO),Brazil (BR),Cambodia(KH),Canada(CA),Chile(CL),Colombia(CO),Costa Rica(CR),Dominica(DM),Dominican Republic(DM),Ecuador(EC),El Salvador(SV),French Guiana(GF),Grenada(GD),Guadeloupe(GP),Guatamala(GT),Guyana(GY),Haiti(HT),Honduras(HN),Jamaica(JM),Martinique(MQ),Mexico(MX),Nicaragua(NI),Panama(PA),Paraguay(PY),Peru(PE),Puerto Rico(PR),Saint Lucia(LC),Saint Vincent and the Grenadines(VC),Suriname(SR),Trinidad & Tobago(TT),United States(US),Uruguay(UY),Venezuela (VE), Virgin Islands U.S.(VI)
     $GLOBALS["usa"] = [
-    	"AG",
-    	"AR",
-    	"BB",
-    	"BS",
-    	"BO",
-    	"BR",
-    	"BZ",
-    	"CA",
-    	"CL",
-    	"CO",
-    	"CR",
-    	"DO",
-    	"DM",
-    	"EC",
-    	"KH",
-    	"LC",
-    	"GD",
-    	"GF",
-    	"GP",
-    	"GT",
-    	"GY",
-    	"HN",
-    	"HT",
-    	"JM",
-    	"MQ",
-    	"MX",
-    	"NI",
-    	"PA",
-    	"PE",
-    	"PR",
-    	"PY",
-    	"SR",
-    	"SV",
-    	"TT",
-    	"US",
-    	"UM",
-    	"UY",
-    	"VC",
-    	"VE",
-    	"VI",
+    	"AG", // Antigua and Barbuda
+    	"AR", // Argentina
+    	"BB", // Barbados
+    	"BS", // Bahamas
+    	"BO", // Bolivia
+    	"BR", // Brazil
+    	"BZ", // Belize
+    	"CA", // Canada
+    	"CL", // Chile
+    	"CO", // Colombia
+    	"CR", // Costa Rica
+    	"DO", // Dominican Republic
+    	"DM", // Dominica
+    	"EC", // Ecuador
+    	"KH", // Cambodia
+    	"LC", // Saint Lucia
+    	"GD", // Grenada
+    	"GF", // French Guiana
+    	"GP", // Guadeloupe
+    	"GT", // Guatemala
+    	"GY", // Guyana
+    	"HN", // Honduras
+    	"HT", // Haiti
+    	"JM", // Jamaica
+    	"MQ", // Martinique
+    	"MX", // Mexico
+    	"NI", // Nicaragua
+    	"PA", // Panama
+    	"PE", // Peru
+    	"PR", // Puerto Rico
+    	"PY", // Paraguay
+    	"SR", // Suriname
+    	"SV", // El Salvador
+    	"TT", // Trinidad & Tobago
+    	"US", // United States
+    	"UM", // United States Minor Outlying Islands
+    	"UY", // Uruguay
+    	"VC", // Saint Vincent and the Grenadines
+    	"VE", // Venezuela
+    	"VI", // Virgin Islands (U.S.)
     ];
 
     // Norwegian countries - I've put this into an array because we'll no doubt add other Scandinavian countries at some point
@@ -149,6 +148,7 @@
     	"SI", // Slovenia
     	"ES", // Spain
     ];
+
     $GLOBALS["help"] = ["US", "GB"];
 
     // lookup country code of IP
@@ -318,26 +318,44 @@
                 </a>
                 <div class="header__navigation">
                     <?php
-                    $donate_url = '/donate';
-                    if ($GLOBALS['userInfo']) {
-                        if (in_array($GLOBALS['userInfo'], $GLOBALS['uk'])) {
-                            $donate_url = get_field('donate_url_uk', 'option') ?: '/donate';
-                        } elseif (in_array($GLOBALS['userInfo'], $GLOBALS['norway'])) {
-                            $donate_url = get_field('donate_url_nok', 'option') ?: '/donate';
-                        } elseif (in_array($GLOBALS['userInfo'], $GLOBALS['usa'])) {
-                            $donate_url = get_field('donate_url_usa', 'option') ?: '/donate';
-                        } elseif (in_array($GLOBALS['userInfo'], $GLOBALS['aus'])) {
-                            $donate_url = get_field('donate_url_aus', 'option') ?: '/donate';
-                        } elseif (in_array($GLOBALS['userInfo'], $GLOBALS['eur'])) {
-                            $donate_url = get_field('donate_url_eur', 'option') ?: '/donate';
-                        } else {
-                            $donate_url = get_field('donate_url_default', 'option') ?: '/donate';
-                        }
+                    $donate_url = "/donate";
+                    if ($GLOBALS["userInfo"]) {
+                    	if (in_array($GLOBALS["userInfo"], $GLOBALS["uk"])) {
+                    		$donate_url =
+                    			get_field("donate_url_uk", "option") ?: "/donate";
+                    	} elseif (
+                    		in_array($GLOBALS["userInfo"], $GLOBALS["norway"])
+                    	) {
+                    		$donate_url =
+                    			get_field("donate_url_nok", "option") ?: "/donate";
+                    	} elseif (
+                    		in_array($GLOBALS["userInfo"], $GLOBALS["usa"])
+                    	) {
+                    		$donate_url =
+                    			get_field("donate_url_usa", "option") ?: "/donate";
+                    	} elseif (
+                    		in_array($GLOBALS["userInfo"], $GLOBALS["aus"])
+                    	) {
+                    		$donate_url =
+                    			get_field("donate_url_aus", "option") ?: "/donate";
+                    	} elseif (
+                    		in_array($GLOBALS["userInfo"], $GLOBALS["eur"])
+                    	) {
+                    		$donate_url =
+                    			get_field("donate_url_eur", "option") ?: "/donate";
+                    	} else {
+                    		$donate_url =
+                    			get_field("donate_url_default", "option") ?:
+                    			"/donate";
+                    	}
                     } else {
-                        $donate_url = get_field('donate_url_default', 'option') ?: '/donate';
+                    	$donate_url =
+                    		get_field("donate_url_default", "option") ?: "/donate";
                     }
                     ?>
-                    <a id="donate" class="button button--red button--nav bold" href="<?php echo esc_url($donate_url); ?>">GIVE</a>
+                    <a id="donate" class="button button--red button--nav bold" href="<?php echo esc_url(
+                    	$donate_url
+                    ); ?>">GIVE</a>
                     <div id="burger-menu" class="header__burger">
                         <div class="burger">
                             <span></span>
