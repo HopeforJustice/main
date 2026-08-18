@@ -433,7 +433,7 @@
 
 // bigger mobiles
 //////////////////////////////////////////////////////////////////////////////////
-@media screen and(min-width: 374px) {
+@media screen and (min-width: 374px) {
 	.donate-block {
 		&__extra-graphic {
 			width: 173px;
@@ -444,7 +444,7 @@
 // phablet
 //////////////////////////////////////////////////////////////////////////////////
 
-@media screen and(min-width: 550px) {
+@media screen and (min-width: 550px) {
 	.donate-block {
 		max-width: 480px;
 		margin: 0 auto;
@@ -510,7 +510,7 @@
 // tablet
 //////////////////////////////////////////////////////////////////////////////////
 
-@media screen and(min-width: 768px) {
+@media screen and (min-width: 768px) {
 	.donate-block {
 		max-width: 523px;
 
@@ -579,7 +579,7 @@
 // desktop
 //////////////////////////////////////////////////////////////////////////////////
 
-@media screen and(min-width: 1024px) {
+@media screen and (min-width: 1024px) {
 	.donate-block {
 		max-width: 480px;
 		justify-self: start;
@@ -651,7 +651,7 @@
 // desktopLarge
 //////////////////////////////////////////////////////////////////////////////////
 
-@media screen and(min-width: 1366px) {
+@media screen and (min-width: 1366px) {
 	.donate-block {
 		max-width: 530px;
 
@@ -666,7 +666,7 @@
 // desktopLarge
 //////////////////////////////////////////////////////////////////////////////////
 
-@media screen and(min-width: 1680px) {
+@media screen and (min-width: 1680px) {
 	.donate-block {
 		//transform: translateX(-20%);
 		grid-column: 7/13;
@@ -696,7 +696,7 @@
 // desktopLarge
 //////////////////////////////////////////////////////////////////////////////////
 
-@media screen and(min-width: 2300px) {
+@media screen and (min-width: 2300px) {
 	.donate-block {
 		// transform: translateX(-50%);
 	}

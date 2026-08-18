@@ -88,8 +88,8 @@
 			animation: ellipsis-dot 1s infinite;
 
 			&:nth-child(1) {
-				-webkit-animation-delay: 0.0s;
-				animation-delay: 0.0s;
+				-webkit-animation-delay: 0s;
+				animation-delay: 0s;
 			}
 
 			&:nth-child(2) {
@@ -102,7 +102,6 @@
 				animation-delay: 0.3s;
 			}
 		}
-
 	}
 
 	&--plain {
@@ -111,8 +110,6 @@
 		&__text {
 			text-decoration: underline;
 		}
-
-
 	}
 
 	&--thin {
@@ -126,12 +123,9 @@
 		align-items: center;
 
 		svg {
-			margin-left: 10px
+			margin-left: 10px;
 		}
 	}
-
-
-
 }
 
 // gravity forms buttons
@@ -177,7 +171,6 @@ input[type="submit"] {
 ///////////////////////////////////////////////////////////////////////////////
 
 @include mq($from: tablet) {
-
 	.button,
 	.wp-block-button__link,
 	.better-grid .button {
@@ -194,14 +187,12 @@ input[type="submit"] {
 			font-size: 16px;
 		}
 	}
-
 }
 
 // desktop
 ///////////////////////////////////////////////////////////////////////////////
 
 @include mq($from: desktop) {
-
 	.button,
 	.wp-block-button__link,
 	.better-grid .button {
@@ -214,14 +205,12 @@ input[type="submit"] {
 			transform: scale(1.05);
 		}
 	}
-
 }
 
 // desktop Large
 ///////////////////////////////////////////////////////////////////////////////
 
 @include mq($from: desktopLarge) {
-
 	.button,
 	.wp-block-button__link,
 	.better-grid .button {
@@ -229,24 +218,18 @@ input[type="submit"] {
 			font-size: 18px;
 		}
 	}
-
 }
-
-
 
 // wide
 // ///////////////////////////////////////////////////////////////////////////////
 
 @include mq($from: wide) {
-
 	.button,
 	.wp-block-button__link,
 	.better-grid .button {
-
 		//font-size: 2em;
 		&--nav {
 			font-size: 18px;
 		}
 	}
-
 }

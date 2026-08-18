@@ -1,0 +1,242 @@
+.draggable-cards-block {
+	// Full-bleed and genuinely no padding here. Padding on this wrapper
+	// would shrink the __track element's own rendered width (it's a child
+	// sized to fit inside this box), which narrows __track's scrollport and
+	// makes cards stop short of the real screen edge - looking like they've
+	// been cut off rather than scrolled/dragged off screen. So this stays
+	// full width, and the left/right inset is applied as padding on
+	// __track itself instead, which doesn't shrink its own scrollport (a
+	// scroll container's visible viewport is its padding box, not its
+	// content box) - it just insets where the first/last card sit within
+	// the still-full-width scrollable area.
+	position: relative;
+	width: 100vw;
+
+	&__nav {
+		display: flex;
+		justify-content: flex-end;
+		gap: 8px;
+		margin: 0 clamp(24px, 5vw, 80px) 16px 0;
+	}
+
+	&__arrow {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		padding: 0;
+		border: none;
+		border-radius: 50%;
+		background: var(--medium-grey);
+		color: var(--black);
+		cursor: pointer;
+		transition: background-color 0.2s ease;
+
+		svg {
+			width: 8px;
+			height: 14px;
+		}
+
+		&:hover,
+		&:focus-visible {
+			background: var(--lines);
+		}
+
+		&:disabled {
+			opacity: 0.4;
+			cursor: default;
+		}
+	}
+
+	&__track {
+		display: flex;
+		align-items: stretch;
+		width: 100%;
+		gap: 24px;
+		overflow-x: auto;
+		cursor: grab;
+		scroll-snap-type: x proximity;
+		scroll-behavior: smooth;
+
+		// A snap container's resting scroll position must always be a valid
+		// snap point - and since only the real cards have scroll-snap-align
+		// (not the leading/trailing spacer below), the browser doesn't know
+		// the spacer is supposed to count as "start". Without this, it
+		// auto-corrects scrollLeft on load (and after every snap) to pull
+		// the first card flush against the edge, silently scrolling straight
+		// past the spacer. scroll-padding tells the snap engine the
+		// scrollport is inset by this much, so resting with the spacer
+		// showing is already a valid, settled snap position.
+		scroll-padding-left: clamp(24px, 5vw, 80px);
+		scroll-padding-right: clamp(24px, 5vw, 80px);
+
+		// hide the scrollbar, dragging/arrows are the affordance
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+
+		&::-webkit-scrollbar {
+			display: none;
+		}
+
+		&--dragging {
+			cursor: grabbing;
+			scroll-snap-type: none;
+			scroll-behavior: auto;
+			user-select: none;
+		}
+
+		> * {
+			flex: 0 0 auto;
+		}
+
+		// ACF renders its own extra wrapper around the actual InnerBlocks
+		// content in the editor - .acf-innerblocks-container, sitting
+		// between __track and the cards (the front end has no such wrapper,
+		// cards are direct children of __track there). >* above already
+		// sizes that wrapper correctly as a flex item within __track's own
+		// row, but it still needs to be turned into a flex row ITSELF so
+		// the cards inside it lay out horizontally instead of stacking -
+		// and its own direct children (the per-card wrapper divs) need the
+		// same width fix as >* above, one level deeper. Direct-child
+		// combinators throughout, since each card's own text content has
+		// its own nested .acf-innerblocks-container (for its heading/
+		// paragraph) that must NOT be turned into a horizontal row too.
+		> .acf-innerblocks-container {
+			display: flex;
+			align-items: stretch;
+			gap: 24px;
+
+			> * {
+				flex: 0 0 auto;
+				width: auto !important;
+				max-width: none !important;
+			}
+		}
+
+		// Targets the card directly (not >* above) so snapping still works
+		// no matter how many wrapper divs sit between it and the track.
+		.draggable-card {
+			scroll-snap-align: start;
+		}
+
+		// The inset is a real leading/trailing flex item (via generated
+		// content), not padding or margin. scroll-snap-align measures each
+		// item's "snap area", and browsers disagree on whether that
+		// includes margin - so a margin-based inset can get snapped straight
+		// past, landing the first card flush against the edge anyway. These
+		// pseudo-elements have no scroll-snap-align, so they're never a snap
+		// target themselves; they just occupy real scrollable space before/
+		// after the actual cards, which snapping can't collapse.
+		//
+		// ::before/::after (rather than one combined rule) so the
+		// desktopLarge breakpoint below can widen just the leading one to
+		// line up with .better-grid content, without touching the trailing
+		// one on the right.
+		&::before,
+		&::after {
+			content: "";
+			flex: 0 0 clamp(24px, 5vw, 80px);
+		}
+	}
+}
+
+// tablet
+//////////////////////////////////////////////////////////////////////////////////
+
+@media screen and (min-width: 768px) {
+	.draggable-cards-block {
+		&__track {
+			gap: 32px;
+
+			> .acf-innerblocks-container {
+				gap: 32px;
+			}
+		}
+	}
+}
+
+// desktop large - core-heading/core-paragraph switch from spanning the full
+// grid to `grid-column: 2/10` here, so surrounding text starts one column
+// (plus one column-gap) in from .better-grid's own padding. Widen just the
+// leading spacer/scroll-padding by that same column+gap amount so the first
+// card starts under the same point as the text above/below it, instead of
+// under .better-grid's outer edge. The trailing spacer on the right is
+// untouched - core-heading/paragraph don't align their end to a column
+// either, so there's nothing on the right to match.
+//
+// column width isn't a fixed px value - it's whatever's left in
+// .better-grid after its own padding and the 11 column-gaps, divided by 12 -
+// so this re-derives it from the *current* left inset ($inset below) at
+// each of .better-grid's own breakpoints, rather than a guessed constant.
+//////////////////////////////////////////////////////////////////////////////////
+
+@media screen and (min-width: 1366px) {
+	.draggable-cards-block {
+		&__track {
+			$inset: clamp(24px, 5vw, 80px);
+
+			// $inset + [(100vw - 2 * $inset - 11 gaps) / 12 columns] + 1 gap
+			scroll-padding-left: calc(#{$inset} + (100vw - #{$inset} * 2 - 352px) / 12 + 32px);
+
+			&::before {
+				flex-basis: calc(#{$inset} + (100vw - #{$inset} * 2 - 352px) / 12 + 32px);
+			}
+		}
+	}
+}
+
+// desktop extra large
+//////////////////////////////////////////////////////////////////////////////////
+
+@media screen and (min-width: 1680px) {
+	.draggable-cards-block {
+		&__nav {
+			margin-right: 124px;
+		}
+
+		&__track {
+			// same column+gap derivation as above, with .better-grid's fixed
+			// 124px inset at this breakpoint instead of the clamp() above:
+			// 124px + [(100vw - 248px - 352px) / 12] + 32px, simplified.
+			scroll-padding-left: calc(156px + (100vw - 600px) / 12);
+			scroll-padding-right: 124px;
+
+			&::before {
+				flex-basis: calc(156px + (100vw - 600px) / 12);
+			}
+
+			&::after {
+				flex-basis: 124px;
+			}
+		}
+	}
+}
+
+// wide - .better-grid switches to a centered, max-width: 1672px box here, so
+// match its resulting left/right inset instead of its (now unused) padding.
+// That also makes "100vw - 2 * inset" a constant 1672px from here on, so the
+// column+gap derivation collapses to a fixed 142px added on top of the
+// inset, rather than needing another vw-based calc().
+//////////////////////////////////////////////////////////////////////////////////
+
+@media screen and (min-width: 1920px) {
+	.draggable-cards-block {
+		&__nav {
+			margin-right: max(124px, calc((100vw - 1672px) / 2));
+		}
+
+		&__track {
+			scroll-padding-left: calc(max(124px, calc((100vw - 1672px) / 2)) + 142px);
+			scroll-padding-right: max(124px, calc((100vw - 1672px) / 2));
+
+			&::before {
+				flex-basis: calc(max(124px, calc((100vw - 1672px) / 2)) + 142px);
+			}
+
+			&::after {
+				flex-basis: max(124px, calc((100vw - 1672px) / 2));
+			}
+		}
+	}
+}

@@ -684,6 +684,50 @@ function my_acf_init_block_types()
 			"render_template" => "template-parts/blocks/days-of-hope/days-of-hope.php",
 			"category" => "hfj-design-system",
 		]);
+
+		//register draggable cards block
+		acf_register_block_type([
+			"name" => "draggable-cards",
+			"title" => __("Draggable Cards"),
+			"description" => __(
+				"A horizontally draggable row of cards. Add 'Draggable Card' blocks inside it."
+			),
+			"render_template" => "template-parts/blocks/draggable-cards/draggable-cards.php",
+			"category" => "hfj-design-system",
+			"icon" => "images-alt2",
+			"acf_block_version" => "2",
+			"enqueue_assets" => "draggable_cards_assets",
+			"supports" => [
+				"jsx" => true,
+			],
+		]);
+
+		function draggable_cards_assets()
+		{
+			wp_enqueue_script(
+				"draggable_cards_scripts",
+				get_template_directory_uri() .
+					"/template-parts/blocks/draggable-cards/draggable-cards.js",
+				["jquery"],
+				_S_VERSION
+			);
+		}
+
+		//register draggable card block (child of draggable-cards)
+		acf_register_block_type([
+			"name" => "draggable-card",
+			"title" => __("Draggable Card"),
+			"description" => __(
+				"A single card for the 'Draggable Cards' block. Image, gradients and full colour, plus inner blocks for the text content."
+			),
+			"render_template" => "template-parts/blocks/draggable-cards/draggable-card.php",
+			"category" => "hfj-design-system",
+			"icon" => "cover-image",
+			"acf_block_version" => "2",
+			"supports" => [
+				"jsx" => true,
+			],
+		]);
 	}
 }
 

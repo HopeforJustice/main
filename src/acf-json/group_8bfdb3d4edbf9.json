@@ -1,0 +1,140 @@
+{
+    "key": "group_8bfdb3d4edbf9",
+    "title": "Block: Draggable Card",
+    "fields": [
+        {
+            "key": "field_a74d6387f2a2b",
+            "label": "Image",
+            "name": "image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "preview_size": "medium",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        },
+        {
+            "key": "field_19fc8da81cffc",
+            "label": "Full colour background",
+            "name": "full_colour",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Fills the card with a flat colour. Sits behind the image if one is also set.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 0,
+            "return_format": "string"
+        },
+        {
+            "key": "field_aeda7ac80ac7b",
+            "label": "Top gradient overlay",
+            "name": "top_gradient",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Darkens the top of the card so light text stays readable.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_9b7f3b357e108",
+            "label": "Bottom gradient overlay",
+            "name": "bottom_gradient",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Darkens the bottom of the card so light text stays readable.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_369b7b768933c",
+            "label": "Content alignment",
+            "name": "content_align",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Vertical alignment of the text content inside the card.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "top": "Top",
+                "middle": "Middle",
+                "bottom": "Bottom"
+            },
+            "default_value": "bottom",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "block",
+                "operator": "==",
+                "value": "acf/draggable-card"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1787065200
+}

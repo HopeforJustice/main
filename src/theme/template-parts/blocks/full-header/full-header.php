@@ -24,6 +24,8 @@ $hasGradient = get_field("has_gradient");
 $hasGradientBottom = get_field("has_gradient_bottom");
 $gradientColor = get_field("gradient_color");
 $gradientColorB = get_field("gradient_color_b");
+$overlayColor = get_field("overlay_color");
+$hideOverlayFromBreakpoint = get_field("hide_overlay_from_breakpoint");
 $dont_split_content = get_field("dont_split_content");
 $align_content = get_field("align_content");
 $max_width = get_field("content_max_width");
@@ -60,6 +62,12 @@ $gradient_style =
 	esc_attr($gradientColorB) .
 	";";
 
+$overlay_class = "full-header__overlay";
+if ($hideOverlayFromBreakpoint) {
+	$overlay_class .= " full-header__overlay--hide-from-" . $hideOverlayFromBreakpoint;
+}
+$overlay_style = "--overlay-color: " . esc_attr($overlayColor) . ";";
+
 $content_class = "full-header__content";
 if ($align_content === "center") {
 	$content_class .= " full-header__content--no-padding";
@@ -79,6 +87,10 @@ $content_style =
     <div class="better-grid">
         <!-- image -->
         <div style="<?php echo $image_style; ?>" class="full-header__image">
+            <?php if ($overlayColor) { ?>
+                <div class="<?php echo esc_attr($overlay_class); ?>" style="<?php echo $overlay_style; ?>">
+                </div>
+            <?php } ?>
         </div>
 
         <?php if ($hasGradient) { ?>

@@ -164,6 +164,90 @@ function my_filter_head()
 add_action("wp_enqueue_scripts", "hope_for_justice_2021_scripts", 1);
 
 /**
+ * Load the block styles (built from editor-block-base-styles.scss, which
+ * imports every block's own .scss file) into the block editor iframe, so
+ * blocks look the same there as they do on the front end.
+ */
+function hope_for_justice_2021_editor_styles()
+{
+	wp_enqueue_style(
+		"hope-for-justice-editor-block-styles",
+		get_template_directory_uri() . "/editor-block-base-styles.css",
+		[],
+		_S_VERSION
+	);
+}
+add_action("enqueue_block_editor_assets", "hope_for_justice_2021_editor_styles");
+
+/**
+ * The "Add Custom CSS" plugin (wp-add-custom-css) only outputs its CSS on
+ * the front end (via wp_head/template_redirect), so anything written into
+ * it never shows up while editing in the block editor. Mirror both its
+ * global and per-page custom CSS into the editor too, reading from the
+ * same option/post meta the plugin itself uses so there's one source of
+ * truth.
+ */
+function hope_for_justice_2021_editor_custom_css()
+{
+	$wpacc_options = get_option("wpacc_settings");
+
+	// Global custom CSS: reuse the plugin's own front-end CSS endpoint so
+	// this always reflects whatever's currently saved.
+	if (!empty($wpacc_options["main_custom_style"])) {
+		$css_base_url = get_bloginfo("url");
+		if (is_ssl()) {
+			$css_base_url = str_replace("http://", "https://", $css_base_url);
+		}
+		wp_register_style(
+			"wp-add-custom-css-editor",
+			$css_base_url . "?display_custom_css=css",
+			[],
+			_S_VERSION
+		);
+		wp_enqueue_style("wp-add-custom-css-editor");
+	}
+
+	// Per-page custom CSS, only when editing a post type the plugin is
+	// actually enabled for (matches the plugin's own is_enabled_post_type()).
+	$post_id = isset($_GET["post"]) ? absint($_GET["post"]) : 0;
+	if (!$post_id) {
+		return;
+	}
+
+	$enabled_post_types = ["post", "page"];
+	if (!empty($wpacc_options["selected_post_types"])) {
+		$enabled_post_types = array_merge(
+			$enabled_post_types,
+			$wpacc_options["selected_post_types"]
+		);
+	}
+	if (!in_array(get_post_type($post_id), $enabled_post_types)) {
+		return;
+	}
+
+	$single_custom_css = get_post_meta(
+		$post_id,
+		"_single_add_custom_css",
+		true
+	);
+	if ($single_custom_css === "") {
+		return;
+	}
+
+	$single_custom_css = str_replace("&gt;", ">", $single_custom_css);
+	wp_register_style("wp-add-custom-css-editor-single", false);
+	wp_enqueue_style("wp-add-custom-css-editor-single");
+	wp_add_inline_style(
+		"wp-add-custom-css-editor-single",
+		$single_custom_css
+	);
+}
+add_action(
+	"enqueue_block_editor_assets",
+	"hope_for_justice_2021_editor_custom_css"
+);
+
+/**
  * Enqueue page specific scripts in a centrally maintained location
  */
 function page_scripts()
