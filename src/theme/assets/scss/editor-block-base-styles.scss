@@ -64,6 +64,12 @@
 @import "../../template-parts/blocks/pre-donation/pre-donation.scss";
 @import "../../template-parts/blocks/other-ways-to-give/other-ways-to-give.scss";
 @import "../../template-parts/blocks/days-of-hope/days-of-hope.scss";
+@import "../../template-parts/blocks/draggable-cards/draggable-cards.scss";
+@import "../../template-parts/blocks/draggable-cards/draggable-card.scss";
+
+.better-grid .button {
+	border-radius: 7.7em !important;
+}
 
 html :where(.wp-block) {
 	max-width: none;

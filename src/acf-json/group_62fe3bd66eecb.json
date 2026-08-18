@@ -108,6 +108,66 @@
             "ui_off_text": ""
         },
         {
+            "key": "field_6e2cba52919a3",
+            "label": "Overlay colour",
+            "name": "overlay_color",
+            "aria-label": "",
+            "type": "color_picker",
+            "instructions": "Darkens the whole image with a flat colour overlay",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "enable_opacity": 1,
+            "return_format": "string",
+            "custom_palette_source": "",
+            "palette_colors": "",
+            "show_color_wheel": true
+        },
+        {
+            "key": "field_11950c2bf4fb8",
+            "label": "Hide overlay from breakpoint",
+            "name": "hide_overlay_from_breakpoint",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Overlay stays visible below the chosen breakpoint and switches off from it upwards. Matches the breakpoints already used in this block's stylesheet.",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6e2cba52919a3",
+                        "operator": "!=empty"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "": "Never (always show)",
+                "375": "Mobile medium (375px)",
+                "480": "Mobile large (480px)",
+                "768": "Tablet (768px)",
+                "1024": "Desktop (1024px)",
+                "1366": "Large desktop (1366px)"
+            },
+            "default_value": "",
+            "return_format": "value",
+            "multiple": 0,
+            "allow_null": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0
+        },
+        {
             "key": "field_6a7ef6ae635c7",
             "label": "Dont split content on mobile",
             "name": "dont_split_content",
@@ -200,5 +260,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1786705765
+    "modified": 1786705775
 }

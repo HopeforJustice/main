@@ -17,6 +17,11 @@ $align = get_field("align");
 //width spacific spanning
 $width_spans = get_field("width_spans");
 $id = "block" . uniqid();
+
+$class_name = "";
+if (!empty($block["className"])) {
+	$class_name .= " " . $block["className"];
+}
 ?>
 <style>
     <?php if (have_rows("width_spans")) {
@@ -38,7 +43,7 @@ $id = "block" . uniqid();
 
 
 <!-- grid -->
-<div id="<?php echo $id; ?>" class="grid-container grid-container--span-<?php echo $span; ?> grid-container--align-<?php echo $align; ?>" style="padding: <?php echo $padding; ?>">
+<div id="<?php echo $id; ?>" class=" <?php echo $class_name; ?> grid-container grid-container--span-<?php echo $span; ?> grid-container--align-<?php echo $align; ?>" style="padding: <?php echo $padding; ?>">
     <?php
     $template = [
     	[
