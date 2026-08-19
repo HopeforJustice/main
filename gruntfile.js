@@ -56,12 +56,12 @@ module.exports = function (grunt) {
 
     // Setup tasks
     clean: require('./grunt-tasks/clean')(dir.distTheme, dir.distPlugins, dir.jsDir, dir.fontsDir, dir.imgDir, dir.scssDir, dir.wpDir, dir.wpTmp + dir.wpZip, dir.wpTmp + dir.wpName),
-    symlink: require('./grunt-tasks/symlink')(dir.devPlugins, dir.distPlugins, dir.devACF, dir.distACF),
-    copy: require('./grunt-tasks/copy')(dir.distTheme, dir.devTheme, dir.distPlugins, dir.devPlugins, dir.fontsDir, dir.imgDir, dir.jsDir, theme.name, theme.description, theme.version, dir.wpTmp + dir.wpName, dir.wpDir, dir.devBlocks),
+    symlink: require('./grunt-tasks/symlink')(dir.devPlugins, dir.distPlugins),
+    copy: require('./grunt-tasks/copy')(dir.distTheme, dir.devTheme, dir.distPlugins, dir.devPlugins, dir.fontsDir, dir.imgDir, dir.jsDir, theme.name, theme.description, theme.version, dir.wpTmp + dir.wpName, dir.wpDir, dir.devBlocks, dir.devACF, dir.distACF),
     sass: require('./grunt-tasks/sass')(dir.distTheme, dir.devTheme, dir.scssDir),
     uglify: require('./grunt-tasks/uglify')(dir.distTheme, dir.devTheme, dir.jsDir),
     browserSync: require('./grunt-tasks/browserSync')(dir.distTheme),
-    watch: require('./grunt-tasks/watch')(dir.distTheme, dir.devTheme, dir.distPlugins, dir.devPlugins, dir.jsDir, dir.fontsDir, dir.imgDir, dir.iconsDir, dir.scssDir, dir.devBlocks),
+    watch: require('./grunt-tasks/watch')(dir.distTheme, dir.devTheme, dir.distPlugins, dir.devPlugins, dir.jsDir, dir.fontsDir, dir.imgDir, dir.iconsDir, dir.scssDir, dir.devBlocks, dir.devACF),
     'sftp-deploy': require('./grunt-tasks/sftp-deploy')(dir.deployBase, theme.name),
     curl: require('./grunt-tasks/curl')(dir.wpCurl, dir.wpTmp + dir.wpZip),
     unzip: require('./grunt-tasks/unzip')(dir.wpTmp + dir.wpZip, dir.wpTmp),
@@ -72,14 +72,15 @@ module.exports = function (grunt) {
 
   /*  Register tasks  */
 
-  // Default task. 
-  grunt.registerTask('default', ['clean:all', 'symlink', 'copy:theme', 'copy:style', 'copy:img', 'copy:tmpl', 'copy:fonts', 'copy:blocks', 'sass:build', 'autoprefixer', 'uglify', 'browserSync', 'watch']);
+  // Default task.
+  grunt.registerTask('default', ['clean:all', 'symlink', 'copy:theme', 'copy:style', 'copy:img', 'copy:tmpl', 'copy:fonts', 'copy:blocks', 'copy:acf', 'sass:build', 'autoprefixer', 'uglify', 'browserSync', 'watch']);
 
   // Specific watch-related tasks
   grunt.registerTask('theme_changed', ['copy:theme', 'browserSync']);
   grunt.registerTask('blocks_changed', ['copy:blocks', 'browserSync']);
   grunt.registerTask('fonts_changed', ['clean:fonts', 'copy:fonts', 'browserSync']);
   grunt.registerTask('img_changed', ['clean:img', 'copy:img', 'browserSync']);
+  grunt.registerTask('acf_changed', ['copy:acf', 'browserSync']);
   grunt.registerTask('scss_changed', ['clean:css', 'sass', 'autoprefixer', 'browserSync']);
   grunt.registerTask('js_changed', ['clean:js', 'copy:theme', 'copy:tmpl', 'uglify', 'browserSync']);
   // install Wordpress latest

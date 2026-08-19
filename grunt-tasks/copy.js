@@ -1,6 +1,14 @@
-module.exports = function (distTheme, devTheme, distPlugins, devPlugins, fontsDir, imgDir, jsDir, themeName, themeDescription, themeVersion, devInstall, distInstall, devBlocks) {
+module.exports = function (distTheme, devTheme, distPlugins, devPlugins, fontsDir, imgDir, jsDir, themeName, themeDescription, themeVersion, devInstall, distInstall, devBlocks, devACF, distACF) {
 
   return {
+    acf: {
+      files: [{
+        expand: true,
+        cwd: devACF,
+        src: ['**/*'],
+        dest: distACF,
+      }],
+    },
     theme: {
       files: [{
         expand: true,
