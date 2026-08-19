@@ -91,4 +91,52 @@
         window.acf.addAction('render_block_preview/type=draggable-cards', initializeDraggableCards);
     }
 
+    /**
+     * A card's "additional content" popup (the "+" button). Delegated on
+     * the document, rather than bound during initializeDraggableCards,
+     * since these live on the child "draggable-card" blocks, which can be
+     * individually re-rendered in the block editor without the parent (and
+     * its init function) running again.
+     */
+    var $modalTrigger = null;
+
+    var openCardModal = function ($modal, $trigger) {
+        $modalTrigger = $trigger;
+        $modal.removeClass('draggable-card__modal--closed').attr('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        $modal.find('.draggable-card__modal-close').focus();
+    };
+
+    var closeCardModal = function ($modal) {
+        $modal.addClass('draggable-card__modal--closed').attr('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if ($modalTrigger && $modalTrigger.length) {
+            $modalTrigger.focus();
+        }
+        $modalTrigger = null;
+    };
+
+    $(document).on('click', '.draggable-card__more', function () {
+        var $modal = $('#' + $(this).attr('data-modal-target'));
+        if ($modal.length) {
+            openCardModal($modal, $(this));
+        }
+    });
+
+    $(document).on('click', '[data-modal-close]', function () {
+        var $modal = $(this).closest('.draggable-card__modal');
+        if ($modal.length) {
+            closeCardModal($modal);
+        }
+    });
+
+    $(document).on('keydown', function (e) {
+        if (e.key !== 'Escape' && e.keyCode !== 27) {
+            return;
+        }
+        $('.draggable-card__modal').not('.draggable-card__modal--closed').each(function () {
+            closeCardModal($(this));
+        });
+    });
+
 })(jQuery);

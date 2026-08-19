@@ -113,6 +113,46 @@
             "placeholder": "",
             "create_options": 0,
             "save_options": 0
+        },
+        {
+            "key": "field_85b02d04c0791",
+            "label": "Additional content header",
+            "name": "additional_content_header",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional. Only shown in the popup if filled in.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_e310f2018f9a1",
+            "label": "Additional content body",
+            "name": "additional_content_body",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "Optional. Extra context for this card. If either this or the header above is filled in, a \"+\" icon appears on the card that opens this content in a popup.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "basic",
+            "media_upload": 0,
+            "delay": 0
         }
     ],
     "location": [
@@ -136,5 +176,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1787065200
+    "modified": 1787140800
 }
