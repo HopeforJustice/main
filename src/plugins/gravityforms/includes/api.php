@@ -402,11 +402,13 @@ class GFAPI {
 	 *
 	 * @uses GFAPI::add_form()
 	 *
-	 * @param array $forms The Form Objects.
+	 * @param array $forms             The Form Objects.
+	 * @param bool  $continue_on_error Controls whether the function will continue adding forms even if it encounters an error with a form. If true, the function will attempt to add all forms and will return an array of successfully added form IDs and an array of failed forms with their corresponding errors. If false, the function will return a WP_Error instance as soon as it encounters an error with a form and will not attempt to add any remaining forms.
+	 * @param bool  $accessible        Controls whether forms are accessible by default. If true, properties that are not set in the specified $forms parameter will be set to an accessible value (i.e. top label). If false, defaults are not guaranteed to be accessible.
 	 *
 	 * @return array|WP_Error Either an array of new form IDs or a WP_Error instance.
 	 */
-	public static function add_forms( $forms, $continue_on_error = false ) {
+	public static function add_forms( $forms, $continue_on_error = false, $accessible = false ) {
 
 		if ( gf_upgrade()->get_submissions_block() ) {
 			return new WP_Error( 'submissions_blocked', __( 'Submissions are currently blocked due to an upgrade in progress', 'gravityforms' ) );
@@ -419,7 +421,7 @@ class GFAPI {
 		$failed_forms = array();
 
 		foreach ( $forms as $form ) {
-			$result = self::add_form( $form );
+			$result = self::add_form( $form, $accessible );
 			if ( is_wp_error( $result ) ) {
 				// If continue_on_error is true on the call, add the failed form details to the failed_forms array and return it else it will return the WP_Error.
 				if ( $continue_on_error ) {
@@ -454,11 +456,12 @@ class GFAPI {
 	 * @access public
 	 * @global $wpdb
 	 *
-	 * @param array $form_meta The Form object.
+	 * @param array $form_meta  The Form object.
+	 * @param bool  $accessible Controls whether forms are accessible by default. If true, properties that are not set in the specified $forms parameter will be set to an accessible value (i.e. top label). If false, defaults are not guaranteed to be accessible.
 	 *
 	 * @return int|WP_Error Either the new Form ID or a WP_Error instance.
 	 */
-	public static function add_form( $form_meta ) {
+	public static function add_form( $form_meta, $accessible = true ) {
 		global $wpdb;
 
 		if ( gf_upgrade()->get_submissions_block() ) {
@@ -520,6 +523,10 @@ class GFAPI {
 		$next_field_id = GFFormsModel::get_next_field_id( $form_meta['fields'] );
 
 		$form_meta['fields'] = self::add_missing_ids( $form_meta['fields'], $next_field_id );
+
+		if ( $accessible ) {
+			$form_meta = GFFormsModel::get_accessible_properties( $form_meta ) ;
+		}
 
 		// Updating form meta.
 		$result = GFFormsModel::update_form_meta( $form_id, $form_meta );
@@ -1819,7 +1826,6 @@ class GFAPI {
 			'validation_messages' => array(),
 			'page_number'         => $is_valid ? $target_page : $failed_validation_page,
 			'source_page_number'  => $source_page,
-			'form'                => $form,
 		);
 
 		if ( $is_valid ) {
@@ -2556,36 +2562,6 @@ class GFAPI {
 				continue;
 			}
 
-			if ( $event == 'form_submission' ) {
-				/**
-				 * Disables user notifications.
-				 *
-				 * @since Unknown
-				 *
-				 * @param bool  false  Determines if the notification will be disabled. Set to true to disable the notification.
-				 * @param array $form  The Form Object that triggered the notification event.
-				 * @param array $entry The Entry Object that triggered the notification event.
-				 */
-				if ( rgar( $notification, 'type' ) == 'user' && gf_apply_filters( array( 'gform_disable_user_notification', $form_id ), false, $form, $entry ) ) {
-					GFCommon::log_debug( __METHOD__ . "(): Notification is disabled by gform_disable_user_notification hook, not including notification (#{$notification['id']} - {$notification['name']})." );
-					// Skip user notification if it has been disabled by a hook.
-					continue;
-					/**
-					 * Disables admin notifications.
-					 *
-					 * @since Unknown
-					 *
-					 * @param bool  false  Determines if the notification will be disabled. Set to true to disable the notification.
-					 * @param array $form  The Form Object that triggered the notification event.
-					 * @param array $entry The Entry Object that triggered the notification event.
-					 */
-				} elseif ( rgar( $notification, 'type' ) == 'admin' && gf_apply_filters( array( 'gform_disable_admin_notification', $form_id ), false, $form, $entry ) ) {
-					GFCommon::log_debug( __METHOD__ . "(): Notification is disabled by gform_disable_admin_notification hook, not including notification (#{$notification['id']} - {$notification['name']})." );
-					// Skip admin notification if it has been disabled by a hook.
-					continue;
-				}
-			}
-
 			/**
 			 * Disables notifications.
 			 *
@@ -2634,6 +2610,58 @@ class GFAPI {
 		}
 
 		return $notifications_to_send;
+	}
+
+	/**
+	 * Triggers sending of the given notification.
+	 *
+	 * @since 2.10.0
+	 *
+	 * @param array $notification The notification to be sent.
+	 * @param array $form         The form the notification belongs to.
+	 * @param array $entry        The entry the notification is being sent for.
+	 * @param array $data         Optional. Array of data which can be used in the notifications via the generic {object:property} merge tag. Defaults to empty array.
+	 *
+	 * @return void
+	 */
+	public static function send_notification( $notification, $form, $entry, $data = array() ) {
+		if ( empty( $notification ) || empty( $form ) || empty( $entry ) ) {
+			return;
+		}
+
+		$notification_id = rgar( $notification, 'id', 'custom' );
+		$event           = rgar( $notification, 'event', 'custom' );
+
+		/**
+		 * @var Async\GF_Notifications_Processor $processor
+		 */
+		$processor       = GFForms::get_service_container()->get( Async\GF_Background_Process_Service_Provider::NOTIFICATIONS );
+		$is_asynchronous = $processor->is_enabled( array( $notification_id ), $form, $entry, $event, $data );
+
+		if ( $is_asynchronous ) {
+			$task = array(
+				'notification' => $notification,
+				'form_id'      => absint( rgar( $form, 'id' ) ),
+				'event'        => $event,
+				'data'         => $data,
+			);
+
+			$entry_id = absint( rgar( $entry, 'id' ) );
+			if ( $entry_id ) {
+				// Entry with an integer ID, so we only store the ID in the task. The task processor will retrieve the latest version of the entry from the db.
+				$for_entry        = ' for entry #' . $entry_id;
+				$task['entry_id'] = $entry_id;
+			} else {
+				// The entry for a draft submission doesn't have an ID, so we need to pass the draft entry to the task processor.
+				$for_entry     = '';
+				$task['entry'] = $entry;
+			}
+
+			GFCommon::log_debug( __METHOD__ . sprintf( '(): Adding notification (#%s - %s) to the async processing queue%s.', $notification_id, rgar( $notification, 'name', 'custom' ), $for_entry ) );
+			$processor->push_to_queue( $task )->save()->dispatch_on_shutdown();
+		} else {
+			GFCommon::send_notification( $notification, $form, $entry, $data );
+		}
 	}
 
 
