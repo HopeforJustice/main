@@ -1,8 +1,12 @@
-module.exports = function (distTheme, devTheme, distPlugins, devPlugins, jsDir, fontsDir, imgDir, iconsDir, scssDir, devBlocks) {
+module.exports = function (distTheme, devTheme, distPlugins, devPlugins, jsDir, fontsDir, imgDir, iconsDir, scssDir, devBlocks, devACF) {
 	return {
 		dev_php: {
 			files: [devTheme + '/**/*.php', devTheme + '/theme.json'],
 			tasks: ['theme_changed', 'blocks_changed', 'scss_changed'],
+		},
+		dev_acf: {
+			files: [devACF + '/**/*.json'],
+			tasks: ['acf_changed'],
 		},
 		dev_fonts: {
 			files: [devTheme + fontsDir + '**/*'],
