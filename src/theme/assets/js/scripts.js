@@ -35,7 +35,7 @@ function captureUTMParameters() {
 
 /* Page load scripts */
 jQuery(document).ready(function ($) {
-	console.log("v6.7.4");
+	console.log("v6.7.5");
 	captureUTMParameters();
 	let cookies = Cookies.get("wordpress_hfjcookies");
 
@@ -83,7 +83,7 @@ jQuery(document).ready(function ($) {
 			{
 				scrollTop: $("#ukraineGiving").offset().top - 100,
 			},
-			500,
+			500
 		);
 	});
 
@@ -147,10 +147,7 @@ jQuery(document).ready(function ($) {
 	// Bootstrap modal
 	$(".modal").on("shown.bs.modal", function () {
 		// any time a modal is shown
-		$(this)
-			.find(".modal__content")
-			.addClass("animate__animated animate__fadeInDown")
-			.fadeIn(); //animate in
+		$(this).find(".modal__content").addClass("animate__animated animate__fadeInDown").fadeIn(); //animate in
 		var urlReplace = "#" + $(this).attr("id"); // make the hash the id of the modal shown
 		history.pushState(null, null, urlReplace); // push state that hash into the url
 	});
@@ -261,7 +258,7 @@ jQuery(document).ready(function ($) {
 			$(this).val(
 				txt.replace(/^(.)|(\s|\-)(.)/g, function ($word) {
 					return $word.toUpperCase();
-				}),
+				})
 			);
 			box.setSelectionRange(stringStart, stringEnd);
 		});
@@ -275,57 +272,54 @@ jQuery(document).ready(function ($) {
 }); /* end of as page load scripts */
 
 //gravity forms on render
-jQuery(document).on(
-	"gform_post_render",
-	function (event, form_id, current_page) {
-		// //modify field name to 'search' on gravity forms if class exists
-		// jQuery(".address-search input").attr("name","search");
+jQuery(document).on("gform_post_render", function (event, form_id, current_page) {
+	// //modify field name to 'search' on gravity forms if class exists
+	// jQuery(".address-search input").attr("name","search");
 
-		//show address fields on click
-		jQuery(".address-link").on("click", function () {
-			jQuery(".address-fields").show();
-		});
+	//show address fields on click
+	jQuery(".address-link").on("click", function () {
+		jQuery(".address-fields").show();
+	});
 
-		//remove html in search input on click
-		jQuery(".address-search input").on("click", function () {
-			jQuery(this).val("");
-		});
+	//remove html in search input on click
+	jQuery(".address-search input").on("click", function () {
+		jQuery(this).val("");
+	});
 
-		// //postcode anywhere with regex matching
-		// var e = {
-		//     key: "DN97-JG93-ZJ46-EW48" //PCA API key
-		// },
-		// d = [{
-		//     element: "search", // use the field named 'search' to search
-		//     field: "",
-		//     mode: pca.fieldMode.SEARCH
-		// }, {
-		//     element: "^input_[0-9]{1,}_[0-9]{1,}_1$",
-		//     field: "Line1",
-		//     mode: pca.fieldMode.POPULATE
-		// }, {
-		//     element: "^input_[0-9]{1,}_[0-9]{1,}_2$",
-		//     field: "Line2",
-		//     mode: pca.fieldMode.POPULATE
-		// }, {
-		//     element: "^input_[0-9]{1,}_[0-9]{1,}_3$",
-		//     field: "City",
-		//     mode: pca.fieldMode.POPULATE
-		// }, {
-		//     element: "^input_[0-9]{1,}_[0-9]{1,}_4$",
-		//     field: "Province",
-		//     mode: pca.fieldMode.POPULATE
-		// }, {
-		//     element: "^input_[0-9]{1,}_[0-9]{1,}_5$",
-		//     field: "PostalCode",
-		//     mode: pca.fieldMode.POPULATE
-		// }],
-		// o = new pca.Address(d, e);
-		// o.listen("populate", function() {
-		//     jQuery(".address-search input").val(jQuery(".address_line_1 input").val() + "...");
-		// }), o.load()
-	},
-);
+	// //postcode anywhere with regex matching
+	// var e = {
+	//     key: "DN97-JG93-ZJ46-EW48" //PCA API key
+	// },
+	// d = [{
+	//     element: "search", // use the field named 'search' to search
+	//     field: "",
+	//     mode: pca.fieldMode.SEARCH
+	// }, {
+	//     element: "^input_[0-9]{1,}_[0-9]{1,}_1$",
+	//     field: "Line1",
+	//     mode: pca.fieldMode.POPULATE
+	// }, {
+	//     element: "^input_[0-9]{1,}_[0-9]{1,}_2$",
+	//     field: "Line2",
+	//     mode: pca.fieldMode.POPULATE
+	// }, {
+	//     element: "^input_[0-9]{1,}_[0-9]{1,}_3$",
+	//     field: "City",
+	//     mode: pca.fieldMode.POPULATE
+	// }, {
+	//     element: "^input_[0-9]{1,}_[0-9]{1,}_4$",
+	//     field: "Province",
+	//     mode: pca.fieldMode.POPULATE
+	// }, {
+	//     element: "^input_[0-9]{1,}_[0-9]{1,}_5$",
+	//     field: "PostalCode",
+	//     mode: pca.fieldMode.POPULATE
+	// }],
+	// o = new pca.Address(d, e);
+	// o.listen("populate", function() {
+	//     jQuery(".address-search input").val(jQuery(".address_line_1 input").val() + "...");
+	// }), o.load()
+});
 
 jQuery(document).on("gform_confirmation_loaded", function (event, formId) {
 	// lottie
@@ -418,19 +412,12 @@ jQuery(document).on("gform_confirmation_loaded", function (event, formId) {
 
 		function customLabel(obj) {
 			let choice = obj.val();
-			let furtherDetails = obj
-				.parent()
-				.siblings(".further-details")
-				.find("label");
+			let furtherDetails = obj.parent().siblings(".further-details").find("label");
 			if (choice == "Faith Based") {
-				$(furtherDetails).html(
-					"Please tell us the name of your place of worship",
-				);
+				$(furtherDetails).html("Please tell us the name of your place of worship");
 			} else if (choice == "Social media") {
 				$(furtherDetails).html("Please tell us which platform inspired you");
-			} else if (
-				choice == "I know a Hope for Justice staff member/ volunteer"
-			) {
+			} else if (choice == "I know a Hope for Justice staff member/ volunteer") {
 				$(furtherDetails).html("Please tell us who you know");
 			} else if (choice == "Gift of celebration") {
 				$(furtherDetails).html("Please let us know what you are celebrating");

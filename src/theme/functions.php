@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.7.4");
+	define("_S_VERSION", "6.7.5");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -29,10 +29,7 @@ if (!function_exists("hope_for_justice_2021_setup")):
 		 * If you're building a theme based on Hope for Justice 2020, use a find and replace
 		 * to change 'hope-for-justice-2020' to the name of your theme in all the template files.
 		 */
-		load_theme_textdomain(
-			"hope-for-justice-2021",
-			get_template_directory() . "/languages"
-		);
+		load_theme_textdomain("hope-for-justice-2021", get_template_directory() . "/languages");
 
 		// Add default posts and comments RSS feed links to head.
 		add_theme_support("automatic-feed-links");
@@ -126,12 +123,7 @@ function hope_for_justice_2021_scripts()
 			_S_VERSION
 		);
 	} else {
-		wp_enqueue_style(
-			"hope-for-justice-2021-style",
-			get_stylesheet_uri(),
-			[],
-			_S_VERSION
-		);
+		wp_enqueue_style("hope-for-justice-2021-style", get_stylesheet_uri(), [], _S_VERSION);
 
 		// remove block scripts
 		function remove_block_css()
@@ -225,11 +217,7 @@ function hope_for_justice_2021_editor_custom_css()
 		return;
 	}
 
-	$single_custom_css = get_post_meta(
-		$post_id,
-		"_single_add_custom_css",
-		true
-	);
+	$single_custom_css = get_post_meta($post_id, "_single_add_custom_css", true);
 	if ($single_custom_css === "") {
 		return;
 	}
@@ -237,15 +225,9 @@ function hope_for_justice_2021_editor_custom_css()
 	$single_custom_css = str_replace("&gt;", ">", $single_custom_css);
 	wp_register_style("wp-add-custom-css-editor-single", false);
 	wp_enqueue_style("wp-add-custom-css-editor-single");
-	wp_add_inline_style(
-		"wp-add-custom-css-editor-single",
-		$single_custom_css
-	);
+	wp_add_inline_style("wp-add-custom-css-editor-single", $single_custom_css);
 }
-add_action(
-	"enqueue_block_editor_assets",
-	"hope_for_justice_2021_editor_custom_css"
-);
+add_action("enqueue_block_editor_assets", "hope_for_justice_2021_editor_custom_css");
 
 /**
  * Enqueue page specific scripts in a centrally maintained location
@@ -432,10 +414,7 @@ function page_scripts()
 	if (is_front_page()) {
 		wp_enqueue_script("homepage");
 	}
-	if (
-		is_page("donate") ||
-		is_page_template("templates/page-basic-campaign.php")
-	) {
+	if (is_page("donate") || is_page_template("templates/page-basic-campaign.php")) {
 		wp_enqueue_script("donate");
 	}
 	if (is_page_template("templates/page-training.php")) {
@@ -501,12 +480,7 @@ function page_scripts()
 		);
 	}
 	if (is_page_template("templates/page-tbco.php")) {
-		wp_enqueue_style(
-			"tbco",
-			get_template_directory_uri() . "/tbco.css",
-			[],
-			_S_VERSION
-		);
+		wp_enqueue_style("tbco", get_template_directory_uri() . "/tbco.css", [], _S_VERSION);
 	}
 	if (is_page_template("templates/page-freedom-foundation.php")) {
 		wp_enqueue_script("freedom-foundation");
@@ -550,8 +524,7 @@ function page_scripts()
 		);
 		wp_enqueue_style(
 			"btc_event_series_assets",
-			get_template_directory_uri() .
-				"/template-parts/blocks/btc-event-series.css",
+			get_template_directory_uri() . "/template-parts/blocks/btc-event-series.css",
 			[],
 			_S_VERSION
 		);
@@ -1222,9 +1195,7 @@ add_action("template_redirect", function () {
 		return;
 	}
 
-	$user_country = class_exists("Wpengine\Geoip")
-		? Wpengine\Geoip::instance()->country()
-		: null;
+	$user_country = class_exists("Wpengine\Geoip") ? Wpengine\Geoip::instance()->country() : null;
 
 	$norway = ["NO"];
 	$uk = ["GB"];
@@ -1319,10 +1290,7 @@ add_action("template_redirect", function () {
 include "custom-shortcodes.php";
 add_shortcode("dropdown", "dropdown_function");
 
-add_action(
-	"give_post_form_output",
-	"my_custom_give_populate_amount_name_email"
-);
+add_action("give_post_form_output", "my_custom_give_populate_amount_name_email");
 
 function post_per_page_control($query)
 {
@@ -1411,10 +1379,7 @@ add_filter(
 		global $wpdb;
 
 		// Only proceed if a Category was chosen from the dropdown.
-		if (
-			!isset($_GET["swp_category_limiter"]) ||
-			empty(intval($_GET["swp_category_limiter"]))
-		) {
+		if (!isset($_GET["swp_category_limiter"]) || empty(intval($_GET["swp_category_limiter"]))) {
 			return $mods;
 		}
 
@@ -1546,12 +1511,7 @@ add_filter(
 // theme's acf-json folder. No override needed here.
 
 //remove inner blocks container on front end
-add_filter(
-	"acf/blocks/wrap_frontend_innerblocks",
-	"acf_should_wrap_innerblocks",
-	10,
-	2
-);
+add_filter("acf/blocks/wrap_frontend_innerblocks", "acf_should_wrap_innerblocks", 10, 2);
 function acf_should_wrap_innerblocks($wrap, $name)
 {
 	if ($name == "acf/test-block") {
@@ -1591,12 +1551,7 @@ function acf_responsive_image($image_id, $image_size, $max_width)
 	}
 }
 
-add_filter(
-	"max_srcset_image_width",
-	"awesome_acf_max_srcset_image_width",
-	10,
-	2
-);
+add_filter("max_srcset_image_width", "awesome_acf_max_srcset_image_width", 10, 2);
 
 // set the max image width
 function awesome_acf_max_srcset_image_width()
@@ -1714,12 +1669,7 @@ function hfj_get_course_redirect_url($course_title)
 /**
  * Set a per-course registration cookie for 3 months after form submission.
  */
-add_action(
-	"gform_after_submission_68",
-	"hfj_set_training_registration_cookie",
-	10,
-	2
-);
+add_action("gform_after_submission_68", "hfj_set_training_registration_cookie", 10, 2);
 
 function hfj_set_training_registration_cookie($entry, $form)
 {
