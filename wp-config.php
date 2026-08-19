@@ -23,10 +23,7 @@
  */
 
 define("DB_CREDENTIALS_PATH", dirname(ABSPATH)); // cache it for multiple use
-define(
-	"WP_LOCAL_SERVER",
-	file_exists(DB_CREDENTIALS_PATH . "/local-config.php")
-);
+define("WP_LOCAL_SERVER", file_exists(DB_CREDENTIALS_PATH . "/local-config.php"));
 
 /**
  * Load DB credentials
@@ -47,52 +44,28 @@ if (WP_LOCAL_SERVER) {
  */
 
 if (!defined("AUTH_KEY")) {
-	define(
-		"AUTH_KEY",
-		'Je,~k6aUWAvsPgFVx`BRZY`.=q>|.x|jZMl3+9EZG[Eu2Z*[$S.5Ig(r:hrNI%,*'
-	);
+	define("AUTH_KEY", 'Je,~k6aUWAvsPgFVx`BRZY`.=q>|.x|jZMl3+9EZG[Eu2Z*[$S.5Ig(r:hrNI%,*');
 }
 if (!defined("SECURE_AUTH_KEY")) {
-	define(
-		"SECURE_AUTH_KEY",
-		't-|u,#G0)]]*Wn+SU$?>G_u-&.*TSVq]-~Or.O~o`_RTGIAoi91>K(6xxej4O_7w'
-	);
+	define("SECURE_AUTH_KEY", 't-|u,#G0)]]*Wn+SU$?>G_u-&.*TSVq]-~Or.O~o`_RTGIAoi91>K(6xxej4O_7w');
 }
 if (!defined("LOGGED_IN_KEY")) {
-	define(
-		"LOGGED_IN_KEY",
-		'D_U%2!81D?9FQz/9VOigu-@,6W+DQGQh6U.9LPkZK,{,2%zGP6+46AD&i$B9b|#;'
-	);
+	define("LOGGED_IN_KEY", 'D_U%2!81D?9FQz/9VOigu-@,6W+DQGQh6U.9LPkZK,{,2%zGP6+46AD&i$B9b|#;');
 }
 if (!defined("NONCE_KEY")) {
-	define(
-		"NONCE_KEY",
-		"ofB^G[cuZ)}E]Z-3m-^m@fi*0Vt:+1Z=dqt(Zg4jv1AD2}NYy^VOQP=`Kt+<#@I%"
-	);
+	define("NONCE_KEY", "ofB^G[cuZ)}E]Z-3m-^m@fi*0Vt:+1Z=dqt(Zg4jv1AD2}NYy^VOQP=`Kt+<#@I%");
 }
 if (!defined("AUTH_SALT")) {
-	define(
-		"AUTH_SALT",
-		"<MZ;}AOZ(ZNO+4_y<WA,{Ot|~-Y_4!kta4mE!v@RSlBdaWU}-|A2}W((c-aysDmH"
-	);
+	define("AUTH_SALT", "<MZ;}AOZ(ZNO+4_y<WA,{Ot|~-Y_4!kta4mE!v@RSlBdaWU}-|A2}W((c-aysDmH");
 }
 if (!defined("SECURE_AUTH_SALT")) {
-	define(
-		"SECURE_AUTH_SALT",
-		'Y!Y86+A{56M<|S|`|j&{kM6KS,Y?KzKy%5_OX |0n{o2Ln2}$S#7rO{Dhk)vBs8q'
-	);
+	define("SECURE_AUTH_SALT", 'Y!Y86+A{56M<|S|`|j&{kM6KS,Y?KzKy%5_OX |0n{o2Ln2}$S#7rO{Dhk)vBs8q');
 }
 if (!defined("LOGGED_IN_SALT")) {
-	define(
-		"LOGGED_IN_SALT",
-		'Q$gCp8tZkGTvz@k<SRt|x|.aep1@:+^.PL%5 ,md)v]3?ndcp0~.`yxOk&S?q~V|'
-	);
+	define("LOGGED_IN_SALT", 'Q$gCp8tZkGTvz@k<SRt|x|.aep1@:+^.PL%5 ,md)v]3?ndcp0~.`yxOk&S?q~V|');
 }
 if (!defined("NONCE_SALT")) {
-	define(
-		"NONCE_SALT",
-		"G,[DL*0D+U9zn3I1ODML0qT(J7P6+.-QJ:R=C^RFrCIg T}}a8[@t4C^{+7~aSnS"
-	);
+	define("NONCE_SALT", "G,[DL*0D+U9zn3I1ODML0qT(J7P6+.-QJ:R=C^RFrCIg T}}a8[@t4C^{+7~aSnS");
 }
 
 $table_prefix = "wphfj2_";
