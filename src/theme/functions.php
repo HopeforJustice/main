@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.7.8");
+	define("_S_VERSION", "6.7.9");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -1730,12 +1730,7 @@ function hfj_redirect_registered_training_user()
 
 require_once __DIR__ . "/hfj-country-tag-map.php"; // hfj_country_tag_map()
 
-add_filter(
-	"gform_mailchimp_subscription",
-	"hfj_add_country_tag_to_mailchimp_subscription",
-	10,
-	6
-);
+add_filter("gform_mailchimp_subscription", "hfj_add_country_tag_to_mailchimp_subscription", 10, 6);
 
 /**
  * Injects a country-group tag into the subscription payload GFMailChimp is
@@ -1807,9 +1802,7 @@ function hfj_add_country_tag_to_mailchimp_subscription(
 	// 3. Add it to whatever tags the feed's own "Tags" setting (or an
 	//    existing member's current tags) already put in the payload.
 	$existing_tags = $subscription["tags"] ?? [];
-	$subscription["tags"] = array_values(
-		array_unique(array_merge($existing_tags, [$tag_name]))
-	);
+	$subscription["tags"] = array_values(array_unique(array_merge($existing_tags, [$tag_name])));
 
 	return $subscription;
 }
