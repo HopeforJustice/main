@@ -73,7 +73,288 @@
 
     <!-- Global GeoIP lookup -->
     <?php
+    // ------------------------------------------------------------------
+    // CONTENT country groups - which regional copy/marketing content a
+    // visitor sees. Sourced from the country-group content mapping table.
+    // Names (usa/uk/au/aus) must not change - lots of templates key off them.
+    // These are NOT used for currency/payment decisions - see the
+    // *_currency globals further down for that.
+    // ------------------------------------------------------------------
     $GLOBALS["usa"] = [
+    	"AS", // American Samoa
+    	"AG", // Antigua and Barbuda
+    	"AR", // Argentina
+    	"AW", // Aruba
+    	"BS", // Bahamas
+    	"BB", // Barbados
+    	"BZ", // Belize
+    	"BO", // Bolivia
+    	"BQ", // Bonaire, Saint Eustatius and Saba
+    	"BR", // Brazil
+    	"CA", // Canada
+    	"KY", // Cayman Islands
+    	"CL", // Chile
+    	"CO", // Colombia
+    	"CR", // Costa Rica
+    	"CU", // Cuba
+    	"CW", // Curaçao
+    	"DM", // Dominica
+    	"DO", // Dominican Republic
+    	"EC", // Ecuador
+    	"SV", // El Salvador
+    	"GF", // French Guiana
+    	"GL", // Greenland
+    	"GD", // Grenada
+    	"GP", // Guadeloupe
+    	"GU", // Guam
+    	"GT", // Guatemala
+    	"GY", // Guyana
+    	"HT", // Haiti
+    	"HN", // Honduras
+    	"JM", // Jamaica
+    	"MQ", // Martinique
+    	"MX", // Mexico
+    	"MS", // Montserrat
+    	"NI", // Nicaragua
+    	"MP", // Northern Mariana Islands
+    	"PA", // Panama
+    	"PY", // Paraguay
+    	"PE", // Peru
+    	"PH", // Philippines
+    	"PR", // Puerto Rico
+    	"BL", // Saint Barthélemy
+    	"KN", // Saint Kitts and Nevis
+    	"LC", // Saint Lucia
+    	"MF", // Saint Martin (French part)
+    	"PM", // Saint Pierre and Miquelon
+    	"VC", // Saint Vincent and the Grenadines
+    	"SX", // Sint Maarten (Dutch part)
+    	"SR", // Suriname
+    	"TT", // Trinidad and Tobago
+    	"US", // United States
+    	"UM", // United States Minor Outlying Islands
+    	"UY", // Uruguay
+    	"VE", // Venezuela
+    	"VI", // Virgin Islands, U.S.
+    ];
+
+    $GLOBALS["au"] = [
+    	"AU", // Australia
+    	"BN", // Brunei Darussalam
+    	"KH", // Cambodia
+    	"CX", // Christmas Island
+    	"CC", // Cocos (Keeling) Islands
+    	"CK", // Cook Islands
+    	"FJ", // Fiji
+    	"PF", // French Polynesia
+    	"HM", // Heard Island and McDonald Islands
+    	"ID", // Indonesia
+    	"LA", // Laos
+    	"MY", // Malaysia
+    	"MV", // Maldives
+    	"MH", // Marshall Islands
+    	"FM", // Micronesia
+    	"MM", // Myanmar
+    	"NR", // Nauru
+    	"NC", // New Caledonia
+    	"NZ", // New Zealand
+    	"NU", // Niue
+    	"NF", // Norfolk Island
+    	"PW", // Palau
+    	"PG", // Papua New Guinea
+    	"PN", // Pitcairn
+    	"WS", // Samoa
+    	"SG", // Singapore
+    	"SB", // Solomon Islands
+    	"TH", // Thailand
+    	"TL", // Timor-Leste
+    	"TK", // Tokelau
+    	"TO", // Tonga
+    	"TV", // Tuvalu
+    	"VU", // Vanuatu
+    	"VN", // Vietnam
+    	"WF", // Wallis and Futuna
+    ];
+
+    // added this as its sometimes referenced as aus
+    $GLOBALS["aus"] = $GLOBALS["au"];
+
+    $GLOBALS["uk"] = [
+    	"AF", // Afghanistan
+    	"AX", // Åland Islands
+    	"AL", // Albania
+    	"DZ", // Algeria
+    	"AD", // Andorra
+    	"AO", // Angola
+    	"AI", // Anguilla
+    	"AQ", // Antarctica
+    	"AM", // Armenia
+    	"AT", // Austria
+    	"AZ", // Azerbaijan
+    	"BH", // Bahrain
+    	"BD", // Bangladesh
+    	"BY", // Belarus
+    	"BE", // Belgium
+    	"BJ", // Benin
+    	"BM", // Bermuda
+    	"BT", // Bhutan
+    	"BA", // Bosnia and Herzegovina
+    	"BW", // Botswana
+    	"BV", // Bouvet Island
+    	"IO", // British Indian Ocean Territory
+    	"BG", // Bulgaria
+    	"BF", // Burkina Faso
+    	"BI", // Burundi
+    	"CM", // Cameroon
+    	"CV", // Cape Verde
+    	"CF", // Central African Republic
+    	"TD", // Chad
+    	"CN", // China
+    	"KM", // Comoros
+    	"CG", // Congo
+    	"CD", // Congo, the Democratic Republic of the
+    	"CI", // Côte D'ivoire
+    	"HR", // Croatia
+    	"CY", // Cyprus
+    	"CZ", // Czech Republic
+    	"DK", // Denmark
+    	"DJ", // Djibouti
+    	"EG", // Egypt
+    	"GQ", // Equatorial Guinea
+    	"ER", // Eritrea
+    	"EE", // Estonia
+    	"ET", // Ethiopia
+    	"FK", // Falkland Islands (Malvinas)
+    	"FO", // Faroe Islands
+    	"FI", // Finland
+    	"FR", // France
+    	"TF", // French Southern Territories
+    	"GA", // Gabon
+    	"GM", // Gambia
+    	"GE", // Georgia
+    	"DE", // Germany
+    	"GH", // Ghana
+    	"GI", // Gibraltar
+    	"GR", // Greece
+    	"GG", // Guernsey
+    	"GN", // Guinea
+    	"GW", // Guinea-Bissau
+    	"NL", // Holland
+    	"VA", // Holy See (Vatican City State)
+    	"HK", // Hong Kong
+    	"HU", // Hungary
+    	"IS", // Iceland
+    	"IN", // India
+    	"IR", // Iran, Islamic Republic Of
+    	"IQ", // Iraq
+    	"IE", // Ireland
+    	"IM", // Isle of Man
+    	"IL", // Israel
+    	"IT", // Italy
+    	"JP", // Japan
+    	"JE", // Jersey
+    	"JO", // Jordan
+    	"KZ", // Kazakhstan
+    	"KE", // Kenya
+    	"KI", // Kiribati
+    	"KW", // Kuwait
+    	"KG", // Kyrgyzstan
+    	"LV", // Latvia
+    	"LB", // Lebanon
+    	"LS", // Lesotho
+    	"LR", // Liberia
+    	"LY", // Libya
+    	"LI", // Liechtenstein
+    	"LT", // Lithuania
+    	"LU", // Luxembourg
+    	"MO", // Macao
+    	"MK", // Macedonia
+    	"MG", // Madagascar
+    	"MW", // Malawi
+    	"ML", // Mali
+    	"MT", // Malta
+    	"MR", // Mauritania
+    	"MU", // Mauritius
+    	"YT", // Mayotte
+    	"MD", // Moldova
+    	"MC", // Monaco
+    	"MN", // Mongolia
+    	"ME", // Montenegro
+    	"MA", // Morocco
+    	"MZ", // Mozambique
+    	"NA", // Namibia
+    	"NP", // Nepal
+    	"NL", // Netherlands
+    	"NE", // Niger
+    	"NG", // Nigeria
+    	"KP", // North Korea
+    	"NO", // Norway
+    	"OM", // Oman
+    	"PK", // Pakistan
+    	"PS", // Palestinian Territory, Occupied
+    	"PL", // Poland
+    	"PT", // Portugal
+    	"QA", // Qatar
+    	"RE", // Réunion
+    	"RO", // Romania
+    	"RU", // Russian Federation
+    	"RW", // Rwanda
+    	"SH", // Saint Helena, Ascension and Tristan da Cunha
+    	"SM", // San Marino
+    	"ST", // Sao Tome and Principe
+    	"SA", // Saudi Arabia
+    	"SN", // Senegal
+    	"RS", // Serbia
+    	"SC", // Seychelles
+    	"SL", // Sierra Leone
+    	"SK", // Slovakia
+    	"SI", // Slovenia
+    	"SO", // Somalia
+    	"ZA", // South Africa
+    	"GS", // South Georgia and the South Sandwich Islands
+    	"KR", // South Korea
+    	"SS", // South Sudan
+    	"ES", // Spain
+    	"LK", // Sri Lanka
+    	"SD", // Sudan
+    	"SJ", // Svalbard and Jan Mayen
+    	"SZ", // Swaziland
+    	"SE", // Sweden
+    	"CH", // Switzerland
+    	"SY", // Syrian Arab Republic
+    	"TW", // Taiwan, Province Of China
+    	"TJ", // Tajikistan
+    	"TZ", // Tanzania
+    	"TG", // Togo
+    	"TN", // Tunisia
+    	"TR", // Turkey
+    	"TM", // Turkmenistan
+    	"TC", // Turks and Caicos Islands
+    	"UG", // Uganda
+    	"UA", // Ukraine
+    	"AE", // United Arab Emirates
+    	"GB", // United Kingdom
+    	"UZ", // Uzbekistan
+    	"VG", // Virgin Islands, British
+    	"EH", // Western Sahara
+    	"YE", // Yemen
+    	"ZM", // Zambia
+    	"ZW", // Zimbabwe
+    ];
+
+    // Norwegian countries - I've put this into an array because we'll no doubt add other Scandinavian countries at some point
+    // Content-wise Norway sits in the UK group above; this list is kept
+    // separately because plenty of templates give Norway its own copy/forms.
+    $GLOBALS["norway"] = ["NO"];
+
+    $GLOBALS["help"] = ["US", "GB"];
+
+    // ------------------------------------------------------------------
+    // CURRENCY-only groups - which currency/payment flow a visitor gets
+    // (donate block, payment forms, currency modal). Deliberately separate
+    // from the usa/uk/au content groups above, and includes eurozone.
+    // ------------------------------------------------------------------
+    $GLOBALS["usa_currency"] = [
     	"AG", // Antigua and Barbuda
     	"AR", // Argentina
     	"BB", // Barbados
@@ -116,18 +397,12 @@
     	"VI", // Virgin Islands (U.S.)
     ];
 
-    // Norwegian countries - I've put this into an array because we'll no doubt add other Scandinavian countries at some point
-    $GLOBALS["norway"] = ["NO"];
+    $GLOBALS["uk_currency"] = ["GB"];
 
-    $GLOBALS["uk"] = ["GB"];
-
-    $GLOBALS["au"] = ["AU", "NZ"];
-
-    // added this as its sometimes referenced as aus
-    $GLOBALS["aus"] = ["AU", "NZ"];
+    $GLOBALS["au_currency"] = ["AU", "NZ"];
 
     // Eurozone countries - countries that use the Euro (EUR) as their currency
-    $GLOBALS["eur"] = [
+    $GLOBALS["eur_currency"] = [
     	"AT", // Austria
     	"BE", // Belgium
     	"CY", // Cyprus
@@ -149,7 +424,7 @@
     	"ES", // Spain
     ];
 
-    $GLOBALS["help"] = ["US", "GB"];
+    $GLOBALS["norway_currency"] = ["NO"];
 
     // lookup country code of IP
     $GLOBALS["geo"] = Wpengine\Geoip::instance();
@@ -320,26 +595,26 @@
                     <?php
                     $donate_url = "/donate";
                     if ($GLOBALS["userInfo"]) {
-                    	if (in_array($GLOBALS["userInfo"], $GLOBALS["uk"])) {
+                    	if (in_array($GLOBALS["userInfo"], $GLOBALS["uk_currency"])) {
                     		$donate_url =
                     			get_field("donate_url_uk", "option") ?: "/donate";
                     	} elseif (
-                    		in_array($GLOBALS["userInfo"], $GLOBALS["norway"])
+                    		in_array($GLOBALS["userInfo"], $GLOBALS["norway_currency"])
                     	) {
                     		$donate_url =
                     			get_field("donate_url_nok", "option") ?: "/donate";
                     	} elseif (
-                    		in_array($GLOBALS["userInfo"], $GLOBALS["usa"])
+                    		in_array($GLOBALS["userInfo"], $GLOBALS["usa_currency"])
                     	) {
                     		$donate_url =
                     			get_field("donate_url_usa", "option") ?: "/donate";
                     	} elseif (
-                    		in_array($GLOBALS["userInfo"], $GLOBALS["aus"])
+                    		in_array($GLOBALS["userInfo"], $GLOBALS["au_currency"])
                     	) {
                     		$donate_url =
                     			get_field("donate_url_aus", "option") ?: "/donate";
                     	} elseif (
-                    		in_array($GLOBALS["userInfo"], $GLOBALS["eur"])
+                    		in_array($GLOBALS["userInfo"], $GLOBALS["eur_currency"])
                     	) {
                     		$donate_url =
                     			get_field("donate_url_eur", "option") ?: "/donate";
