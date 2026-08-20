@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.7.5");
+	define("_S_VERSION", "6.7.7");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -1719,4 +1719,148 @@ function hfj_redirect_registered_training_user()
 
 	wp_safe_redirect($redirect_url);
 	exit();
+}
+
+/**
+ * Tag Mailchimp subscribers by country group, after all Gravity Forms feeds
+ * (Donorfy, Mailchimp, etc.) have processed for the entry.
+ */
+
+require_once __DIR__ . "/hfj-country-tag-map.php"; // hfj_country_tag_map()
+
+add_action("gform_after_submission", "hfj_tag_mailchimp_by_country", 20, 2);
+
+/**
+ * Both the Donorfy and Mailchimp feed add-ons extend GFFeedAddOn, which
+ * processes feeds via the separate, earlier `gform_entry_post_save` filter
+ * (inside GFFormDisplay::handle_submission()) — not via gform_after_submission
+ * at all. That filter always completes before gform_after_submission is even
+ * dispatched, so by the time this runs both feeds are already processed,
+ * regardless of the priority given here.
+ */
+function hfj_tag_mailchimp_by_country($entry, $form)
+{
+	if (!class_exists("GFMailChimp")) {
+		return; // Mailchimp add-on not active.
+	}
+
+	// 1. Find the email address. Prefer the dedicated "Email" field type;
+	//    fall back to a label match if a form doesn't use it.
+	$email_field_id =
+		hfj_find_field_id($form, static function ($field) {
+			return "email" === $field->type;
+		}) ??
+		hfj_find_field_id($form, static function ($field) {
+			return stripos($field->label, "email") !== false;
+		});
+
+	if (!$email_field_id) {
+		return; // No email field on this form — nothing to tag.
+	}
+
+	$email = rgar($entry, $email_field_id);
+	if (empty($email)) {
+		return; // Field exists but wasn't filled in.
+	}
+
+	// 2. Find the country value, by label, on the field itself or on a
+	//    sub-input (e.g. the "Country" part of an Address field).
+	$country_field_id = hfj_find_field_id(
+		$form,
+		static function ($field) {
+			return stripos($field->label, "country") !== false;
+		},
+		true
+	);
+
+	if (!$country_field_id) {
+		return; // Form has no country selection — don't guess, don't tag.
+	}
+
+	$country = rgar($entry, $country_field_id);
+	if (empty($country)) {
+		return;
+	}
+
+	// 3. Map country -> tag group. An unrecognised value (typo, free-text
+	//    entry, a country added to the form but not yet to the map, etc.)
+	//    falls back to the UK group rather than being skipped.
+	$tag_map = hfj_country_tag_map();
+	$tag_name = $tag_map[strtolower(trim($country))] ?? null;
+
+	if (!$tag_name) {
+		error_log(
+			sprintf(
+				'hfj_tag_mailchimp_by_country: unrecognised country "%s" on entry #%d — defaulting to UK Country Group.',
+				$country,
+				$entry["id"]
+			)
+		);
+		$tag_name = "UK Country Group";
+	}
+
+	// 4. Tag the subscriber on every Mailchimp list this form actually feeds.
+	$settings = get_option("gravityformsaddon_gravityformsmailchimp_settings");
+	if (empty($settings["access_token"]) || empty($settings["server_prefix"])) {
+		return;
+	}
+
+	$feeds = GFAPI::get_feeds(null, $form["id"], "gravityformsmailchimp");
+	if (is_wp_error($feeds) || empty($feeds)) {
+		return;
+	}
+
+	if (!class_exists("GF_MailChimp_API")) {
+		require_once WP_PLUGIN_DIR . "/gravityformsmailchimp/includes/class-gf-mailchimp-api.php";
+	}
+	$mc = new GF_MailChimp_API($settings["access_token"], $settings["server_prefix"]);
+
+	foreach ($feeds as $feed) {
+		if (empty($feed["is_active"]) || empty($feed["meta"]["mailchimpList"])) {
+			continue;
+		}
+
+		$result = $mc->update_member_tags($feed["meta"]["mailchimpList"], $email, [
+			["name" => $tag_name, "status" => "active"],
+		]);
+
+		if (is_wp_error($result)) {
+			error_log(
+				"Mailchimp tag update failed for entry " .
+					$entry["id"] .
+					": " .
+					$result->get_error_message()
+			);
+		}
+	}
+}
+
+/**
+ * Find a field's entry key by testing each field (and optionally its
+ * sub-inputs, e.g. an Address field's "Country" part) against a predicate.
+ *
+ * @param array    $form         The form.
+ * @param callable $predicate    function( object $field ): bool — tested against the
+ *                               field itself, and against each sub-input (as a
+ *                               lightweight object) when $check_inputs is true.
+ * @param bool     $check_inputs Whether to also test composite sub-inputs.
+ * @return string|null The entry array key (e.g. "5" or "3.6"), or null if no match.
+ */
+function hfj_find_field_id($form, callable $predicate, $check_inputs = false)
+{
+	foreach ($form["fields"] as $field) {
+		if ($predicate($field)) {
+			return (string) $field->id;
+		}
+
+		if ($check_inputs && !empty($field->inputs) && is_array($field->inputs)) {
+			foreach ($field->inputs as $input) {
+				$pseudo = (object) ["label" => $input["label"] ?? "", "type" => $field->type];
+				if ($predicate($pseudo)) {
+					return (string) $input["id"];
+				}
+			}
+		}
+	}
+	return null;
 }

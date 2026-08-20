@@ -35,7 +35,7 @@ $form_image = get_field("form_img");
 if (
 	//if they are in the USA array or they want to give in $
 	($GLOBALS["userInfo"] &&
-		in_array($GLOBALS["userInfo"], $GLOBALS["usa"]) &&
+		in_array($GLOBALS["userInfo"], $GLOBALS["usa_currency"]) &&
 		$currency != "NOK" &&
 		$currency != "GBP" &&
 		$currency != "AUD" &&
@@ -49,7 +49,7 @@ if (
 } elseif (
 	// if they are in Norway or want to give in Kr
 	($GLOBALS["userInfo"] &&
-		in_array($GLOBALS["userInfo"], $GLOBALS["norway"]) &&
+		in_array($GLOBALS["userInfo"], $GLOBALS["norway_currency"]) &&
 		$currency != "USD" &&
 		$currency != "GBP" &&
 		$currency != "AUD" &&
@@ -63,7 +63,7 @@ if (
 } elseif (
 	// if they are in AU or want to give in AUD
 	($GLOBALS["userInfo"] &&
-		in_array($GLOBALS["userInfo"], $GLOBALS["au"]) &&
+		in_array($GLOBALS["userInfo"], $GLOBALS["au_currency"]) &&
 		$currency != "USD" &&
 		$currency != "GBP" &&
 		$currency != "NOK" &&
@@ -77,7 +77,7 @@ if (
 } elseif (
 	// if they are in Eurozone countries or want to give in EUR
 	($GLOBALS["userInfo"] &&
-		in_array($GLOBALS["userInfo"], $GLOBALS["eur"]) &&
+		in_array($GLOBALS["userInfo"], $GLOBALS["eur_currency"]) &&
 		$currency != "USD" &&
 		$currency != "GBP" &&
 		$currency != "NOK" &&
