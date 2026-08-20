@@ -1722,29 +1722,46 @@ function hfj_redirect_registered_training_user()
 }
 
 /**
- * Tag Mailchimp subscribers by country group, after all Gravity Forms feeds
- * (Donorfy, Mailchimp, etc.) have processed for the entry.
+ * Tag Mailchimp subscribers by country group, right after GFMailChimp has
+ * actually subscribed them (see hfj_tag_mailchimp_by_country() below for why
+ * that has to be a Mailchimp-specific hook rather than gform_after_submission).
  */
 
 require_once __DIR__ . "/hfj-country-tag-map.php"; // hfj_country_tag_map()
 
-add_action("gform_after_submission", "hfj_tag_mailchimp_by_country", 20, 2);
+add_action("gform_gravityformsmailchimp_post_process_feed", "hfj_tag_mailchimp_by_country", 10, 3);
 
 /**
- * Both the Donorfy and Mailchimp feed add-ons extend GFFeedAddOn, which
- * processes feeds via the separate, earlier `gform_entry_post_save` filter
- * (inside GFFormDisplay::handle_submission()) — not via gform_after_submission
- * at all. That filter always completes before gform_after_submission is even
- * dispatched, so by the time this runs both feeds are already processed,
- * regardless of the priority given here.
+ * GFMailChimp processes its feeds asynchronously by default (it sets
+ * $_async_feed_processing = true), so the actual Mailchimp subscribe call
+ * usually happens on a background queue, not inline during the original
+ * request. gform_after_submission fires before that queue has necessarily
+ * run at all, so tagging from there raced the subscription and 404'd
+ * ("Resource Not Found") against a member that didn't exist yet.
+ *
+ * gform_{slug}_post_process_feed instead fires once GFMailChimp has actually
+ * finished processing this specific feed — whether that happened inline or
+ * (the default) via the background queue (see
+ * GF_Feed_Processor::task() -> $addon->post_process_feed()) — and only on
+ * success, since the background processor skips post_process_feed() when
+ * process_feed() returns a WP_Error. That guarantees the Mailchimp member
+ * already exists by the time we try to tag them, and hands us the exact
+ * feed that ran, so we no longer need to re-fetch feeds ourselves.
  */
-function hfj_tag_mailchimp_by_country($entry, $form)
+function hfj_tag_mailchimp_by_country($feed, $entry, $form)
 {
 	$entry_id = rgar($entry, "id");
 
 	if (!class_exists("GFMailChimp")) {
 		error_log(
 			"hfj_tag_mailchimp_by_country: Mailchimp add-on not active — skipping entry #$entry_id."
+		);
+		return;
+	}
+
+	if (empty($feed["meta"]["mailchimpList"])) {
+		error_log(
+			"hfj_tag_mailchimp_by_country: feed #{$feed["id"]} on form #{$form["id"]} has no Mailchimp list configured — skipping entry #$entry_id."
 		);
 		return;
 	}
@@ -1816,26 +1833,11 @@ function hfj_tag_mailchimp_by_country($entry, $form)
 		$tag_name = "UK Country Group";
 	}
 
-	// 4. Tag the subscriber on every Mailchimp list this form actually feeds.
+	// 4. Tag the subscriber on the Mailchimp list this feed just subscribed them to.
 	$settings = get_option("gravityformsaddon_gravityformsmailchimp_settings");
 	if (empty($settings["access_token"]) || empty($settings["server_prefix"])) {
 		error_log(
 			"hfj_tag_mailchimp_by_country: Mailchimp add-on has no access_token/server_prefix configured — skipping entry #$entry_id."
-		);
-		return;
-	}
-
-	$feeds = GFAPI::get_feeds(null, $form["id"], "gravityformsmailchimp");
-	if (is_wp_error($feeds)) {
-		error_log(
-			"hfj_tag_mailchimp_by_country: GFAPI::get_feeds() error for form #{$form["id"]}: " .
-				$feeds->get_error_message()
-		);
-		return;
-	}
-	if (empty($feeds)) {
-		error_log(
-			"hfj_tag_mailchimp_by_country: no active Mailchimp feed on form #{$form["id"]} — skipping entry #$entry_id."
 		);
 		return;
 	}
@@ -1845,32 +1847,24 @@ function hfj_tag_mailchimp_by_country($entry, $form)
 	}
 	$mc = new GF_MailChimp_API($settings["access_token"], $settings["server_prefix"]);
 
-	foreach ($feeds as $feed) {
-		if (empty($feed["is_active"]) || empty($feed["meta"]["mailchimpList"])) {
-			error_log(
-				"hfj_tag_mailchimp_by_country: feed #{$feed["id"]} on form #{$form["id"]} is inactive or has no list configured — skipping."
-			);
-			continue;
-		}
+	$list_id = $feed["meta"]["mailchimpList"];
+	$result = $mc->update_member_tags($list_id, $email, [
+		["name" => $tag_name, "status" => "active"],
+	]);
 
-		$result = $mc->update_member_tags($feed["meta"]["mailchimpList"], $email, [
-			["name" => $tag_name, "status" => "active"],
-		]);
-
-		if (is_wp_error($result)) {
-			error_log(
-				"hfj_tag_mailchimp_by_country: Mailchimp tag update failed for entry " .
-					$entry_id .
-					" on list " .
-					$feed["meta"]["mailchimpList"] .
-					": " .
-					$result->get_error_message()
-			);
-		} else {
-			error_log(
-				"hfj_tag_mailchimp_by_country: tagged $email with \"$tag_name\" on list {$feed["meta"]["mailchimpList"]} (entry #$entry_id)."
-			);
-		}
+	if (is_wp_error($result)) {
+		error_log(
+			"hfj_tag_mailchimp_by_country: Mailchimp tag update failed for entry " .
+				$entry_id .
+				" on list " .
+				$list_id .
+				": " .
+				$result->get_error_message()
+		);
+	} else {
+		error_log(
+			"hfj_tag_mailchimp_by_country: tagged $email with \"$tag_name\" on list $list_id (entry #$entry_id)."
+		);
 	}
 }
 
