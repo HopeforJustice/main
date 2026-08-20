@@ -1740,8 +1740,13 @@ add_action("gform_after_submission", "hfj_tag_mailchimp_by_country", 20, 2);
  */
 function hfj_tag_mailchimp_by_country($entry, $form)
 {
+	$entry_id = rgar($entry, "id");
+
 	if (!class_exists("GFMailChimp")) {
-		return; // Mailchimp add-on not active.
+		error_log(
+			"hfj_tag_mailchimp_by_country: Mailchimp add-on not active — skipping entry #$entry_id."
+		);
+		return;
 	}
 
 	// 1. Find the email address. Prefer the dedicated "Email" field type;
@@ -1755,11 +1760,17 @@ function hfj_tag_mailchimp_by_country($entry, $form)
 		});
 
 	if (!$email_field_id) {
+		error_log(
+			"hfj_tag_mailchimp_by_country: no email field found on form #{$form["id"]} — skipping entry #$entry_id."
+		);
 		return; // No email field on this form — nothing to tag.
 	}
 
 	$email = rgar($entry, $email_field_id);
 	if (empty($email)) {
+		error_log(
+			"hfj_tag_mailchimp_by_country: email field {$email_field_id} was empty on entry #$entry_id — skipping."
+		);
 		return; // Field exists but wasn't filled in.
 	}
 
@@ -1774,11 +1785,17 @@ function hfj_tag_mailchimp_by_country($entry, $form)
 	);
 
 	if (!$country_field_id) {
+		error_log(
+			"hfj_tag_mailchimp_by_country: no country field found on form #{$form["id"]} — skipping entry #$entry_id."
+		);
 		return; // Form has no country selection — don't guess, don't tag.
 	}
 
 	$country = rgar($entry, $country_field_id);
 	if (empty($country)) {
+		error_log(
+			"hfj_tag_mailchimp_by_country: country field {$country_field_id} was empty on entry #$entry_id — skipping."
+		);
 		return;
 	}
 
@@ -1793,7 +1810,7 @@ function hfj_tag_mailchimp_by_country($entry, $form)
 			sprintf(
 				'hfj_tag_mailchimp_by_country: unrecognised country "%s" on entry #%d — defaulting to UK Country Group.',
 				$country,
-				$entry["id"]
+				$entry_id
 			)
 		);
 		$tag_name = "UK Country Group";
@@ -1802,11 +1819,24 @@ function hfj_tag_mailchimp_by_country($entry, $form)
 	// 4. Tag the subscriber on every Mailchimp list this form actually feeds.
 	$settings = get_option("gravityformsaddon_gravityformsmailchimp_settings");
 	if (empty($settings["access_token"]) || empty($settings["server_prefix"])) {
+		error_log(
+			"hfj_tag_mailchimp_by_country: Mailchimp add-on has no access_token/server_prefix configured — skipping entry #$entry_id."
+		);
 		return;
 	}
 
 	$feeds = GFAPI::get_feeds(null, $form["id"], "gravityformsmailchimp");
-	if (is_wp_error($feeds) || empty($feeds)) {
+	if (is_wp_error($feeds)) {
+		error_log(
+			"hfj_tag_mailchimp_by_country: GFAPI::get_feeds() error for form #{$form["id"]}: " .
+				$feeds->get_error_message()
+		);
+		return;
+	}
+	if (empty($feeds)) {
+		error_log(
+			"hfj_tag_mailchimp_by_country: no active Mailchimp feed on form #{$form["id"]} — skipping entry #$entry_id."
+		);
 		return;
 	}
 
@@ -1817,6 +1847,9 @@ function hfj_tag_mailchimp_by_country($entry, $form)
 
 	foreach ($feeds as $feed) {
 		if (empty($feed["is_active"]) || empty($feed["meta"]["mailchimpList"])) {
+			error_log(
+				"hfj_tag_mailchimp_by_country: feed #{$feed["id"]} on form #{$form["id"]} is inactive or has no list configured — skipping."
+			);
 			continue;
 		}
 
@@ -1826,10 +1859,16 @@ function hfj_tag_mailchimp_by_country($entry, $form)
 
 		if (is_wp_error($result)) {
 			error_log(
-				"Mailchimp tag update failed for entry " .
-					$entry["id"] .
+				"hfj_tag_mailchimp_by_country: Mailchimp tag update failed for entry " .
+					$entry_id .
+					" on list " .
+					$feed["meta"]["mailchimpList"] .
 					": " .
 					$result->get_error_message()
+			);
+		} else {
+			error_log(
+				"hfj_tag_mailchimp_by_country: tagged $email with \"$tag_name\" on list {$feed["meta"]["mailchimpList"]} (entry #$entry_id)."
 			);
 		}
 	}
