@@ -8,10 +8,7 @@
 get_header("", ["page_class" => "tbco"]); ?>
 
 <main id="main" class="site-main tbco__main" role="main">
-    			<?php if (
-       	isset($_GET["form-complete"]) &&
-       	$_GET["form-complete"] === "true"
-       ) {
+    			<?php if (isset($_GET["form-complete"]) && $_GET["form-complete"] === "true") {
        	echo '<div class="tbco__toast"><div>Your church resources pack is on the way!</div></div>';
        } ?>
 <div class="tbco__hero">
@@ -23,17 +20,17 @@ get_header("", ["page_class" => "tbco"]); ?>
         </div>
 
 		<h1 class="tbco__title font-fk">
-            We will be the generation to end human trafficking
+            RESOLVED TO SET THE CAPTIVE FREE
         </h1>
 
         <div class="tbco__buttons">
-            <a href="/tbco-donate" class="button button--red tbco__donate-button">
+            <a href="/donate/?campaign=2026%20TBCO" class="button button--red tbco__donate-button">
                 Donate now  
             </a>
-            <a href="/tbco-church-pack-request/" class="button button--white">
+            <a href="/signup/?campaign=2026%20TBCO&church=true" class="button button--white">
                 <div class="button__inner">
                     <div class="button__text bold red">
-                        Get your free church pack
+                        Join the movement
                     </div>
                 </div>
             </a>
