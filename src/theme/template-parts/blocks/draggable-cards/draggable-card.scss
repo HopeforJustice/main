@@ -152,6 +152,18 @@
 		:last-child {
 			margin-bottom: 0;
 		}
+
+		// Overrides the `* { color: var(--black); }` rule above - the
+		// button keeps white text on its red background like every other
+		// .button on the site.
+		.draggable-card__modal-button {
+			color: var(--white);
+		}
+	}
+
+	&__modal-button {
+		display: inline-block;
+		margin-top: 24px;
 	}
 
 	&__modal-header {

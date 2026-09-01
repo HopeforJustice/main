@@ -24,7 +24,9 @@ $full_colour = get_field("full_colour");
 $content_align = get_field("content_align") ?: "bottom";
 $additional_content_header = get_field("additional_content_header");
 $additional_content_body = get_field("additional_content_body");
-$has_additional_content = $additional_content_header || $additional_content_body;
+$button_text = get_field("button_text") ?: "Find out more";
+$button_link = get_field("button_link");
+$has_additional_content = $additional_content_header || $additional_content_body || $button_link;
 $modal_id = "draggable-card-modal-" . uniqid();
 
 $class_name = "";
@@ -97,6 +99,11 @@ if (!empty($block["className"])) {
                         ); ?></strong></h3>
                     <?php } ?>
                     <?php echo $additional_content_body; ?>
+                    <?php if ($button_link) { ?>
+                        <a href="<?php echo esc_url($button_link); ?>" class="button button--red draggable-card__modal-button"><?php echo esc_html(
+                        	$button_text
+                        ); ?></a>
+                    <?php } ?>
                 </div>
             </div>
         </div>
