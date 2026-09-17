@@ -107,10 +107,10 @@
         $modal.find('.draggable-card__modal-close').focus();
     };
 
-    var closeCardModal = function ($modal) {
+    var closeCardModal = function ($modal, skipFocusRestore) {
         $modal.addClass('draggable-card__modal--closed').attr('aria-hidden', 'true');
         document.body.style.overflow = '';
-        if ($modalTrigger && $modalTrigger.length) {
+        if (!skipFocusRestore && $modalTrigger && $modalTrigger.length) {
             $modalTrigger.focus();
         }
         $modalTrigger = null;
@@ -127,6 +127,18 @@
         var $modal = $(this).closest('.draggable-card__modal');
         if ($modal.length) {
             closeCardModal($modal);
+        }
+    });
+
+    // The modal's own button can link to an anchor elsewhere on the page
+    // (e.g. "#start") rather than off it. Close the modal first so
+    // body.style.overflow isn't still hiding the scroll when the browser
+    // follows the link, and skip restoring focus to the "+" trigger -
+    // that would fight the browser's scroll to the link's target.
+    $(document).on('click', '.draggable-card__modal-button', function () {
+        var $modal = $(this).closest('.draggable-card__modal');
+        if ($modal.length) {
+            closeCardModal($modal, true);
         }
     });
 

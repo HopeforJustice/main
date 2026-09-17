@@ -51,3 +51,5 @@ src/theme/vendor
 # Ignore plugins
 src/plugins
 .claude/*
+
+wp-config.php

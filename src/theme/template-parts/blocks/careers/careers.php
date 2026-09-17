@@ -1,55 +1,70 @@
 <?php
 
-$emptyCezanne = false;
-$hideCezanne = get_field("hide_cezanne") ?: false;
-$get_records = wp_remote_get(
-	"https://cezanneondemand.intervieweb.it/annunci.php?lang=en&LAC=hopeforjustice&d=hopeforjustice.org&k=c27d0f6eb2ff4684a4861d58933b8957&CodP=&nbsp;&format=json_en&utype=0"
-);
-// when empty show message
-if ($get_records["body"] == "[]") {
-	$emptyCezanne = true;
+$hideJobs = get_field("hide_cezanne") ?: false;
+
+$occupop_request = wp_remote_get("https://api.occupop.com/rest/jobs", [
+	"headers" => [
+		"Accept" => "application/json",
+		"Authorization" => "Bearer " . OCCUPOP_API_TOKEN,
+	],
+]);
+
+$jobs = [];
+if (!is_wp_error($occupop_request)) {
+	$occupop_response = json_decode(wp_remote_retrieve_body($occupop_request));
+	$jobs = $occupop_response->data ?? [];
 }
+$emptyJobs = empty($jobs);
 ?>
 
 <div class="better-grid careers-block">
-    <?php if (!$hideCezanne) { ?>
-        <?php foreach (json_decode($get_records["body"]) as $body) {
+    <?php if (!$hideJobs) { ?>
+        <?php foreach ($jobs as $job) {
+        	// SFA roles are tagged via their id_ref (e.g. "SFA-123") rather than a dedicated field.
+        	$isSfaJob = isset($job->id_ref) && strpos($job->id_ref, "SFA") !== false;
+        	if ($isSfaJob) {
+        		continue;
+        	}
 
-        	$locationPart1 = $body->location ?: $body->region;
-        	$locationPart2 = $body->nation;
+        	$locationPart1 = $job->location->city ?? $job->location->state ?? null;
+        	$locationPart2 = $job->location->country ?? null;
+
+        	$jobMeta = array_filter([
+        		"Contract" => $job->contract ?? null,
+        		"Period" => $job->period ?? null,
+        		"Workplace" => isset($job->workplace)
+        			? match ($job->workplace) {
+        				"hybrid" => "Hybrid",
+        				"remote" => "Remote",
+        				"onSite" => "On site",
+        				default => $job->workplace,
+        			}
+        			: null,
+        	]);
         	?>
-        <?php if (strpos($body->project_label, "SFA") === false) { ?>
 
             <div class="careers-block__card">
-                <a class="careers-block__inner" href="<?php echo $body->url; ?>">
+                <a class="careers-block__inner" href="<?php echo esc_url($job->apply_url); ?>">
                     <!-- Card title -->
                     <h3 class="careers-block__title">
-                        <?php echo $body->title; ?>
+                        <?php echo esc_html($job->title); ?>
                     </h3>
-
-                    <!-- location -->
-                    <?php if ($locationPart1 || $locationPart2) { ?>
-                        <div class="careers-block__location">
-                            <img src="<?php echo get_template_directory_uri() .
-                            	"/assets/img/balloon.svg"; ?>" />
-                            <p>
-                            <?php
-                            if ($locationPart1) {
-                            	echo $locationPart1;
-                            }
-                            if ($locationPart1 && $locationPart2) {
-                            	echo ",&nbsp;";
-                            }
-                            if ($locationPart2) {
-                            	echo $locationPart2;
-                            }
-                            ?>
-                            </p>
-                        </div>
-                    <?php } ?>
+                    <ul class="careers-block__meta">
+                        <?php foreach ($jobMeta as $label => $value): ?>
+                            <li>
+                                <span class="careers-block__meta-label"><?php echo esc_html($label); ?>:</span>
+                                <?php echo esc_html($value); ?>
+                            </li>
+                        <?php endforeach; ?>
+                        <?php if ($locationPart1 || $locationPart2): ?>
+                            <li>
+                                <span class="careers-block__meta-label">Location:</span>
+                                <?php echo esc_html(implode(", ", array_filter([$locationPart1, $locationPart2]))); ?>
+                            </li>
+                        <?php endif; ?>
+                    </ul>
                 </a>
             </div>
-            <?php } ?>
         <?php
         } ?>
     <?php } ?>
@@ -85,7 +100,7 @@ if ($get_records["body"] == "[]") {
     else:
     	$emptyNonCezanne = true;
 
-    	if ($emptyNonCezanne == true && $emptyCezanne == true): ?>
+    	if ($emptyNonCezanne == true && $emptyJobs == true): ?>
             <h2 style="text-align: center; grid-column: col2 / col12; opacity:0.5;" class="font-canela">No Vacancies</h2>
 
     <?php endif;
