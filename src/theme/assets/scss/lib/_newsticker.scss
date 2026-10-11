@@ -12,6 +12,8 @@
   z-index: $z-ticker;
   max-width: 2560px;
   left: 0;
+  right: 0;
+  margin: 0 auto;
   @include box-shadow-reverse;
   opacity: 0;
   transition: all 0.5s ease-out;

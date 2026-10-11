@@ -16,6 +16,12 @@
 		color: var(--red);
 	}
 
+	&__error {
+		color: var(--red);
+		font-size: 14px;
+		margin: 5px 0 0;
+	}
+
 	&__container {
 		display: grid;
 		width: 100%;
@@ -332,6 +338,16 @@
 		&:hover {
 			cursor: pointer;
 			opacity: 0.8;
+		}
+
+		&--disabled {
+			background-color: #ebebeb;
+			color: #bcbcbc;
+			pointer-events: none;
+
+			&:hover {
+				opacity: 1;
+			}
 		}
 	}
 

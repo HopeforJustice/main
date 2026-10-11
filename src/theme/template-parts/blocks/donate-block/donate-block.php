@@ -120,7 +120,7 @@ if (is_admin()) {
 	}
 } ?>
 
-
+<?php $min_custom_amount = $currency == "NOK" ? 20 : 2; ?>
 
 
 <!-- render the block -->
@@ -264,6 +264,7 @@ if ($tracked && $target) {
 
         <!-- donate widget -->
         <div data-tracked="<?php echo $tracked; ?>" data-thankyou="<?php echo $thank_you; ?>" data-emaileventonce="<?php echo $email_event_once; ?>" data-emaileventmonthly="<?php echo $email_event_monthly; ?>" data-campaign="<?php echo $campaign; ?>" data-currency="<?php echo $currency; ?>"
+        data-minamount="<?php echo $min_custom_amount; ?>"
         data-usedonationapp="<?php echo $use_donation_app; ?>" class="donate-block" <?php if (
 	$widget_id_once
 ) { ?> data-widgetidonce="<?php echo $widget_id_once; ?>" <?php } ?> <?php if (
@@ -416,7 +417,7 @@ if ($tracked && $target) {
                         <?php } ?>
                     </span>
                     <span class="currency"><?php echo $symbol; ?></span>
-                    <input id="customAmount" style="display: none" type="number" name="customAmount" />
+                    <input id="customAmount" style="display: none" type="number" name="customAmount" min="<?php echo $min_custom_amount; ?>" />
                 </div>
             </div>
 
@@ -439,6 +440,14 @@ if ($tracked && $target) {
                 <span id="reason"></span>
             </p>
 
+            <p class="donate-block__error" style="display: none; text-align:center; width:100%;">
+                <?php if ($currency == "NOK") { ?>
+                    Please enter a donation of <?php echo $min_custom_amount; ?> kr or higher
+                <?php } else { ?>
+                    Please enter a donation of <?php echo $symbol . $min_custom_amount; ?> or higher
+                <?php } ?>
+            </p>
+
             <div class="donate-block__button">
                 <?php if ($currency == "NOK") { ?>
                     Gi
@@ -453,8 +462,7 @@ if ($tracked && $target) {
                 ?></span><span class="donate-block__button-amount"></span>
                 <span class="donate-block__button-freq"></span>
             </div>
-                        <div class="donate-block__other-ways">
-                
+                    <div class="donate-block__other-ways">
                     <a href="<?php echo $currency == "usd" || "gbp"
                     	? "#other-ways"
                     	: $other_ways_link; ?>">

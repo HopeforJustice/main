@@ -17,10 +17,9 @@
 		let amount = $(".donate-block__options-option--active").data("amount");
 		let freq = $(".donate-block__freq-option--active").data("freq");
 		let reason = $(".donate-block__options-option--active").data("reason");
-		let reasonMonthly = $(".donate-block__options-option--active").data(
-			"monthly",
-		);
+		let reasonMonthly = $(".donate-block__options-option--active").data("monthly");
 		let currency = $(".donate-block").data("currency");
+		let minAmount = $(".donate-block").data("minamount");
 		let widgetIdOnce = $(".donate-block").data("widgetidonce");
 		let widgetIdMonthly = $(".donate-block").data("widgetidmonthly");
 		let thankyou = $(".donate-block").data("thankyou");
@@ -57,12 +56,8 @@
 					}
 				});
 
-				$(".donate-block__text-currency").insertAfter(
-					".donate-block__text-amount",
-				);
-				$(".donate-block__button-currency").insertAfter(
-					".donate-block__button-amount",
-				);
+				$(".donate-block__text-currency").insertAfter(".donate-block__text-amount");
+				$(".donate-block__button-currency").insertAfter(".donate-block__button-amount");
 			}
 		});
 
@@ -70,7 +65,7 @@
 			$(this).val(
 				$(this)
 					.val()
-					.replace(/[^0-9\,]/, ""),
+					.replace(/[^0-9\,]/, "")
 			);
 		});
 
@@ -142,7 +137,7 @@
 
 		$(".donate-block__freq-option").click(function () {
 			$(".donate-block__freq-option--active").removeClass(
-				"donate-block__freq-option--active",
+				"donate-block__freq-option--active"
 			);
 
 			$(this).addClass("donate-block__freq-option--active");
@@ -175,9 +170,7 @@
 
 			if (freq == "monthly") {
 				$("#reason").html(reasonMonthly);
-				amount = $(".donate-block__options-option--active").data(
-					"amountmonthly",
-				);
+				amount = $(".donate-block__options-option--active").data("amountmonthly");
 				$(".donate-block__options-option").each(function () {
 					let textAmount = $(this).data("amountmonthly");
 					$(this).children(".donate-block__options-amount").text(textAmount);
@@ -203,12 +196,10 @@
 
 			if (
 				$(".donate-block__options-option--custom").hasClass(
-					"donate-block__options-option--active",
+					"donate-block__options-option--active"
 				)
 			) {
-				amount = $(".donate-block__options-option--custom")
-					.children("input")
-					.val();
+				amount = $(".donate-block__options-option--custom").children("input").val();
 				$(".donate-block__text-freq").hide();
 			}
 
@@ -216,12 +207,22 @@
 			$(".donate-block__button-amount").text(amount);
 		});
 
+		//shows/hides the min-amount error and disables the donate button while a custom amount below the minimum is entered
+		function validateCustomAmount() {
+			let isCustomAmount = $(".donate-block__options-option--custom").hasClass(
+				"donate-block__options-option--active"
+			);
+			let isBelowMin =
+				isCustomAmount && (isNaN(parseFloat(amount)) || parseFloat(amount) < minAmount);
+
+			$(".donate-block__error").toggle(isBelowMin);
+			$(".donate-block__button").toggleClass("donate-block__button--disabled", isBelowMin);
+		}
+
 		//options select
 
 		$(".donate-block__options-option").click(function () {
-			$(".donate-block__options-option").removeClass(
-				"donate-block__options-option--active",
-			);
+			$(".donate-block__options-option").removeClass("donate-block__options-option--active");
 			$(this).addClass("donate-block__options-option--active");
 			reason = $(this).data("reason");
 			console.log(reason);
@@ -268,6 +269,8 @@
 				$(".donate-block__text-amount").hide();
 				$(".donate-block__text-currency").hide();
 			}
+
+			validateCustomAmount();
 		});
 
 		//custom select
@@ -290,6 +293,7 @@
 			}
 
 			amount = val;
+			validateCustomAmount();
 		});
 
 		// custom input
@@ -322,11 +326,17 @@
 					$(".donate-block__text-amount").text(newText);
 				}
 			}
+
+			validateCustomAmount();
 		});
 
 		//donate submit button click
 		$(".donate-block__button").click(function () {
 			//console.log(amount, freq, currency);
+
+			if ($(this).hasClass("donate-block__button--disabled")) {
+				return;
+			}
 
 			let url = window.location.origin;
 			let urlAmount;
@@ -359,9 +369,6 @@
 
 	// Initialize dynamic block preview (editor).
 	if (window.acf) {
-		window.acf.addAction(
-			"render_block_preview/type=donate-block",
-			initializeBlock,
-		);
+		window.acf.addAction("render_block_preview/type=donate-block", initializeBlock);
 	}
 })(jQuery);

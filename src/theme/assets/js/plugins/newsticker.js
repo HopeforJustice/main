@@ -149,9 +149,15 @@
     function update(slide, content) {
 
       slide.html(content);
-      while (container.width() > slide.width()) {
-        slide.append(' ' + content);
+
+      let itemWidth = slide.width();
+      let containerWidth = container.width();
+
+      if (itemWidth > 0 && containerWidth > itemWidth) {
+        let repeats = Math.ceil(containerWidth / itemWidth);
+        slide.html(content + (' ' + content).repeat(repeats));
       }
+
       slide.append('&nbsp;');
 
     }

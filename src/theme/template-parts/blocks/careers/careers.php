@@ -20,13 +20,14 @@ $emptyJobs = empty($jobs);
 <div class="better-grid careers-block">
     <?php if (!$hideJobs) { ?>
         <?php foreach ($jobs as $job) {
+
         	// SFA roles are tagged via their id_ref (e.g. "SFA-123") rather than a dedicated field.
         	$isSfaJob = isset($job->id_ref) && strpos($job->id_ref, "SFA") !== false;
         	if ($isSfaJob) {
         		continue;
         	}
 
-        	$locationPart1 = $job->location->city ?? $job->location->state ?? null;
+        	$locationPart1 = $job->location->city ?? ($job->location->state ?? null);
         	$locationPart2 = $job->location->country ?? null;
 
         	$jobMeta = array_filter([
@@ -40,6 +41,8 @@ $emptyJobs = empty($jobs);
         				default => $job->workplace,
         			}
         			: null,
+        		"Country" => $job->location->country ?? null,
+        		"Location" => $job->location->cityFullName ?? null,
         	]);
         	?>
 
@@ -52,16 +55,12 @@ $emptyJobs = empty($jobs);
                     <ul class="careers-block__meta">
                         <?php foreach ($jobMeta as $label => $value): ?>
                             <li>
-                                <span class="careers-block__meta-label"><?php echo esc_html($label); ?>:</span>
+                                <span class="careers-block__meta-label"><?php echo esc_html(
+                                	$label
+                                ); ?>:</span>
                                 <?php echo esc_html($value); ?>
                             </li>
                         <?php endforeach; ?>
-                        <?php if ($locationPart1 || $locationPart2): ?>
-                            <li>
-                                <span class="careers-block__meta-label">Location:</span>
-                                <?php echo esc_html(implode(", ", array_filter([$locationPart1, $locationPart2]))); ?>
-                            </li>
-                        <?php endif; ?>
                     </ul>
                 </a>
             </div>
