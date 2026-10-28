@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.8.4");
+	define("_S_VERSION", "6.8.5");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -1836,3 +1836,6 @@ function hfj_find_field_id($form, callable $predicate, $check_inputs = false)
 	}
 	return null;
 }
+
+// Allow REST API access to menus for all users.
+add_filter("rest_menu_read_access", "__return_true");
