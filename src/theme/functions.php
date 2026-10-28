@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.8.5");
+	define("_S_VERSION", "6.8.7");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -1839,3 +1839,18 @@ function hfj_find_field_id($form, callable $predicate, $check_inputs = false)
 
 // Allow REST API access to menus for all users.
 add_filter("rest_menu_read_access", "__return_true");
+
+// Revalidate menus on update to keep Next.js in sync.
+add_action("wp_update_nav_menu", "hfj_revalidate_menus");
+
+function hfj_revalidate_menus()
+{
+	wp_remote_post("https://hopeforjustice.org/api/revalidate?tag=wp-coupled-menus", [
+		"headers" => [
+			"x-revalidate-secret" => NEXT_REVALIDATE_SECRET,
+			"Content-Type" => "application/json",
+		],
+		"blocking" => false, // fire-and-forget, don't slow down the WP save
+		"timeout" => 1,
+	]);
+}
