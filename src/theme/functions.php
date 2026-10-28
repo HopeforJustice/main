@@ -1841,16 +1841,16 @@ function hfj_find_field_id($form, callable $predicate, $check_inputs = false)
 add_filter("rest_menu_read_access", "__return_true");
 
 // Revalidate menus on update to keep Next.js in sync.
-add_action("wp_update_nav_menu", "hfj_revalidate_menus");
+// add_action("wp_update_nav_menu", "hfj_revalidate_menus");
 
-function hfj_revalidate_menus()
-{
-	wp_remote_post("https://hopeforjustice.org/api/revalidate?tag=wp-coupled-menus", [
-		"headers" => [
-			"x-revalidate-secret" => NEXT_REVALIDATE_SECRET,
-			"Content-Type" => "application/json",
-		],
-		"blocking" => false, // fire-and-forget, don't slow down the WP save
-		"timeout" => 1,
-	]);
-}
+// function hfj_revalidate_menus()
+// {
+// 	wp_remote_post("https://hopeforjustice.org/api/revalidate?tag=wp-coupled-menus", [
+// 		"headers" => [
+// 			"x-revalidate-secret" => NEXT_REVALIDATE_SECRET,
+// 			"Content-Type" => "application/json",
+// 		],
+// 		"blocking" => false, // fire-and-forget, don't slow down the WP save
+// 		"timeout" => 1,
+// 	]);
+// }
