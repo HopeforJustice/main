@@ -10,13 +10,19 @@ function formatPostcode(string) {
 	return string;
 }
 
-//capture UTM parameters and store as cookies
+//capture UTM parameters (or our own tlx tracking link params as a fallback) and store as cookies
 function captureUTMParameters() {
 	const urlParams = new URLSearchParams(window.location.search);
-	const utmParams = ["utm_source", "utm_medium", "utm_campaign"];
+	// tlx params are our own tracking link equivalents of UTMs (used as some adblockers strip utm_* params)
+	// tlxs = source, tlxm = medium, tlxc = campaign
+	const utmParams = {
+		utm_source: "tlxs",
+		utm_medium: "tlxm",
+		utm_campaign: "tlxc",
+	};
 
-	utmParams.forEach((param) => {
-		const value = urlParams.get(param);
+	Object.entries(utmParams).forEach(([param, tlxParam]) => {
+		const value = urlParams.get(param) || urlParams.get(tlxParam);
 		if (value) {
 			const cookieName = "wordpress_" + param;
 			const existingValue = Cookies.get(cookieName);
@@ -35,7 +41,7 @@ function captureUTMParameters() {
 
 /* Page load scripts */
 jQuery(document).ready(function ($) {
-	console.log("v6.8.7");
+	console.log("v6.9.0");
 	captureUTMParameters();
 	let cookies = Cookies.get("wordpress_hfjcookies");
 

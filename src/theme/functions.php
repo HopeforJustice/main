@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.8.7");
+	define("_S_VERSION", "6.8.9");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -1841,16 +1841,38 @@ function hfj_find_field_id($form, callable $predicate, $check_inputs = false)
 add_filter("rest_menu_read_access", "__return_true");
 
 // Revalidate menus on update to keep Next.js in sync.
-// add_action("wp_update_nav_menu", "hfj_revalidate_menus");
+add_action("wp_update_nav_menu", "hfj_revalidate_menus");
 
-// function hfj_revalidate_menus()
-// {
-// 	wp_remote_post("https://hopeforjustice.org/api/revalidate?tag=wp-coupled-menus", [
-// 		"headers" => [
-// 			"x-revalidate-secret" => NEXT_REVALIDATE_SECRET,
-// 			"Content-Type" => "application/json",
-// 		],
-// 		"blocking" => false, // fire-and-forget, don't slow down the WP save
-// 		"timeout" => 1,
-// 	]);
-// }
+function hfj_revalidate_menus()
+{
+	wp_remote_post("https://hopeforjustice.org/api/revalidate/?tag=wp-coupled-menus", [
+		"headers" => [
+			"x-revalidate-secret" => NEXT_REVALIDATE_SECRET,
+			"Content-Type" => "application/json",
+		],
+		"blocking" => false, // fire-and-forget, don't slow down the WP save
+		"timeout" => 1,
+	]);
+}
+
+// Expose only the specific ACF Options fields Next.js needs. ACF's own REST
+// support (since 5.11) only attaches to post types, taxonomies and users -
+// there is no route for an options page, so this is the only way to reach
+// get_field(..., 'option') data headlessly.
+add_action("rest_api_init", function () {
+	register_rest_route("hfj/v1", "/site-options", [
+		"methods" => "GET",
+		"callback" => function () {
+			return rest_ensure_response([
+				"footer_text" => get_field("footer_text", "option"),
+				"donate_url_default" => get_field("donate_url_default", "option"),
+				"donate_url_uk" => get_field("donate_url_uk", "option"),
+				"donate_url_usa" => get_field("donate_url_usa", "option"),
+				"donate_url_nok" => get_field("donate_url_nok", "option"),
+				"donate_url_aus" => get_field("donate_url_aus", "option"),
+				"donate_url_eur" => get_field("donate_url_eur", "option"),
+			]);
+		},
+		"permission_callback" => "__return_true",
+	]);
+});
