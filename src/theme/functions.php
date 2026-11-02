@@ -1179,6 +1179,10 @@ add_action("template_redirect", function () {
 		return;
 	}
 
+	if (isset($_GET["campaign"])) {
+		return;
+	}
+
 	$post = get_post();
 	if (!$post || !has_block("acf/geo-redirect", $post)) {
 		return;
