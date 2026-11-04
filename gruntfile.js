@@ -88,7 +88,11 @@ module.exports = function (grunt) {
   grunt.registerTask('wp-install', ['clean:wpTmp', 'curl', 'unzip', 'clean:install', 'copy:install', 'clean:wpTmp']);
 
 
-  // grunt.registerTask('deploy-production', ['clean:all', 'symlink', 'copy:theme', 'copy:style', 'copy:img', 'copy:tmpl', 'copy:fonts', 'sass:build', 'uglify', 'sftp-deploy:production']);
-  // grunt.registerTask('deploy-staging', ['clean:all', 'symlink', 'copy:theme', 'copy:style', 'copy:img', 'copy:tmpl', 'copy:fonts', 'sass:build', 'uglify', 'sftp-deploy:staging']);
+  // Same build steps as the 'default' task (now including copy:blocks,
+  // copy:acf and autoprefixer, which this task predates), minus the local
+  // dev-only browserSync/watch, plus the SFTP upload as the final step.
+  grunt.registerTask('deploy-production', ['clean:all', 'symlink', 'copy:theme', 'copy:style', 'copy:img', 'copy:tmpl', 'copy:fonts', 'copy:blocks', 'copy:acf', 'sass:build', 'autoprefixer', 'uglify', 'sftp-deploy:production']);
+  // Needs a "staging" entry added to .ftppass first (only "production" exists there today).
+  grunt.registerTask('deploy-staging', ['clean:all', 'symlink', 'copy:theme', 'copy:style', 'copy:img', 'copy:tmpl', 'copy:fonts', 'copy:blocks', 'copy:acf', 'sass:build', 'autoprefixer', 'uglify', 'sftp-deploy:staging']);
 
 };

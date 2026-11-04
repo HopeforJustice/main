@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.9.0");
+	define("_S_VERSION", "6.9.1");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -1859,23 +1859,15 @@ function hfj_revalidate_menus()
 	]);
 }
 
-// Expose only the specific ACF Options fields Next.js needs. ACF's own REST
-// support (since 5.11) only attaches to post types, taxonomies and users -
-// there is no route for an options page, so this is the only way to reach
-// get_field(..., 'option') data headlessly.
+// Expose every ACF Options field to Next.js, flat, by field name. ACF's own
+// REST support (since 5.11) only attaches to post types, taxonomies and
+// users - there is no route for an options page, so this is the only way to
+// reach get_fields(..., 'option') data headlessly.
 add_action("rest_api_init", function () {
 	register_rest_route("hfj/v1", "/site-options", [
 		"methods" => "GET",
 		"callback" => function () {
-			return rest_ensure_response([
-				"footer_text" => get_field("footer_text", "option"),
-				"donate_url_default" => get_field("donate_url_default", "option"),
-				"donate_url_uk" => get_field("donate_url_uk", "option"),
-				"donate_url_usa" => get_field("donate_url_usa", "option"),
-				"donate_url_nok" => get_field("donate_url_nok", "option"),
-				"donate_url_aus" => get_field("donate_url_aus", "option"),
-				"donate_url_eur" => get_field("donate_url_eur", "option"),
-			]);
+			return rest_ensure_response(get_fields("option") ?: []);
 		},
 		"permission_callback" => "__return_true",
 	]);
