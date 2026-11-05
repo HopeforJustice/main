@@ -1872,3 +1872,8 @@ add_action("rest_api_init", function () {
 		"permission_callback" => "__return_true",
 	]);
 });
+
+// Expose page/post content as structured block JSON for Next.js - see
+// headless-blocks.php for why this is one generic serializer rather than
+// a bespoke REST field per block type.
+require_once __DIR__ . "/headless-blocks.php";
