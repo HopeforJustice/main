@@ -148,5 +148,30 @@ add_action("rest_api_init", function () {
 				return hfj_get_post_blocks($post["id"]);
 			},
 		]);
+
+		// Not every page is built from blocks - several templates
+		// (e.g. templates/page-what-we-do.php) are hand-coded PHP reading
+		// ACF fields directly via get_field()/the_field(), with no REST
+		// exposure of those values at all otherwise (ACF's own REST
+		// integration isn't enabled for these field groups). This is the
+		// same "generic, not one endpoint per page type" approach as
+		// `blocks` above, just for plain ACF field values instead of
+		// Gutenberg block data - get_fields() already resolves repeaters
+		// (e.g. a "countries" repeater) into nested arrays for free.
+		register_rest_field($post_type, "acf_fields", [
+			"get_callback" => function ($post, $field_name, $request) {
+				$requested_fields = $request->get_param("_fields");
+				if (empty($requested_fields)) {
+					return null;
+				}
+				if (!is_array($requested_fields)) {
+					$requested_fields = preg_split('/[\s,]+/', $requested_fields);
+				}
+				if (!rest_is_field_included($field_name, $requested_fields)) {
+					return null;
+				}
+				return get_fields($post["id"]) ?: [];
+			},
+		]);
 	}
 });
