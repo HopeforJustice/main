@@ -23,7 +23,8 @@ $emptyJobs = empty($jobs);
 
         	// SFA roles are tagged via their id_ref (e.g. "SFA-123") rather than a dedicated field.
         	$isSfaJob = isset($job->id_ref) && strpos($job->id_ref, "SFA") !== false;
-        	if ($isSfaJob) {
+        	$isClosed = isset($job->closed_for_applicants) && $job->closed_for_applicants === true;
+        	if ($isSfaJob || $isClosed) {
         		continue;
         	}
 
