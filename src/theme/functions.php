@@ -1867,7 +1867,32 @@ add_action("rest_api_init", function () {
 	register_rest_route("hfj/v1", "/site-options", [
 		"methods" => "GET",
 		"callback" => function () {
-			return rest_ensure_response(get_fields("option") ?: []);
+			$fields = get_fields("option") ?: [];
+
+			// "email_footer_image" (an ACF Image field, return_format "url")
+			// would otherwise only ever give Next.js a bare URL - no
+			// dimensions, unlike every other image this REST API exposes
+			// (media_details.width/height via /wp/v2/media, which
+			// lib/wordpress/media.ts's getMediaImage() relies on for
+			// next/image). get_field(..., false) bypasses that return_format
+			// to get the raw attachment ID instead, so this can resolve the
+			// same width/height any other image gets, without changing the
+			// field's own admin-facing configuration at all. Nothing else
+			// reads this REST route (grep confirms it - only Next.js does),
+			// so reshaping this one field is safe.
+			$image_id = get_field("email_footer_image", "option", false);
+			if ($image_id) {
+				$image = wp_get_attachment_image_src($image_id, "full");
+				if ($image) {
+					$fields["email_footer_image"] = [
+						"url" => $image[0],
+						"width" => $image[1],
+						"height" => $image[2],
+					];
+				}
+			}
+
+			return rest_ensure_response($fields);
 		},
 		"permission_callback" => "__return_true",
 	]);
