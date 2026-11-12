@@ -1,5 +1,24 @@
 <?php
 
+//audience segment targeting - show this block only when the url's segment param
+//matches the "segment" field (case-insensitive). If that field is left empty,
+//hide the block whenever a segment param is present in the url at all (so an
+//untargeted block steps aside for a segment-specific one), otherwise show as normal.
+//Skipped in wp-admin so editors can still see/edit the block regardless of segment.
+if (!is_admin()) {
+	$segment = get_field("segment") ?: "";
+	$has_url_segment = isset($_GET["segment"]);
+	$url_segment = $has_url_segment ? trim($_GET["segment"]) : null;
+
+	if ($segment !== "") {
+		if (!$has_url_segment || strtolower($url_segment) !== strtolower($segment)) {
+			return;
+		}
+	} elseif ($has_url_segment) {
+		return;
+	}
+}
+
 //Get Currency=value from the url
 $currency = $_GET["Currency"];
 //if the visitor explicitly picked a currency (eg. via the currency-switch modal), the

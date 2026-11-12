@@ -535,6 +535,26 @@
             "append": ""
         },
         {
+            "key": "field_6d29a1f4b2301",
+            "label": "Audience segment",
+            "name": "segment",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "If set, this block only shows when the url's ?segment= param matches this value (case-insensitive). If left empty, this block hides whenever a ?segment= param is present in the url at all, and shows as normal otherwise.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_631b49ac2797f",
             "label": "UK",
             "name": "",
@@ -4403,5 +4423,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1774539636
+    "modified": 1794503545
 }
