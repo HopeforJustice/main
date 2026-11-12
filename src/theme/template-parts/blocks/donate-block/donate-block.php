@@ -2,6 +2,10 @@
 
 //Get Currency=value from the url
 $currency = $_GET["Currency"];
+//if the visitor explicitly picked a currency (eg. via the currency-switch modal), the
+//gl-*/glm-* giving level overrides no longer apply, since an amount tailored for one
+//currency doesn't make sense carried over to another - fall back to the ACF amounts
+$currency_explicitly_set = isset($_GET["Currency"]) && trim($_GET["Currency"]) !== "";
 $use_donation_app = get_field("use_donation_app") ?: false;
 $frequency = get_field("frequency_settings");
 $frequency_start = get_field("frequency_start");
@@ -215,29 +219,31 @@ $hidden_once = [];
 $hidden_monthly = [];
 $has_custom_giving_levels = false;
 
-foreach (["a", "b", "c", "d", "e"] as $letter) {
-	$gl_value = isset($_GET["gl-$letter"]) ? $_GET["gl-$letter"] : null;
-	if ($gl_value !== null) {
-		$has_custom_giving_levels = true;
-		if (in_array(strtolower(trim($gl_value)), ["0", "false"], true)) {
-			$hidden_once[$letter] = true;
-		} else {
-			$parsed_amount = parse_giving_level_amount($gl_value);
-			if ($parsed_amount !== null) {
-				${"amount_once_$letter"} = $parsed_amount;
+if (!$currency_explicitly_set) {
+	foreach (["a", "b", "c", "d", "e"] as $letter) {
+		$gl_value = isset($_GET["gl-$letter"]) ? $_GET["gl-$letter"] : null;
+		if ($gl_value !== null) {
+			$has_custom_giving_levels = true;
+			if (in_array(strtolower(trim($gl_value)), ["0", "false"], true)) {
+				$hidden_once[$letter] = true;
+			} else {
+				$parsed_amount = parse_giving_level_amount($gl_value);
+				if ($parsed_amount !== null) {
+					${"amount_once_$letter"} = $parsed_amount;
+				}
 			}
 		}
-	}
 
-	$glm_value = isset($_GET["glm-$letter"]) ? $_GET["glm-$letter"] : null;
-	if ($glm_value !== null) {
-		$has_custom_giving_levels = true;
-		if (in_array(strtolower(trim($glm_value)), ["0", "false"], true)) {
-			$hidden_monthly[$letter] = true;
-		} else {
-			$parsed_amount = parse_giving_level_amount($glm_value);
-			if ($parsed_amount !== null) {
-				${"amount_monthly_$letter"} = $parsed_amount;
+		$glm_value = isset($_GET["glm-$letter"]) ? $_GET["glm-$letter"] : null;
+		if ($glm_value !== null) {
+			$has_custom_giving_levels = true;
+			if (in_array(strtolower(trim($glm_value)), ["0", "false"], true)) {
+				$hidden_monthly[$letter] = true;
+			} else {
+				$parsed_amount = parse_giving_level_amount($glm_value);
+				if ($parsed_amount !== null) {
+					${"amount_monthly_$letter"} = $parsed_amount;
+				}
 			}
 		}
 	}
