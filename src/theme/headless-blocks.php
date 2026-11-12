@@ -173,5 +173,38 @@ add_action("rest_api_init", function () {
 				return get_fields($post["id"]) ?: [];
 			},
 		]);
+
+		// The "WP Add Custom CSS" plugin (src/plugins/wp-add-custom-css) lets
+		// an editor attach free-form CSS to a single page/post via a meta
+		// box, stored under a protected ("_"-prefixed) meta key and printed
+		// verbatim in a <style> tag on that page's own front-end render (see
+		// its single_custom_css()) - invisible to Next.js otherwise, since
+		// protected meta keys aren't exposed via the default REST `meta`
+		// field. Confirmed live on /modern-slavery/ (page 1418): a
+		// `.full-header__gradient{width:100%;opacity:.88}` override that
+		// isn't in the theme's own SCSS at all - without this, Next.js
+		// renders that page's hero gradient at the theme default (opacity
+		// .68) instead of the editor's override.
+		register_rest_field($post_type, "custom_css", [
+			"get_callback" => function ($post, $field_name, $request) {
+				$requested_fields = $request->get_param("_fields");
+				if (empty($requested_fields)) {
+					return null;
+				}
+				if (!is_array($requested_fields)) {
+					$requested_fields = preg_split('/[\s,]+/', $requested_fields);
+				}
+				if (!rest_is_field_included($field_name, $requested_fields)) {
+					return null;
+				}
+				$css = get_post_meta($post["id"], "_single_add_custom_css", true);
+				if (!$css) {
+					return "";
+				}
+				// Matches single_custom_css()'s own undo of the textarea's
+				// HTML-entity-encoded ">" on save.
+				return str_replace("&gt;", ">", $css);
+			},
+		]);
 	}
 });
