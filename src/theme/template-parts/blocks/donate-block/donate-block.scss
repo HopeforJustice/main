@@ -237,14 +237,15 @@
 		display: flex;
 		justify-content: space-between;
 		flex-wrap: wrap;
+		gap: 16px;
 		margin: 25px 0;
 		padding: 0 20px;
 
 		&-option {
 			background-color: #ebebeb;
 			color: #bcbcbc;
-			width: calc(33% - 3.33px);
-			margin-bottom: 5px;
+			//3 per row (accounting for the 16px gap); doesn't grow itself, so only the custom tile absorbs space left by a hidden option
+			flex: 0 1 calc(33.333% - 32px / 3);
 			height: 65px;
 			display: flex;
 			justify-content: center;
@@ -255,6 +256,13 @@
 
 			&--custom {
 				font-size: 16px;
+				//grows alone to absorb the space left by a hidden option on its row
+				flex-grow: 1;
+
+				&.donate-block__options-option--active {
+					justify-content: flex-start;
+					padding-left: 20px;
+				}
 
 				input::-webkit-outer-spin-button,
 				input::-webkit-inner-spin-button {
@@ -377,6 +385,12 @@
 			width: 100%;
 			object-fit: contain;
 			display: block;
+		}
+	}
+
+	&--hide-impact {
+		#impactText {
+			display: none;
 		}
 	}
 
@@ -505,11 +519,6 @@
 
 		&__options {
 			padding: 0 40px;
-
-			&-option {
-				width: calc(33% - 6.66px);
-				margin-bottom: 12px;
-			}
 		}
 
 		&__button {

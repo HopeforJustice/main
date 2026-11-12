@@ -30,24 +30,40 @@
 		//campaign for donation app
 		let campaign = $(".donate-block").data("campaign") || null;
 
+		//tracks whether the giver has manually picked an option, so the per-frequency suggested default stops being reapplied once they have
+		let userSelectedOption = false;
+
+		//adds thousand separators to a displayed amount - a space for NOK, a comma for every other currency
+		function formatAmountText(value) {
+			if (value === null || value === undefined || value === "") {
+				return "";
+			}
+
+			let groupSeparator = currency == "NOK" ? " " : ",";
+			let parts = value.toString().split(".");
+			let integerPart = parts[0];
+			let decimalPart = parts[1];
+			let isNegative = integerPart.charAt(0) === "-";
+			if (isNegative) {
+				integerPart = integerPart.slice(1);
+			}
+
+			integerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, groupSeparator);
+
+			let formatted = (isNegative ? "-" : "") + integerPart;
+			if (decimalPart !== undefined) {
+				formatted += "." + decimalPart;
+			}
+
+			return formatted;
+		}
+
 		$(document).ready(function () {
 			if (currency == "NOK") {
 				$(".donate-block__options-option").each(function () {
 					$(this)
 						.children(".currency")
 						.insertAfter($(this).children(".donate-block__options-amount"));
-
-					let amountEl = $(this).children(".donate-block__options-amount");
-					let amountText = amountEl.text();
-					let amountLength = amountText.length;
-					//console.log(amountLength);
-
-					if (amountLength > 3) {
-						let text = amountText.split("");
-						text.splice(-3, 0, " ");
-						let newText = text.join("");
-						amountEl.text(newText);
-					}
 
 					if ($(this).hasClass("donate-block__options-option--custom")) {
 						$(this)
@@ -97,7 +113,9 @@
 			amount = $(".donate-block__options-option--active").data("amountmonthly");
 			$(".donate-block__options-option").each(function () {
 				let textAmount = $(this).data("amountmonthly");
-				$(this).children(".donate-block__options-amount").text(textAmount);
+				$(this)
+					.children(".donate-block__options-amount")
+					.text(formatAmountText(textAmount));
 			});
 			$(".donate-block__top-text").show();
 			$(".donate-block__top-text--once").hide();
@@ -115,7 +133,9 @@
 			amount = $(".donate-block__options-option--active").data("amount");
 			$(".donate-block__options-option").each(function () {
 				let textAmount = $(this).data("amount");
-				$(this).children(".donate-block__options-amount").text(textAmount);
+				$(this)
+					.children(".donate-block__options-amount")
+					.text(formatAmountText(textAmount));
 			});
 			$(".donate-block__top-text").hide();
 			$(".donate-block__top-text--once").show();
@@ -127,11 +147,22 @@
 			$(".donate-block").addClass("donate-block-once");
 		}
 
-		$(".donate-block__text-amount").text(amount);
-		$(".donate-block__button-amount").text(amount);
+		$(".donate-block__text-amount").text(formatAmountText(amount));
+		$(".donate-block__button-amount").text(formatAmountText(amount));
 
 		//fade in widget
 		$(".donate-new__donate-block").css("opacity", "1");
+
+		//shows/hides each giving level option based on its data-hideonce/data-hidemonthly attributes for the given frequency
+		function updateOptionVisibility(freq) {
+			$(".donate-block__options-option").each(function () {
+				let isHidden =
+					freq == "monthly" ? $(this).data("hidemonthly") : $(this).data("hideonce");
+				$(this).toggle(!isHidden);
+			});
+		}
+
+		updateOptionVisibility(freq);
 
 		//frequency select
 
@@ -142,6 +173,25 @@
 
 			$(this).addClass("donate-block__freq-option--active");
 			freq = $(this).data("freq");
+
+			updateOptionVisibility(freq);
+
+			//switch the highlighted option to this frequency's suggested default, unless the giver has already picked one themselves
+			if (!userSelectedOption) {
+				$(".donate-block__options-option").removeClass(
+					"donate-block__options-option--active"
+				);
+				let defaultOption = $(".donate-block__options-option")
+					.filter(function () {
+						return freq == "monthly"
+							? $(this).data("defaultmonthly")
+							: $(this).data("defaultonce");
+					})
+					.first();
+				defaultOption.addClass("donate-block__options-option--active");
+				reason = defaultOption.data("reason");
+				reasonMonthly = defaultOption.data("monthly");
+			}
 
 			//no longer needed - stripe regular implemented
 			// if (currency == 'NOK' && freq == 'monthly') {
@@ -173,7 +223,9 @@
 				amount = $(".donate-block__options-option--active").data("amountmonthly");
 				$(".donate-block__options-option").each(function () {
 					let textAmount = $(this).data("amountmonthly");
-					$(this).children(".donate-block__options-amount").text(textAmount);
+					$(this)
+						.children(".donate-block__options-amount")
+						.text(formatAmountText(textAmount));
 				});
 				$(".donate-block__top-text").show();
 				$(".donate-block__top-text--once").hide();
@@ -190,7 +242,9 @@
 				amount = $(".donate-block__options-option--active").data("amount");
 				$(".donate-block__options-option").each(function () {
 					let textAmount = $(this).data("amount");
-					$(this).children(".donate-block__options-amount").text(textAmount);
+					$(this)
+						.children(".donate-block__options-amount")
+						.text(formatAmountText(textAmount));
 				});
 			}
 
@@ -203,8 +257,8 @@
 				$(".donate-block__text-freq").hide();
 			}
 
-			$(".donate-block__text-amount").text(amount);
-			$(".donate-block__button-amount").text(amount);
+			$(".donate-block__text-amount").text(formatAmountText(amount));
+			$(".donate-block__button-amount").text(formatAmountText(amount));
 		});
 
 		//shows/hides the min-amount error and disables the donate button while a custom amount below the minimum is entered
@@ -222,6 +276,7 @@
 		//options select
 
 		$(".donate-block__options-option").click(function () {
+			userSelectedOption = true;
 			$(".donate-block__options-option").removeClass("donate-block__options-option--active");
 			$(this).addClass("donate-block__options-option--active");
 			reason = $(this).data("reason");
@@ -244,22 +299,8 @@
 				$(input).children(".currency").hide();
 				$(input).children(".text").show();
 				$(input).children("input").hide();
-				$(".donate-block__button-amount").text(amount);
-				$(".donate-block__text-amount").text(amount);
-
-				if (currency == "NOK") {
-					let amountText = amount.toString();
-					let amountLength = amountText.length;
-					console.log(amountText, amountLength);
-
-					if (amountLength > 3) {
-						let text = amountText.split("");
-						text.splice(-3, 0, " ");
-						let newText = text.join("");
-						$(".donate-block__button-amount").text(newText);
-						$(".donate-block__text-amount").text(newText);
-					}
-				}
+				$(".donate-block__button-amount").text(formatAmountText(amount));
+				$(".donate-block__text-amount").text(formatAmountText(amount));
 
 				$(".donate-block__text-amount").show();
 				$(".donate-block__text-currency").show();
@@ -279,8 +320,8 @@
 			reason = $(this).data("reason");
 			reasonMonthly = $(this).data("monthly");
 			let val = $(this).children("input").val();
-			$(".donate-block__button-amount").text(val);
-			$(".donate-block__text-amount").text(val);
+			$(".donate-block__button-amount").text(formatAmountText(val));
+			$(".donate-block__text-amount").text(formatAmountText(val));
 			$(".donate-block__text-freq").hide();
 			$(this).children(".currency").show();
 			$(this).children(".text").hide();
@@ -300,32 +341,9 @@
 
 		$("#customAmount").on("input", function () {
 			let val = $(this).val();
-			$(".donate-block__button-amount").text(val);
-			$(".donate-block__text-amount").text(val);
 			amount = val;
-
-			string = val.toString();
-
-			if (string.length > 3) {
-				let amountText = string;
-				let amountLength = amountText.length;
-				console.log(amountText, amountLength);
-
-				if (amountLength > 3 && amountLength < 7) {
-					let text = amountText.split("");
-					text.splice(-3, 0, " ");
-					let newText = text.join("");
-					$(".donate-block__button-amount").text(newText);
-					$(".donate-block__text-amount").text(newText);
-				} else if (amountLength >= 7) {
-					let text = amountText.split("");
-					text.splice(-3, 0, " ");
-					text.splice(-7, 0, " ");
-					let newText = text.join("");
-					$(".donate-block__button-amount").text(newText);
-					$(".donate-block__text-amount").text(newText);
-				}
-			}
+			$(".donate-block__button-amount").text(formatAmountText(val));
+			$(".donate-block__text-amount").text(formatAmountText(val));
 
 			validateCustomAmount();
 		});

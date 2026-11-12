@@ -171,6 +171,108 @@ $reason_monthly_f = $set["reason_monthly_f"];
 $default_level = $set["default_level"] ?: "c";
 //default level
 $other_ways_link = $set["other_ways"];
+
+//parses a giving-level url value - a plain number ("20"), or a base amount plus/minus
+//a modifier ("20+10"), optionally "pc" suffixed to treat the modifier as a percentage
+//of the base ("20+10pc" = 20 + 10% of 20 = 22), rounded to the nearest whole number
+if (!function_exists("parse_giving_level_amount")) {
+	function parse_giving_level_amount($value)
+	{
+		$value = trim($value);
+
+		if (is_numeric($value)) {
+			return floatval($value);
+		}
+
+		//a literal "+" in a url query string is decoded as a space unless it was
+		//percent-encoded as %2B, so treat a plain space between the numbers the same as "+"
+		$value = preg_replace('/^(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)(pc)?$/i', '$1+$2$3', $value);
+
+		if (preg_match('/^(\d+(?:\.\d+)?)([+-])(\d+(?:\.\d+)?)(pc)?$/i', $value, $matches)) {
+			$base = floatval($matches[1]);
+			$operator = $matches[2];
+			$modifier = floatval($matches[3]);
+			$is_percentage = !empty($matches[4]);
+
+			if ($is_percentage) {
+				$change = $base * ($modifier / 100);
+				$result = $operator === "+" ? $base + $change : $base - $change;
+				return round($result);
+			}
+
+			return $operator === "+" ? $base + $modifier : $base - $modifier;
+		}
+
+		return null;
+	}
+}
+
+//giving level overrides from the url
+//once amounts: gl-a, gl-b, gl-c, gl-d, gl-e
+//monthly amounts: glm-a, glm-b, glm-c, glm-d, glm-e
+//passing 0 or false for either hides that giving level entirely for that frequency
+$hidden_once = [];
+$hidden_monthly = [];
+$has_custom_giving_levels = false;
+
+foreach (["a", "b", "c", "d", "e"] as $letter) {
+	$gl_value = isset($_GET["gl-$letter"]) ? $_GET["gl-$letter"] : null;
+	if ($gl_value !== null) {
+		$has_custom_giving_levels = true;
+		if (in_array(strtolower(trim($gl_value)), ["0", "false"], true)) {
+			$hidden_once[$letter] = true;
+		} else {
+			$parsed_amount = parse_giving_level_amount($gl_value);
+			if ($parsed_amount !== null) {
+				${"amount_once_$letter"} = $parsed_amount;
+			}
+		}
+	}
+
+	$glm_value = isset($_GET["glm-$letter"]) ? $_GET["glm-$letter"] : null;
+	if ($glm_value !== null) {
+		$has_custom_giving_levels = true;
+		if (in_array(strtolower(trim($glm_value)), ["0", "false"], true)) {
+			$hidden_monthly[$letter] = true;
+		} else {
+			$parsed_amount = parse_giving_level_amount($glm_value);
+			if ($parsed_amount !== null) {
+				${"amount_monthly_$letter"} = $parsed_amount;
+			}
+		}
+	}
+}
+
+//the frequency tab active on first render, used to decide which giving levels start hidden
+$initial_freq = $frequency == "once" || $frequency_start == "once" ? "once" : "monthly";
+
+//url overrides for which button is highlighted by default - "suggested" for the once view, "suggested-m" for the monthly view
+$default_level_once = $default_level;
+$default_level_monthly = $default_level;
+
+$url_suggested = $_GET["suggested"] ?: null;
+if ($url_suggested && in_array(strtolower($url_suggested), ["a", "b", "c", "d", "e"])) {
+	$default_level_once = strtolower($url_suggested);
+}
+
+$url_suggested_monthly = $_GET["suggested-m"] ?: null;
+if (
+	$url_suggested_monthly &&
+	in_array(strtolower($url_suggested_monthly), ["a", "b", "c", "d", "e"])
+) {
+	$default_level_monthly = strtolower($url_suggested_monthly);
+}
+
+//the default level for whichever frequency is shown first
+$default_level = $initial_freq == "once" ? $default_level_once : $default_level_monthly;
+
+//url override for showing the impact/reason text - defaults to false if a custom giving level was passed in the url
+$url_impact = $_GET["impact"] ?: null;
+if ($url_impact !== null) {
+	$show_impact = strtolower($url_impact) === "true";
+} else {
+	$show_impact = !$has_custom_giving_levels;
+}
 ?>
 
 <?php //get tracked campaign amount from wp database
@@ -265,7 +367,11 @@ if ($tracked && $target) {
         <!-- donate widget -->
         <div data-tracked="<?php echo $tracked; ?>" data-thankyou="<?php echo $thank_you; ?>" data-emaileventonce="<?php echo $email_event_once; ?>" data-emaileventmonthly="<?php echo $email_event_monthly; ?>" data-campaign="<?php echo $campaign; ?>" data-currency="<?php echo $currency; ?>"
         data-minamount="<?php echo $min_custom_amount; ?>"
-        data-usedonationapp="<?php echo $use_donation_app; ?>" class="donate-block" <?php if (
+        data-usedonationapp="<?php echo $use_donation_app; ?>" class="donate-block <?php if (
+	!$show_impact
+) {
+	echo "donate-block--hide-impact";
+} ?>" <?php if (
 	$widget_id_once
 ) { ?> data-widgetidonce="<?php echo $widget_id_once; ?>" <?php } ?> <?php if (
  	$widget_id_monthly
@@ -353,7 +459,23 @@ if ($tracked && $target) {
             <div class="donate-block__options">
                 <div class="donate-block__options-option <?php if ($default_level == "a") {
                 	echo "donate-block__options-option--active";
-                } ?>" data-amount="<?php echo $amount_once_a; ?>" data-amountmonthly="<?php echo $amount_monthly_a; ?>" data-reason="<?php echo htmlspecialchars(
+                } ?>" style="<?php if (
+	$initial_freq == "once"
+		? !empty($hidden_once["a"])
+		: !empty($hidden_monthly["a"])
+) {
+	echo "display:none;";
+} ?>" data-amount="<?php echo $amount_once_a; ?>" data-amountmonthly="<?php echo $amount_monthly_a; ?>" data-hideonce="<?php echo !empty(
+	$hidden_once["a"]
+)
+	? "true"
+	: "false"; ?>" data-hidemonthly="<?php echo !empty($hidden_monthly["a"]) ? "true" : "false"; ?>" data-defaultonce="<?php echo $default_level_once ==
+"a"
+	? "true"
+	: "false"; ?>" data-defaultmonthly="<?php echo $default_level_monthly ==
+"a"
+	? "true"
+	: "false"; ?>" data-reason="<?php echo htmlspecialchars(
 	$reason_once_a
 ); ?>" data-monthly="<?php echo htmlspecialchars($reason_monthly_a); ?>">
                     <span class="currency"><?php echo $symbol; ?></span>
@@ -364,7 +486,23 @@ if ($tracked && $target) {
 
                 <div class="donate-block__options-option <?php if ($default_level == "b") {
                 	echo "donate-block__options-option--active";
-                } ?>" data-amount="<?php echo $amount_once_b; ?>" data-amountmonthly="<?php echo $amount_monthly_b; ?>" data-reason="<?php echo htmlspecialchars(
+                } ?>" style="<?php if (
+	$initial_freq == "once"
+		? !empty($hidden_once["b"])
+		: !empty($hidden_monthly["b"])
+) {
+	echo "display:none;";
+} ?>" data-amount="<?php echo $amount_once_b; ?>" data-amountmonthly="<?php echo $amount_monthly_b; ?>" data-hideonce="<?php echo !empty(
+	$hidden_once["b"]
+)
+	? "true"
+	: "false"; ?>" data-hidemonthly="<?php echo !empty($hidden_monthly["b"]) ? "true" : "false"; ?>" data-defaultonce="<?php echo $default_level_once ==
+"b"
+	? "true"
+	: "false"; ?>" data-defaultmonthly="<?php echo $default_level_monthly ==
+"b"
+	? "true"
+	: "false"; ?>" data-reason="<?php echo htmlspecialchars(
 	$reason_once_b
 ); ?>" data-monthly="<?php echo htmlspecialchars($reason_monthly_b); ?>">
                     <span class="currency"><?php echo $symbol; ?></span>
@@ -375,7 +513,23 @@ if ($tracked && $target) {
 
                 <div class="donate-block__options-option <?php if ($default_level == "c") {
                 	echo "donate-block__options-option--active";
-                } ?>" data-amount="<?php echo $amount_once_c; ?>" data-amountmonthly="<?php echo $amount_monthly_c; ?>" data-reason="<?php echo htmlspecialchars(
+                } ?>" style="<?php if (
+	$initial_freq == "once"
+		? !empty($hidden_once["c"])
+		: !empty($hidden_monthly["c"])
+) {
+	echo "display:none;";
+} ?>" data-amount="<?php echo $amount_once_c; ?>" data-amountmonthly="<?php echo $amount_monthly_c; ?>" data-hideonce="<?php echo !empty(
+	$hidden_once["c"]
+)
+	? "true"
+	: "false"; ?>" data-hidemonthly="<?php echo !empty($hidden_monthly["c"]) ? "true" : "false"; ?>" data-defaultonce="<?php echo $default_level_once ==
+"c"
+	? "true"
+	: "false"; ?>" data-defaultmonthly="<?php echo $default_level_monthly ==
+"c"
+	? "true"
+	: "false"; ?>" data-reason="<?php echo htmlspecialchars(
 	$reason_once_c
 ); ?>" data-monthly="<?php echo htmlspecialchars($reason_monthly_c); ?>">
                     <span class="currency"><?php echo $symbol; ?></span>
@@ -386,7 +540,23 @@ if ($tracked && $target) {
 
                 <div class="donate-block__options-option <?php if ($default_level == "d") {
                 	echo "donate-block__options-option--active";
-                } ?>" data-amount="<?php echo $amount_once_d; ?>" data-amountmonthly="<?php echo $amount_monthly_d; ?>" data-reason="<?php echo htmlspecialchars(
+                } ?>" style="<?php if (
+	$initial_freq == "once"
+		? !empty($hidden_once["d"])
+		: !empty($hidden_monthly["d"])
+) {
+	echo "display:none;";
+} ?>" data-amount="<?php echo $amount_once_d; ?>" data-amountmonthly="<?php echo $amount_monthly_d; ?>" data-hideonce="<?php echo !empty(
+	$hidden_once["d"]
+)
+	? "true"
+	: "false"; ?>" data-hidemonthly="<?php echo !empty($hidden_monthly["d"]) ? "true" : "false"; ?>" data-defaultonce="<?php echo $default_level_once ==
+"d"
+	? "true"
+	: "false"; ?>" data-defaultmonthly="<?php echo $default_level_monthly ==
+"d"
+	? "true"
+	: "false"; ?>" data-reason="<?php echo htmlspecialchars(
 	$reason_once_d
 ); ?>" data-monthly="<?php echo htmlspecialchars($reason_monthly_d); ?>">
                     <span class="currency"><?php echo $symbol; ?></span>
@@ -397,7 +567,23 @@ if ($tracked && $target) {
 
                 <div class="donate-block__options-option <?php if ($default_level == "e") {
                 	echo "donate-block__options-option--active";
-                } ?>" data-amount="<?php echo $amount_once_e; ?>" data-amountmonthly="<?php echo $amount_monthly_e; ?>" data-reason="<?php echo htmlspecialchars(
+                } ?>" style="<?php if (
+	$initial_freq == "once"
+		? !empty($hidden_once["e"])
+		: !empty($hidden_monthly["e"])
+) {
+	echo "display:none;";
+} ?>" data-amount="<?php echo $amount_once_e; ?>" data-amountmonthly="<?php echo $amount_monthly_e; ?>" data-hideonce="<?php echo !empty(
+	$hidden_once["e"]
+)
+	? "true"
+	: "false"; ?>" data-hidemonthly="<?php echo !empty($hidden_monthly["e"]) ? "true" : "false"; ?>" data-defaultonce="<?php echo $default_level_once ==
+"e"
+	? "true"
+	: "false"; ?>" data-defaultmonthly="<?php echo $default_level_monthly ==
+"e"
+	? "true"
+	: "false"; ?>" data-reason="<?php echo htmlspecialchars(
 	$reason_once_e
 ); ?>" data-monthly="<?php echo htmlspecialchars($reason_monthly_e); ?>">
                     <span class="currency"><?php echo $symbol; ?></span>
@@ -421,7 +607,7 @@ if ($tracked && $target) {
                 </div>
             </div>
 
-            <p class="donate-block__text">
+            <p class="donate-block__text" id="impactText">
                 <span class="color-red">
                     <b><span class="donate-block__text-currency"><?php
                     if ($currency !== "NOK") {
