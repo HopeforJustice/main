@@ -132,7 +132,13 @@ function hfj_get_post_blocks(int $post_id): array
 // result. Opting in via _fields keeps it to callers (Next.js, an editor
 // explicitly asking for it) that actually want it.
 add_action("rest_api_init", function () {
-	foreach (["page", "post"] as $post_type) {
+	// "resources_template" added so acf/resources-block's own resource
+	// posts (choose_between/upload_pdf/link/no_download) are readable
+	// headlessly too (main-next's lib/wordpress/resources.ts) - it never
+	// requests "blocks"/"custom_css" for this post type, so registering
+	// those here too is inert for it, same "opt-in via _fields" guard
+	// below applies regardless of post type.
+	foreach (["page", "post", "resources_template"] as $post_type) {
 		register_rest_field($post_type, "blocks", [
 			"get_callback" => function ($post, $field_name, $request) {
 				$requested_fields = $request->get_param("_fields");

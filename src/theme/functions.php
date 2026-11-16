@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.9.4");
+	define("_S_VERSION", "6.9.5");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -1843,6 +1843,57 @@ function hfj_find_field_id($form, callable $predicate, $check_inputs = false)
 
 // Allow REST API access to menus for all users.
 add_filter("rest_menu_read_access", "__return_true");
+
+// Allow REST API *read* access to every attachment, regardless of its own
+// post_status. WP_REST_Posts_Controller::check_read_permission() - which
+// WP_REST_Attachments_Controller inherits unchanged - treats an
+// attachment's "inherit" status as "ask the parent post": if that PARENT
+// (often a wholly unrelated draft/private/trashed post the image happens
+// to be attached to, not necessarily the page actually using it) isn't
+// itself readable by an anonymous request, the attachment comes back
+// 401/403 over REST - confirmed live multiple times during the Next.js
+// migration (several hero/card images were uploaded while attached to a
+// draft, then reused elsewhere via the media library, and inherited that
+// draft's unreadable status). The underlying file is already public
+// regardless (wp-content/uploads isn't access-controlled by WP at all -
+// that's a separate, filesystem-level concern this doesn't touch), so
+// this only ever exposes metadata (url/dimensions/alt text) for a file
+// that was already fetchable by anyone who had its URL. Scoped to GET only
+// (methods excludes POST) so create/update/delete permission checks are
+// untouched - same "loosen a REST read permission this headless frontend
+// needs, nothing else" precedent as rest_menu_read_access just above.
+add_filter("rest_endpoints", function ($endpoints) {
+	foreach ($endpoints as $route => &$handlers) {
+		if (!str_starts_with($route, "/wp/v2/media")) {
+			continue;
+		}
+		foreach ($handlers as &$handler) {
+			// This filter fires before WP_REST_Server::serve_request()
+			// normalizes each handler's "methods" into a {METHOD: true}
+			// map (confirmed in class-wp-rest-server.php - the
+			// apply_filters("rest_endpoints", ...) call precedes that
+			// normalization loop) - at this point it's still whatever raw
+			// shape register_rest_route() was given, almost always one of
+			// the WP_REST_Server::READABLE/EDITABLE/... constants, which
+			// are plain (comma-separated) strings like "GET" or
+			// "POST, PUT, PATCH", not yet an array. Parsed the same way
+			// that later normalization step does (explode on ",", trim,
+			// uppercase) so this doesn't rely on an unnormalized shape.
+			if (!is_array($handler) || !isset($handler["methods"])) {
+				continue;
+			}
+			$raw_methods = $handler["methods"];
+			$methods = array_map(
+				fn($method) => strtoupper(trim($method)),
+				is_array($raw_methods) ? $raw_methods : explode(",", $raw_methods),
+			);
+			if (in_array("GET", $methods, true) && !in_array("POST", $methods, true)) {
+				$handler["permission_callback"] = "__return_true";
+			}
+		}
+	}
+	return $endpoints;
+});
 
 // Keep Next.js in sync with WP saves. Previously this only covered nav
 // menus - every other fetch in main-next's lib/wordpress/*.ts (page
