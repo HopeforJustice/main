@@ -1844,12 +1844,17 @@ function hfj_find_field_id($form, callable $predicate, $check_inputs = false)
 // Allow REST API access to menus for all users.
 add_filter("rest_menu_read_access", "__return_true");
 
-// Revalidate menus on update to keep Next.js in sync.
-add_action("wp_update_nav_menu", "hfj_revalidate_menus");
-
-function hfj_revalidate_menus()
+// Keep Next.js in sync with WP saves. Previously this only covered nav
+// menus - every other fetch in main-next's lib/wordpress/*.ts (page
+// blocks/custom_css/aioseo_head_json, legacy-page ACF fields, posts,
+// resources, media, site options) had no webhook at all, so a save there
+// only showed up in production once its own revalidate: 3600 window
+// (1hr) expired. These hooks fire the same on-demand revalidation at the
+// exact tag names those fetches already key on, so a save shows up
+// immediately instead.
+function hfj_revalidate_tag($tag)
 {
-	wp_remote_post("https://hopeforjustice.org/api/revalidate/?tag=wp-coupled-menus", [
+	wp_remote_post("https://hopeforjustice.org/api/revalidate/?tag=" . rawurlencode($tag), [
 		"headers" => [
 			"x-revalidate-secret" => NEXT_REVALIDATE_SECRET,
 			"Content-Type" => "application/json",
@@ -1858,6 +1863,63 @@ function hfj_revalidate_menus()
 		"timeout" => 1,
 	]);
 }
+
+add_action("wp_update_nav_menu", function () {
+	hfj_revalidate_tag("wp-coupled-menus");
+});
+
+// `page` covers both block-template and legacy-template pages - both
+// blocks.ts' getPageBlocks and legacy-page.ts' getLegacyPage tag their
+// fetch "wp-coupled-page-{id}", so one tag covers either. `post` also
+// invalidates every category listing it belongs to
+// ("wp-coupled-category-{id}", posts.ts' getPostsByCategory) - not just
+// its own "wp-coupled-post-{id}" page - since a new/edited post changes
+// what a PostsBlock category listing returns elsewhere, not only its own
+// page. `resources_template` backs acf/resources-block's resource cards
+// (lib/wordpress/resources.ts).
+add_action("save_post", function ($post_id, $post) {
+	if (wp_is_post_autosave($post_id) || wp_is_post_revision($post_id) || $post->post_status !== "publish") {
+		return;
+	}
+
+	switch ($post->post_type) {
+		case "page":
+			hfj_revalidate_tag("wp-coupled-page-" . $post_id);
+			break;
+
+		case "post":
+			hfj_revalidate_tag("wp-coupled-post-" . $post_id);
+			foreach (wp_get_post_categories($post_id) as $category_id) {
+				hfj_revalidate_tag("wp-coupled-category-" . $category_id);
+			}
+			break;
+
+		case "resources_template":
+			hfj_revalidate_tag("wp-coupled-resource-" . $post_id);
+			break;
+	}
+}, 10, 2);
+
+// media.ts' getMediaImage() shares one tag across every image rather than
+// one per attachment ID, so any attachment add/edit (a new upload, a
+// crop, a replaced file) sweeps that single tag - same as the "Training"
+// card image swap that prompted this.
+add_action("add_attachment", function () {
+	hfj_revalidate_tag("wp-coupled-media");
+});
+add_action("edit_attachment", function () {
+	hfj_revalidate_tag("wp-coupled-media");
+});
+
+// ACF Options pages save into wp_options, not wp_posts, so save_post never
+// fires for them - acf/save_post is ACF's own equivalent, with the
+// options page's pseudo post_id ("options", since acf_add_options_page()
+// above is called with no overrides) rather than a real post ID.
+add_action("acf/save_post", function ($post_id) {
+	if ($post_id === "options") {
+		hfj_revalidate_tag("wp-coupled-site-options");
+	}
+}, 20);
 
 // Expose every ACF Options field to Next.js, flat, by field name. ACF's own
 // REST support (since 5.11) only attaches to post types, taxonomies and
