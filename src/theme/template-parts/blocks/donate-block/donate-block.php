@@ -235,25 +235,82 @@ if (!function_exists("parse_giving_level_amount")) {
 	}
 }
 
+//the rounding step for a giving level amount - bigger amounts get bigger steps, so
+//url amounts derived from an "interesting" last gift (eg. 1679+10pc = 1847) come out
+//as tidy numbers (1800) rather than looking oddly precise
+if (!function_exists("giving_level_step")) {
+	function giving_level_step($amount)
+	{
+		if ($amount < 100) {
+			return 5;
+		}
+		if ($amount < 500) {
+			return 10;
+		}
+		if ($amount < 1000) {
+			return 50;
+		}
+		return 100;
+	}
+}
+
+//rounds a url giving level amount to the nearest step for its size, never below one step
+if (!function_exists("round_giving_level")) {
+	function round_giving_level($amount)
+	{
+		$step = giving_level_step($amount);
+		$rounded = (int) (round($amount / $step) * $step);
+		return $rounded > 0 ? $rounded : $step;
+	}
+}
+
+//walks the visible levels a-e in order and bumps any level that isn't higher than the one
+//before it to the previous level plus one step, so rounding (or small flat modifiers like
+//+5/+10 on a large base) can't leave duplicate or out-of-order buttons. Levels only ever
+//move up. Hidden levels and ones with no amount set are skipped.
+if (!function_exists("step_up_giving_levels")) {
+	function step_up_giving_levels($amounts, $hidden)
+	{
+		$previous = null;
+		foreach ($amounts as $letter => $amount) {
+			if (!empty($hidden[$letter]) || !is_numeric($amount)) {
+				continue;
+			}
+			if ($previous !== null && $amount <= $previous) {
+				$amount = $previous + giving_level_step($previous);
+				$amounts[$letter] = $amount;
+			}
+			$previous = $amount;
+		}
+		return $amounts;
+	}
+}
+
 //giving level overrides from the url
 //once amounts: gl-a, gl-b, gl-c, gl-d, gl-e
 //monthly amounts: glm-a, glm-b, glm-c, glm-d, glm-e
 //passing 0 or false for either hides that giving level entirely for that frequency
+//url amounts are rounded to a tidy step for their size, then the visible levels for that
+//frequency (including any ACF amounts not overridden) are stepped up so each is higher
+//than the last - see round_giving_level / step_up_giving_levels above
 $hidden_once = [];
 $hidden_monthly = [];
 $has_custom_giving_levels = false;
+$has_custom_once = false;
+$has_custom_monthly = false;
 
 if (!$currency_explicitly_set) {
 	foreach (["a", "b", "c", "d", "e"] as $letter) {
 		$gl_value = isset($_GET["gl-$letter"]) ? $_GET["gl-$letter"] : null;
 		if ($gl_value !== null) {
 			$has_custom_giving_levels = true;
+			$has_custom_once = true;
 			if (in_array(strtolower(trim($gl_value)), ["0", "false"], true)) {
 				$hidden_once[$letter] = true;
 			} else {
 				$parsed_amount = parse_giving_level_amount($gl_value);
 				if ($parsed_amount !== null) {
-					${"amount_once_$letter"} = $parsed_amount;
+					${"amount_once_$letter"} = round_giving_level($parsed_amount);
 				}
 			}
 		}
@@ -261,14 +318,29 @@ if (!$currency_explicitly_set) {
 		$glm_value = isset($_GET["glm-$letter"]) ? $_GET["glm-$letter"] : null;
 		if ($glm_value !== null) {
 			$has_custom_giving_levels = true;
+			$has_custom_monthly = true;
 			if (in_array(strtolower(trim($glm_value)), ["0", "false"], true)) {
 				$hidden_monthly[$letter] = true;
 			} else {
 				$parsed_amount = parse_giving_level_amount($glm_value);
 				if ($parsed_amount !== null) {
-					${"amount_monthly_$letter"} = $parsed_amount;
+					${"amount_monthly_$letter"} = round_giving_level($parsed_amount);
 				}
 			}
+		}
+	}
+
+	foreach (["once" => $has_custom_once, "monthly" => $has_custom_monthly] as $freq => $has_custom) {
+		if (!$has_custom) {
+			continue;
+		}
+		$ladder = [];
+		foreach (["a", "b", "c", "d", "e"] as $letter) {
+			$ladder[$letter] = ${"amount_{$freq}_$letter"};
+		}
+		$ladder = step_up_giving_levels($ladder, ${"hidden_$freq"});
+		foreach ($ladder as $letter => $amount) {
+			${"amount_{$freq}_$letter"} = $amount;
 		}
 	}
 }
