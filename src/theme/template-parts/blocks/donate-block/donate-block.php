@@ -203,6 +203,11 @@ if (!function_exists("parse_giving_level_amount")) {
 	{
 		$value = trim($value);
 
+		//strip thousands-separator commas ("1,297" -> "1297") - mailchimp number merge fields
+		//are formatted with them when merged into a url. only commas followed by exactly three
+		//digits are removed, so a decimal comma like "12,50" is not misread as 1250
+		$value = preg_replace('/(?<=\d),(?=\d{3}(?!\d))/', "", $value);
+
 		if (is_numeric($value)) {
 			return floatval($value);
 		}

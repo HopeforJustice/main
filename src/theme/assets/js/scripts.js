@@ -41,7 +41,7 @@ function captureUTMParameters() {
 
 /* Page load scripts */
 jQuery(document).ready(function ($) {
-	console.log("v6.9.5");
+	console.log("v6.9.6");
 	captureUTMParameters();
 	let cookies = Cookies.get("wordpress_hfjcookies");
 
