@@ -1037,6 +1037,22 @@ function add_custom_taxonomies()
 		"show_ui" => true,
 		"show_admin_column" => true,
 
+		// Added for the headless frontend (main-next): without
+		// "show_in_rest", this taxonomy has no REST exposure at all - no
+		// terms endpoint, no query var on gov_pol_fund's own collection
+		// endpoint, and no per-post terms field, unlike "languages"/
+		// "topics" below. Confirmed live that `?categories=X` on
+		// /wp-json/wp/v2/gov_pol_fund is silently a no-op today (always
+		// returns all 56 posts unfiltered, even for a nonexistent term
+		// id) - acf/gpf-block's own per-category filtering can't work
+		// headlessly until this is REST-exposed. An explicit "rest_base"
+		// is required (unlike "languages"/"topics", which rely on the
+		// default) because this taxonomy's own name, "categories", is
+		// also WP core's built-in "category" taxonomy's REST base - the
+		// default would collide with it.
+		"show_in_rest" => true,
+		"rest_base" => "gpf_categories",
+
 		"labels" => [
 			"name" => _x("Categories", "taxonomy general name"),
 

@@ -138,7 +138,16 @@ add_action("rest_api_init", function () {
 	// requests "blocks"/"custom_css" for this post type, so registering
 	// those here too is inert for it, same "opt-in via _fields" guard
 	// below applies regardless of post type.
-	foreach (["page", "post", "resources_template"] as $post_type) {
+	//
+	// "gov_pol_fund"/"publications"/"events" added the same way, for the
+	// same reason: acf/gpf-block and acf/publications-block both read
+	// per-post ACF fields off these CPTs directly (choose_between_field/
+	// upload_pdf/external_link on gov_pol_fund, file on publications), and
+	// a planned /events/ and /publications/ archive route needs each
+	// event's/publication's own fields (dates, location, file) the same
+	// way. None of these three ever request "blocks"/"custom_css" either,
+	// so registering those here too is inert for them as well.
+	foreach (["page", "post", "resources_template", "gov_pol_fund", "publications", "events"] as $post_type) {
 		register_rest_field($post_type, "blocks", [
 			"get_callback" => function ($post, $field_name, $request) {
 				$requested_fields = $request->get_param("_fields");
