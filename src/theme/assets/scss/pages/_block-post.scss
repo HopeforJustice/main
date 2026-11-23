@@ -166,6 +166,12 @@
             padding: 0;
             width: 100%;
         }
+
+        // Stop lists wrapping around a floated paragraph image.
+        article ul,
+        article ol {
+            clear: both;
+        }
     }
 
     &__aside {
@@ -217,6 +223,18 @@
         ul,
         ol {
             font-size: 1rem;
+        }
+    }
+}
+
+@media screen and (max-width:400px) {
+    .block-post {
+        &__content {
+            // On small phones a floated image leaves too little room for
+            // text beside it, so let it take the full width.
+            article p img {
+                min-width: 100%;
+            }
         }
     }
 }
