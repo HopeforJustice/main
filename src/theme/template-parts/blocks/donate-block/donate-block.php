@@ -28,6 +28,12 @@ $currency_explicitly_set = isset($_GET["Currency"]) && trim($_GET["Currency"]) !
 $use_donation_app = get_field("use_donation_app") ?: false;
 $frequency = get_field("frequency_settings");
 $frequency_start = get_field("frequency_start");
+//url override for which frequency tab starts active: ?frequency=monthly or ?frequency=once
+//ignored on once-only blocks (frequency_settings "once"), which have no monthly tab to show
+$url_frequency = isset($_GET["frequency"]) ? strtolower(trim($_GET["frequency"])) : "";
+if (in_array($url_frequency, ["once", "monthly"]) && $frequency != "once") {
+	$frequency_start = $url_frequency;
+}
 $image = get_field("image");
 $image_uk = get_field("image_uk") ?: false;
 $image_us = get_field("image_us") ?: false;
