@@ -54,6 +54,10 @@ if ($url_campaign) {
 	$campaign = $url_campaign;
 }
 
+//flags the block as being on the homepage, so the JS can set fallback UTM cookies for
+//the donation app when the visitor arrived with no UTMs (in the url or cookies)
+$is_homepage = is_front_page() ? "true" : "false";
+
 $extra_text = get_field("extra_text") ?: false;
 $background_color = get_field("background_color") ?: "#ffffff";
 $overlay_color = get_field("overlay_color");
@@ -475,7 +479,7 @@ if ($tracked && $target) {
         <!-- donate widget -->
         <div data-tracked="<?php echo $tracked; ?>" data-thankyou="<?php echo $thank_you; ?>" data-emaileventonce="<?php echo $email_event_once; ?>" data-emaileventmonthly="<?php echo $email_event_monthly; ?>" data-campaign="<?php echo $campaign; ?>" data-currency="<?php echo $currency; ?>"
         data-minamount="<?php echo $min_custom_amount; ?>"
-        data-usedonationapp="<?php echo $use_donation_app; ?>" class="donate-block <?php if (
+        data-usedonationapp="<?php echo $use_donation_app; ?>" data-homepage="<?php echo $is_homepage; ?>" class="donate-block <?php if (
 	!$show_impact
 ) {
 	echo "donate-block--hide-impact";

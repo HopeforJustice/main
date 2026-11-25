@@ -30,6 +30,36 @@
 		//campaign for donation app
 		let campaign = $(".donate-block").data("campaign") || null;
 
+		//whether the block is on the homepage (homepage takeover)
+		let isHomepage = $(".donate-block").data("homepage") === true || $(".donate-block").data("homepage") === "true";
+
+		//true if the visitor already has attribution - utm_*/tlx* params in the url, or the
+		//wordpress_utm_* cookies set by captureUTMParameters() in scripts.js
+		function hasExistingUtms() {
+			let urlParams = new URLSearchParams(window.location.search);
+			let keys = ["utm_source", "utm_medium", "utm_campaign", "tlxs", "tlxm", "tlxc"];
+			if (keys.some((key) => urlParams.get(key))) {
+				return true;
+			}
+			return ["utm_source", "utm_medium", "utm_campaign"].some((param) =>
+				document.cookie.split("; ").some((c) => c.indexOf("wordpress_" + param + "=") === 0 && c.split("=")[1] !== "")
+			);
+		}
+
+		//fallback attribution for homepage donations with no existing UTMs - writes the same
+		//wordpress_utm_* cookies captureUTMParameters() sets, which the donation app reads
+		function setHomepageUtmCookies() {
+			let values = {
+				utm_source: "homepage",
+				utm_medium: "organic",
+				utm_campaign: campaign || "homepage",
+			};
+			let expires = new Date(Date.now() + 10 * 864e5).toUTCString();
+			Object.entries(values).forEach(([param, value]) => {
+				document.cookie = `wordpress_${param}=${encodeURIComponent(value)}; path=/; domain=.hopeforjustice.org; expires=${expires}`;
+			});
+		}
+
 		//tracks whether the giver has manually picked an option, so the per-frequency suggested default stops being reapplied once they have
 		let userSelectedOption = false;
 
@@ -372,6 +402,9 @@
 			}
 			if (image) {
 				url += `&image=${encodeURIComponent(image)}`;
+			}
+			if (isHomepage && !hasExistingUtms()) {
+				setHomepageUtmCookies();
 			}
 
 			window.location.href = url;
