@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.9.11");
+	define("_S_VERSION", "6.9.12");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):

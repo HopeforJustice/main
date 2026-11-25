@@ -52,7 +52,8 @@
 			let values = {
 				utm_source: "homepage",
 				utm_medium: "organic",
-				utm_campaign: campaign || "homepage",
+				//update this for each homepage takeover campaign
+				utm_campaign: "2026_eoy",
 			};
 			let expires = new Date(Date.now() + 10 * 864e5).toUTCString();
 			Object.entries(values).forEach(([param, value]) => {
