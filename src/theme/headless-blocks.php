@@ -102,6 +102,20 @@ function hfj_resolve_blocks(array $parsed_blocks, int $post_id): array
 			$node["html"] = render_block($block);
 		}
 
+		// core/list is the exception to the leaf-only rule above: its own
+		// markup (the theme's better-grid/core-list wrapper div, color/
+		// background classes, a nested list's wrapper) and a parent list
+		// item's own text (e.g. "Criminal activity" above a nested sub-list)
+		// live only in the saved innerHTML/innerContent around its children,
+		// which the headless frontend can't reconstruct from attrs alone. A
+		// list can only ever contain list items and nested lists - never an
+		// ACF block - so rendering the whole subtree here is safe, and gives
+		// exactly what the_content() outputs. innerBlocks stays as well, so
+		// a frontend that predates this field keeps working.
+		if ($block_name === "core/list" && !empty($inner_blocks)) {
+			$node["html"] = render_block($block);
+		}
+
 		$resolved[] = $node;
 	}
 
