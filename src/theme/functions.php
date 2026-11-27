@@ -10,7 +10,7 @@
 
 if (!defined("_S_VERSION")) {
 	// Replace the version number of the theme on each release.
-	define("_S_VERSION", "6.9.13");
+	define("_S_VERSION", "6.9.14");
 }
 
 if (!function_exists("hope_for_justice_2021_setup")):
@@ -945,8 +945,25 @@ add_action("init", "create_post_types");
 function add_custom_taxonomies()
 {
 	//pages
+	// Internal only: the one term ("Resources", ID 673) exists to power
+	// search.php's "Resources" filter (swp_page_category_limiter below), so
+	// it has no public archive. It used to be public with a /categories/
+	// rewrite, but nothing renders those archives (/categories/resources/
+	// is a 404) - and AIOSEO's REST output (aioseo_head_json, read by the
+	// headless frontend) put that dead URL at the start of every tagged
+	// page's BreadcrumbList. Non-public means no archive URL and no crumb;
+	// editors still assign terms (show_ui/show_in_rest) and the search
+	// filter's tax query works the same by term ID.
 	register_taxonomy("page_categories", "page", [
 		"hierarchical" => true,
+
+		"public" => false,
+
+		"publicly_queryable" => false,
+
+		"query_var" => false,
+
+		"show_ui" => true,
 
 		"show_in_rest" => true,
 
@@ -976,15 +993,7 @@ function add_custom_taxonomies()
 
 		"show_in_nav_menus" => false,
 
-		// Control the slugs used for this taxonomy
-
-		"rewrite" => [
-			"slug" => "categories", // This controls the base slug that will display before each term
-
-			"with_front" => false, // Don't display the category base before "/locations/"
-
-			"hierarchical" => true, // This will allow URL's like "/locations/boston/cambridge/"
-		],
+		"rewrite" => false,
 	]);
 
 	//events
